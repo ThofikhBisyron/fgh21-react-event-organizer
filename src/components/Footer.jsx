@@ -9,43 +9,50 @@ import x from "../assets/img/footer-x.svg"
 function Footer(){
 
     return(
-        <div class="flex flex-col bg-[#F4F7FF] justify-center mt-[100px]">
-            <div class="flex w-[930px] h-[308px] gap-[125px] ml-[25%]">
-                <div class="-w[232px] -h[140px]">
-                    <div class="flex items-center mb-[30px]"><img src={logo} alt=""/><span class="text-[#3366FF] text-2xl font-semibold">We</span><span class="text-[#FF3D71] text-2xl font-semibold">tick</span></div>
-                    <div class="text-xs mb-[15px]">Find events you love with our</div>
-                    <div class="flex gap-y-3.5">   
-                        <button><img src={facebook} alt="" /></button>
-                        <button><img src={wa} alt="" /></button>
-                        <button><img src={ig} alt="" /></button>
-                        <button><img src={x} alt="" /></button>
+        <div>
+            <div>
+                <div className="w-full">
+                <div className="flex md:gap-56 gap-10 md:ml-20 ml-6 flex-col md:flex-row mb-20 mt-40">
+                    <div className="">
+                        <div class="flex items-center mb-[30px]"><img src={logo} alt=""/>
+                            <span className="text-[#3366FF] text-2xl font-semibold">We</span>
+                            <span className="text-[#FF3D71] text-2xl font-semibold">tick</span>
+                        </div>
+                        <div className="text-xs mb-[15px]">Find events you love with our</div>
+                        <div>   
+                            <button><img src={facebook} alt=""/></button>
+                            <button><img src={wa} alt="" /></button>
+                            <button><img src={ig} alt="" /></button>
+                            <button><img src={x} alt="" /></button>
+                        </div>
+                    </div>
+                    <div>   
+                        <div className="mb-[20px] font-bold text-base">Wetick</div>
+                        <div className="text-[#C1C5D0] text-sm">About Us</div>
+                        <div className="text-[#C1C5D0] text-sm">Features</div>
+                        <div className="text-[#C1C5D0] text-sm">Blog</div>
+                        <div className="text-[#C1C5D0] text-sm">Payments</div>
+                        <div className="text-[#C1C5D0] text-sm">Mobile App</div>
+                    </div>
+                    <div>
+                        <div className="mb-[20px] font-bold text-base">Features</div>
+                        <div className="text-[#C1C5D0] text-sm">Booking</div>
+                        <div className="text-[#C1C5D0] text-sm">Create Event</div>
+                        <div className="text-[#C1C5D0] text-sm">Discover</div>
+                        <div className="text-[#C1C5D0] text-sm">Register</div>
+                    </div>
+                    <div>
+                        <div className="mb-[20px] font-bold text-base">Company</div>
+                        <div className="text-[#C1C5D0] text-sm">Partnership</div>
+                        <div className="text-[#C1C5D0] text-sm">Help</div>
+                        <div className="text-[#C1C5D0] text-sm">Terms of Service</div>
+                        <div className="text-[#C1C5D0] text-sm">Privacy Policy</div>
+                        <div className="text-[#C1C5D0] text-sm">Sitemap</div>
                     </div>
                 </div>
-                <div>   
-                    <div class="mb-[20px] font-bold text-base">Wetick</div>
-                    <div class="text-[#C1C5D0] text-sm">About Us</div>
-                    <div class="text-[#C1C5D0] text-sm">Features</div>
-                    <div class="text-[#C1C5D0] text-sm">Blog</div>
-                    <div class="text-[#C1C5D0] text-sm">Payments</div>
-                    <div class="text-[#C1C5D0] text-sm">Mobile App</div>
                 </div>
-                <div>
-                    <div class="mb-[20px] font-bold text-base">Features</div>
-                    <div class="text-[#C1C5D0] text-sm">Booking</div>
-                    <div class="text-[#C1C5D0] text-sm">Create Event</div>
-                    <div class="text-[#C1C5D0] text-sm">Discover</div>
-                    <div class="text-[#C1C5D0] text-sm">Register</div>
-                </div>
-                <div>
-                    <div class="mb-[20px] font-bold text-base">Company</div>
-                    <div class="text-[#C1C5D0] text-sm">Partnership</div>
-                    <div class="text-[#C1C5D0] text-sm">Help</div>
-                    <div class="text-[#C1C5D0] text-sm">Terms of Service</div>
-                    <div class="text-[#C1C5D0] text-sm">Privacy Policy</div>
-                    <div class="text-[#C1C5D0] text-sm">Sitemap</div>
-                </div>
+                <div className="text-base md:ml-52 ml-4">© 2020 Wetick All Rights Reserved</div>
             </div>
-                <div class="text-base ml-[25%]">© 2020 Wetick All Rights Reserved</div>
         </div>
     )
 }

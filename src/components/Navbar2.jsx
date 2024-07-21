@@ -1,11 +1,12 @@
 import React from "react";
 import logo from "../assets/img/logo_blur.svg"
 import nav from "../assets/img/navbar.svg"
+import profile from "../assets/img/profile.svg";
 import { Link } from "react-router-dom";
 
 
 
-function Navbar(){
+function Navbar2(){
 // const navb = React.useRef("hidden");
 
 //   const navbar = () => {
@@ -59,9 +60,9 @@ function butnav () {
                         </div>  
                     </div>
                     <div className={navb ? "md:flex hidden" : ""}>
-                        <div className="mb-5 items-center align-middle md:pt-5">
-                            <Link to="/login"><button className="h-[40px] w-[100px]">Log In</button></Link>
-                            <Link to="/Signup"><button className="h-[40px] bg-[#3366FF] rounded-xl w-[169px] text-white">Sign Up</button></Link>
+                        <div className="flex gap-4 mb-5 items-center align-middle md:pt-5">
+                            <Link to="/Profile"><button><img src={profile} alt="" className="w" /></button></Link>
+                            <Link to="/Profile"><div className=" text-black">Jhon Thomson</div></Link>
                         </div>
                     </div>
                 </div>
@@ -69,4 +70,4 @@ function butnav () {
         </div>
     )
 }
-export default Navbar
+export default Navbar2
