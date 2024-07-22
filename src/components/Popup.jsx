@@ -1,6 +1,15 @@
 import React from "react";
 
 function Popup() {
+  const [pop, setpop] = React.useState(true)
+function butpop () {
+    if ( pop === true ){
+        setpop(false)
+    }else{
+        setpop(true)
+    }
+
+}
   return (
     <div className="flex items-center justify-center bg-black/25 w-full h-screen relative">
       <div className="bg-white pr-[52px] w-4/5 rounded-[30px] pl-[52px] absolute ">
