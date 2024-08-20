@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar2 from "../components/Navbar2";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import card from "../assets/img/card.svg";
 import arrowUp from "../assets/img/arrow-up.svg";
@@ -14,10 +14,10 @@ function Payment() {
 
 
   return (
-    <div className="md:bg-[#F4F7FF]">
-      <Navbar2 />
+    <div className="bg-yellow-300">
+      <Navbar />
       <div className="">
-        <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-white rounded-[30px] p-[100px]">
+        <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">
           <div className=" md:w-[50%] w-[100%] h-[486px] md:mr-[88px]">
             <div className="text-[#373A42] tracking-[1px] font-semibold text-xl mb-[50px]">Payment Method
             </div>

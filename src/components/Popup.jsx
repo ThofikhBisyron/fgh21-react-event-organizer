@@ -1,15 +1,7 @@
 import React from "react";
 
 function Popup() {
-  const [pop, setpop] = React.useState(true)
-function butpop () {
-    if ( pop === true ){
-        setpop(false)
-    }else{
-        setpop(true)
-    }
-
-}
+  
   return (
     <div className="flex items-center justify-center bg-black/25 w-full h-screen relative">
       <div className="bg-white pr-[52px] w-4/5 rounded-[30px] pl-[52px] absolute ">
@@ -21,6 +13,7 @@ function butpop () {
               <input type="text" name="name" id="name" placeholder="Input Name Event ..." className="h-[55px] border border-2 w-full pl-[20px] pr-[20px] rounded-[15px] mb-[30px]"/>
             </div>
           </div>
+          
           <div className="w-1/2">
             <label htmlFor="name" className="mb-[10px]">Category</label>
             <div className="">

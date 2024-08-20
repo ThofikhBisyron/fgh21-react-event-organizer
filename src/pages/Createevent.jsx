@@ -1,6 +1,6 @@
 import React from "react" 
 import Footer from "../components/Footer"
-import Navbar2 from "../components/Navbar2"
+import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
 import profilejhon from "../assets/img/profilejhon.svg"
 import cardprofile from "../assets/img/cardprofile.svg"
@@ -33,13 +33,13 @@ function butpop () {
 
 
     return(
-        <div className="md:bg-[#F4F7FF] bg-white">
-            <Navbar2/>
+        <div className="bg-yellow-300">
+            <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] w-[100%] hidden md:block">
                     <Sidebar/>
                 </div>
-                <div className=" md:w-[70%] w-[100%] bg-[#FFFFFF] rounded-[30px] md:mr-[70px]">
+                <div className=" md:w-[70%] w-[100%] md:bg-gray-200 bg-yellow-300 rounded-[30px] md:mr-[70px]">
                    <div className="md:flex flex flex-col gap-5 md:flex-row md:justify-between md:h-[50px] w-[90%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">Manage Event</div>
                         <button onClick={butpop} className="border rounded-[15px] w-[125px] h-[50px] bg-[#EAF1FF] text-[#3366FF]">Create</button>

@@ -1,11 +1,16 @@
 import React from "react";
 import logo from "../assets/img/logo_blur.svg"
 import nav from "../assets/img/navbar.svg"
+import profile from "../assets/img/profile.svg";
+import ticket from "../assets/img/logoticket.png"
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 
 
 function Navbar(){
+    const datauser = useSelector((state) => state.profile.datauser)
 // const navb = React.useRef("hidden");
 
 //   const navbar = () => {
@@ -20,6 +25,8 @@ function Navbar(){
 //         console.log(navb.current)
 //     }
 //   };
+ const datatoken = useSelector((state) => state.auth.token);
+ console.log(datatoken)
 const [navb, setnavb] = React.useState(true)
 function butnav () {
     if ( navb === true ){
@@ -29,17 +36,16 @@ function butnav () {
     }
 
 }
- 
 
 
     return(
-    <div class="md:bg-white">
+    <div class="bg-gray-300">
         <div>
             <div className="w-{100%] flex md:flex-row flex-col justify-between md:align-middle content-center items-center mr-10 ml-10">
                 <div className="flex items-center justify-between w-full md:w-[0]">
-                    <Link to="/Index"><div className="flex items-center"><img src={logo} alt=""/>
-                            <span className="text-[#3366FF] text-2xl font-semibold">We</span>
-                            <span className="text-[#FF3D71] text-2xl font-semibold">tick</span>
+                    <Link to="/Index"><div className="flex items-center"><img src={ticket} alt=""/>
+                            <span className="text-yellow-300 text-2xl font-semibold">Athrus</span>
+                            <span className="text-yellow-300 text-2xl font-semibold">Tick</span>
                     </div></Link>
                     <div>
                         <button type="button" onClick={butnav} className="md:hidden"><img src={nav} alt=""/></button>
@@ -58,12 +64,19 @@ function butnav () {
                             </div>
                         </div>  
                     </div>
-                    <div className={navb ? "md:flex hidden" : ""}>
+                    { datatoken === null ? (<div className={navb ? "md:flex hidden" : ""}>
                         <div className="mb-5 items-center align-middle md:pt-5">
                             <Link to="/login"><button className="h-[40px] w-[100px]">Log In</button></Link>
                             <Link to="/Signup"><button className="h-[40px] bg-[#3366FF] rounded-xl w-[169px] text-white">Sign Up</button></Link>
                         </div>
-                    </div>
+                    </div>) : (<div className={navb ? "md:flex hidden" : ""}>
+                        <div className="flex gap-4 mb-5 items-center align-middle md:pt-5">
+                            <Link to="/Profile"><button><img src="" alt="" className="w" /></button></Link>
+                            <Link to="/Profile"><div className=" text-black">{datauser.profile[0].full_name}</div></Link>
+                        </div>
+                    </div>)}
+                    
+                    
                 </div>
             </div>
         </div>

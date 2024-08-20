@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import './assets/style.css'
 import Profile from './pages/Profile';
 import Changepassword from './pages/Changepassword';
-import Mybooking from './pages/Mybooking';
+import Mybooking from "./pages/Mybooking";
 import Mywishlist from "./pages/Mywishlist";
 import Createevent from "./pages/Createevent"
 import Index from "./pages/Index"
@@ -18,11 +18,13 @@ import Sidebar from './components/Sidebar'
 import Loginpassword from './pages/Loginpassword'
 import Navbar2 from './components/Navbar2';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from 'react-redux';
+import { store } from "./redux/store";
 
 const Router = createBrowserRouter([
     {
         path : "/", 
-        element : <Index/>
+        element : <Login/>
     },
     {
         path : "/Loginpassword", 
@@ -41,7 +43,7 @@ const Router = createBrowserRouter([
         element : <Createevent/>
     },
     {
-        path : "/Event", 
+        path : "/Events/:id", 
         element : <Event/>
     },
     {
@@ -65,7 +67,7 @@ const Router = createBrowserRouter([
         element : <Profile/>
     },
     {
-        path : "/Ticket", 
+        path : "/Ticket/:id", 
         element : <Ticket/>
     },
     {
@@ -80,7 +82,9 @@ const Router = createBrowserRouter([
 ])
 function App() {
     return(
+        <Provider store={store}>
        < RouterProvider router = {Router} />
+       </Provider>
     )
 }  
 export default App

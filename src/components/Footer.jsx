@@ -4,6 +4,7 @@ import facebook from"../assets/img/footer-facebook.svg"
 import wa from "../assets/img/footer-wa.svg"
 import ig from "../assets/img/footer-ig.svg"
 import x from "../assets/img/footer-x.svg"
+import ticket from "../assets/img/logoticket.png"
 
 
 function Footer(){
@@ -14,9 +15,9 @@ function Footer(){
                 <div className="w-full">
                 <div className="flex md:gap-56 gap-10 md:ml-20 ml-6 flex-col md:flex-row mb-20 mt-40">
                     <div className="">
-                        <div class="flex items-center mb-[30px]"><img src={logo} alt=""/>
-                            <span className="text-[#3366FF] text-2xl font-semibold">We</span>
-                            <span className="text-[#FF3D71] text-2xl font-semibold">tick</span>
+                        <div class="flex items-center mb-[30px]"><img src={ticket} alt="" className="w-10 h-10"/>
+                            <span className="text-[#757217] text-2xl font-semibold">Athrus</span>
+                            <span className="text-[#757217] text-2xl font-semibold">Tick</span>
                         </div>
                         <div className="text-xs mb-[15px]">Find events you love with our</div>
                         <div>   

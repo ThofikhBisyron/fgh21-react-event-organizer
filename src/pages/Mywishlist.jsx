@@ -1,6 +1,6 @@
 import React from "react" 
 import Footer from "../components/Footer"
-import Navbar2 from "../components/Navbar2"
+import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
 import profilejhon from "../assets/img/profilejhon.svg"
 import cardprofile from "../assets/img/cardprofile.svg"
@@ -23,11 +23,11 @@ function Mywishlist(){
 
 
     return(
-<div className="md:bg-[#F4F7FF]">
-    <Navbar2/>
+<div className="bg-yellow-300">
+    <Navbar/>
         <div className="flex mt-[50px]">
             <Sidebar/>
-            <div className=" md:w-[70%] w-[100%] bg-[#FFFFFF] rounded-[30px] md:mr-[70px]">
+            <div className=" md:w-[70%] w-[100%] bg-yellow-300 md:bg-gray-200 rounded-[30px] md:mr-[70px]">
                 <div className="flex justify-between h-[50px] mt-[33px] ml-[50px]">
                     <div className="font-semibold text-2xl">My Wishlist</div>
                 </div>  

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../components/Footer"
-import Navbar2 from "../components/Navbar2"
+import Navbar from "../components/Navbar"
 import location from "../assets/img/locat.svg";
 import clock from "../assets/img/clock.svg";
 import map from "../assets/img/maps.svg";
@@ -10,20 +10,43 @@ import profile1 from "../assets/img/p1.svg";
 import profile2 from "../assets/img/p2.svg";
 import profile3 from "../assets/img/p3.svg";
 import profile4 from "../assets/img/p4.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { listevent } from "../redux/reducers/event";
 
 function Event() {
+  const dispatch = useDispatch()
+  // const datae = useSelector((state) => state.event.dataevent);
+  // console.log(datae) 
+  let {id} = useParams()
+  const [event, setEvent] = React.useState([])
+  console.log(event)
+
+  useEffect(() =>{
+    async function eventData(){
+      const eventfetch = await fetch("http://localhost:8080/events/" + id)
+      const eventdata = await eventfetch.json()
+      // console.log(eventdata.results)
+      // dispatch(listevent(eventdata.results))
+      setEvent(eventdata.results)
+      
+
+      
+    }
+    eventData()
+  }, [])
+
   return (
-    <div className="md:bg-[#F4F7FF]">
+    <div className="bg-yellow-300">
       <div className="navbar">
-        <Navbar2 />
+        <Navbar />
       </div>
       <div className="">
-        <div className="flex relative w-full h-full overflow-hidden rounded-[40px] mb-[52px] md:hidden">
-          <img src={subsquid} alt="" className=" h-full w-full object-cover md:hidden"/>
+        <div className="flex relative w-full h-full overflow-hidden md:rounded-[40px] mb-[52px] md:hidden">
+          <img src={event.image} alt="" className=" h-full w-full object-cover md:hidden"/>
           <div className="flex flex-col px-5 py-24 justify-center absolute bg-gradient-to-t from-[black] to-[transparent] w-full h-full ">
             <div className="flex justify-between ">
-              <div className="text-white text-2xl tracking-widest font-semibold mb-4">Sights & Sounds Exhibition</div>
+              <div className="text-white text-2xl tracking-widest font-semibold mb-4">{event.tittle}</div>
               <div className="">
                 <img src={favorite} alt="" className="h-6 w-6" />
               </div>
@@ -61,10 +84,10 @@ function Event() {
             </div>
           </div>
         </div>
-        <div className="flex mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] bg-white p-10 mb:p-[100px] rounded-3xl">
+        <div className="flex mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] bg-yellow-300 md:bg-gray-200 p-10 mb:p-[100px] rounded-3xl">
           <div className="md:flex flex-col md:w-2/5 h-[486px] mr-[88px] hidden">
-            <div className="flex relative w-full h-full overflow-hidden rounded-[40px] mb-[52px] ">
-              <img src={subsquid} alt="" className=" h-full w-full object-cover"/>
+            <div className="flex relative w-full h-full overflow-hidden rounded-[40px] mb-[52px] "> 
+              <img src={event.image} alt="" className=" h-full w-full object-cover"/>
               <div className="absolute bg-gradient-to-t from-[black] to-[transparent] w-full h-full "></div>
             </div>
             <div className="flex justify-center items-center gap-[16px]">
@@ -77,7 +100,7 @@ function Event() {
           </div>
           <div className="md:w-3/5">
             <div className=" md:flex flex-col border-b-2 border-solid border-[rgba(193,197,208,0.25)] mb-[25px] hidden">
-              <div className="font-semibold text-2xl mb-[30px] tracking-[2px]">Sights & Sounds<div>Exhibition</div>
+              <div className="font-semibold text-2xl mb-[30px] tracking-[2px]">{event.tittle}
               </div>
               <div className="flex gap-[88px] mb-[30px]">
                 <div className="flex gap-[4px] text-sm items-center tracking-[1px] font-medium">
@@ -91,7 +114,7 @@ function Event() {
                   <div className="">
                     <img src={clock} alt="" />
                   </div>
-                  <div className="text-[#373A42] font-medium text-sm">Wed, 15 Nov, 4:00 PM
+                  <div className="text-[#373A42] font-medium text-sm">{event.date}
                   </div>
                 </div>
               </div>
@@ -115,7 +138,7 @@ function Event() {
             </div>
             <div className="font-semibold tracking-[1px] text-xl mb-[16px]">Event Detail
             </div>
-            <div className="text-xs text-[rgba(55,58,66,0.75)] mb-[12px]">After his controversial art exhibition "Tear and Consume" back in November 2018, in which guests were invited to tear up…
+            <div className="text-xs text-[rgba(55,58,66,0.75)] mb-[12px]">{event.description}
             </div>
             <div className="text-xs text-[#3366FF] font-medium mb-[25px]">Read More
             </div>
@@ -124,7 +147,7 @@ function Event() {
             <div className="w-full">
               <img src={map} alt="" className="h-[152px] w-full md:max-w-[315px] object-cover rounded-[20px] mb-[50px]"/>
             </div>
-            <Link to="/ticket">
+            <Link to={`/Ticket/${id}`}>
               <button type="submit" className="h-[55px] w-full md:max-w-[315px] bg-[#3366FF] rounde text-white rounded-[15px]">Buy Tickets
               </button>
             </Link>

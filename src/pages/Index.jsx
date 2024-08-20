@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import people from "../assets/img/family.svg";
@@ -24,11 +24,23 @@ import black3 from "../assets/img/black3.svg";
 import black4 from "../assets/img/black4.svg";
 import black5 from "../assets/img/black5.svg";
 import black6 from "../assets/img/black6.svg";
-import { Link } from "react-router-dom";
+import ticket from "../assets/img/logoticket.png"
+import orangebanner from "../assets/img/orangebanner.jpg";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { inputhome } from "../redux/reducers/home";
+import { useDispatch} from "react-redux";
 
 function Index() {
+  const datatoken = useSelector((state) => state.auth.token);
+  console.log(datatoken)
+  const datahome = useSelector((state) => state.home.datahome)
+  console.log(datahome)
+  const dispatch = useDispatch()
+  const [partner, setPartner] = React.useState([])
     const [see, setsee] = React.useState(true)
-function seeall () {
+function seeall () 
+{
     if ( see === true ){
         setsee(false)
     }else{
@@ -37,15 +49,62 @@ function seeall () {
 
 }
 
+useEffect(() =>{
+  async function home(){
+    const dataHome = await fetch('http://localhost:8080/events/' ,{
+      headers: {
+        Authorization: "Bearer " + datatoken,
+      }
+    })
+    const listevent = await dataHome.json()
+    console.log(listevent)
+    dispatch(inputhome(listevent.results))
+  }
+  home()
+}, [])
+
+useEffect(() =>{
+  async function partnersData(){
+    const eventfetch = await fetch("http://localhost:8080/partners/")
+    const datapartners = await eventfetch.json()
+    // console.log(eventdata.results)
+    // dispatch(listevent(eventdata.results))
+    console.log(datapartners.results)
+    setPartner(datapartners.results)
+
+    
+
+    
+  }
+  partnersData()
+}, [])
+// async function home() {
+
+//   const dataeventhome = await fetch(
+//       "https://wsw6zh-8888.csb.app/events",
+//  {
+//   headers: {
+//       Authorization: "Bearer " + data.results.token,
+//       },
+//   }
+// );  
+// const listhome = await dataeventhome.json()
+// dispatch(dataHome(listhome.results))
+// }
+// home()
+
+    
+
+
   return (
-    <div>
-      <div className="">
+    <div className="bg-yellow-300">
+      <div>
         <Navbar />
       </div>
       <div className="mb-[150px]">
         <div className="h-[600px] bg-[#3366FF]  mb-[175px]">
           <div className="w-full h-full flex items-end justify-end">
-            <img src={people} alt="" />
+            <img src={orangebanner} alt="" className="w-full h-[600px]" />
           </div>
         </div>
         <div className="w-full flex flex-col items-center">
@@ -84,398 +143,43 @@ function seeall () {
           </div>
         </div>
         <div className="flex gap-4 overflow-x-scroll mb-10 ml-10">
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative ">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
+          {datahome.map((data) =>{
+            return(
+              <Link to={`/Events/${data.id}`}>
+                <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative ">
+                  <img
+                    src={data.image}
+                    alt=""
+                    className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
+                  />
+                  <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
+                    <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
+                      <div className="text-white">{new Date(data.date).toLocaleDateString("en-CA")}</div>
+                      <div className="text-white">{data.tittle}</div>
+                      <div className="flex mb-[8px]">
+                        {/* {data.attendees.map((item) =>{
+                          return(
+                            <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
+                            <img src={'https://wsw6zh-8888.csb.app/' + item.picture} alt="" />
+                          </div>
+                          )
+                        })} */}
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to="/event">
-            <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative overflow-hidden">
-              <img
-                src={cars}
-                alt=""
-                className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
-              />
-              <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                  <div className="text-white">Wed, 15 Nov, 4:00 PM</div>
-                  <div className="text-white">Sights & Sounds Exhibition</div>
-                  <div className="flex mb-[8px]">
-                    <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile1} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile2} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                      <img src={profile3} alt="" />
-                    </div>
-                    <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                      <img src={profile4} alt="" />
-                      <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                        62+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
+              </Link>
+            )
+          })}
+          </div>
+        
         <div className="w-full flex flex-col items-center">
           <div>
             <button type="button" className="border-2 tracking-[0.5px] border-[#3366FF] w-[255px] h-[40px] mb-[175px] rounded-2xl text-[#3366FF]">See All
             </button>
           </div>
           <div className="w-full mb-[175px]">
-            <div className="mx-5 bg-[#3366FF] rounded-2xl">
+            <div className="mx-5 bg-[#0a0a0ab9] rounded-2xl">
               <div className="p-16">
                 <div className="flex justify-center mb-6 text-white items-center gap-4 w-[160px] h-[30px] text-center bg-[#668CFF] rounded-xl ">
                   <div className="before:content-['\2501']"></div>
@@ -570,7 +274,7 @@ function seeall () {
           </div>
           <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden ml-8 flex-shrink-0">
             <img src={cars} alt="" />
-            <div className="absolute bg-blue-600 w-full h-[162px] bottom-0 px-4 pb-4">
+            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
               <div className="flex mb-[8px] mt-[-16px]">
                 <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile1} alt="" />
@@ -598,7 +302,7 @@ function seeall () {
           </div>
           <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden flex-shrink-0">
             <img src={cars} alt="" />
-            <div className="absolute bg-blue-600 w-full h-[162px] bottom-0 px-4 pb-4">
+            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
               <div className="flex mb-[8px] mt-[-16px]">
                 <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile1} alt="" />
@@ -626,7 +330,7 @@ function seeall () {
           </div>
           <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden mr-8 flex-shrink-0">
             <img src={cars} alt="" />
-            <div className="absolute bg-blue-600 w-full h-[162px] bottom-0 px-4 pb-4">
+            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
               <div className="flex mb-[8px] mt-[-16px]">
                 <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile1} alt="" />
@@ -666,24 +370,31 @@ function seeall () {
         </div>
         <div className="text-[#C1C5D0] mb-8">By companies like :</div>
         <div className="grid grid-cols-2 md:grid-cols-6 items-center gap-6">
-          <div>
-            <img src={black1} alt="" />
+          {partner.map((item) => {
+            return(
+              <div> 
+            <img src={item.image} alt="" />
+          </div>
+            )
+          })}
+          {/* <div>
+            <img src={partner[0].image} alt="" />
           </div>
           <div>
-            <img src={black2} alt="" />
+            <img src={partner[1].image} alt="" />
           </div>
           <div>
-            <img src={black3} alt="" />
+            <img src={partner[2].image} alt="" />
           </div>
           <div>
-            <img src={black4} alt="" />
+            <img src={partner[3].image} alt="" />
           </div>
           <div>
-            <img src={black5} alt="" />
+            <img src={partner[4].image} alt="" />
           </div>
           <div>
-            <img src={black6} alt="" />
-          </div>
+            <img src={partner[5].image} alt="" />
+          </div> */}
         </div>
       </div>
       <div>

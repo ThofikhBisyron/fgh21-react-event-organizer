@@ -2,10 +2,14 @@ import React from "react" ;
 import logo from "../assets/img/logo_blur.svg"
 import google from "../assets/img/google.svg"
 import facebok from "../assets/img/facebook.svg"
+import binancecover from "../assets/img/binancelogo.svg"
+import binancelogo from "../assets/img/logobinance.png"
 import family from "../assets/img/family.svg"
 import Footer from "../components/Footer"
 import show from "../assets/img/showpassword.svg"
 import { Link, useNavigate } from "react-router-dom";
+import orangelogin from "../assets/img/orangelogin.jpg"
+import ticket from "../assets/img/logoticket.png"
 
  
 
@@ -49,6 +53,18 @@ const [New, setNew] = React.useState("password")
         const email = e.target.email.value;
         const password = e.target.password.value;
         const confirmpass = e.target.confirmpassword.value;
+        console.log(name)
+        console.log(email)
+        console.log(password)
+        const formData = new URLSearchParams()
+        formData.append('full_name', name)
+        formData.append('email', email)
+        formData.append('password', password)
+       
+        fetch ('http://localhost:8080/auth/register', {
+            method: 'POST',
+            body: formData,
+        })
     
         if (name !== "") {
           if (email !== "") {
@@ -71,14 +87,14 @@ const [New, setNew] = React.useState("password")
       }
 
     return(
-        <div>
+        <div className="bg-yellow-300">
             <div className="flex ">
-            <div className="md:w-[75%] h-[1000px] bg-[#3366FF] hidden md:block">
-                <img src={family} alt="" className="pl-[17%] pt-[8%]" />       
+            <div className="md:w-[75%] h-[1000px] bg-[#000000] hidden md:block">
+                <img src={orangelogin} alt="" className="w-[1100px] h-[1000px]" />       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-full md:h-[614px]">
-                    <Link to="/Login"><div className="flex mb-[50px]"><span><img src={logo} alt=""/></span><span className="text-[#3366FF] content-center">we</span><span className="text-[#FF3D71] content-center">tick</span>  
+                    <Link to="/Login"><div className="flex mb-[50px]"><span><img src={ticket} alt="" className="w-16 h-16"/></span><span className="text-[#000000] content-center">Athrust</span><span className="text-[#000000] content-center">Tick</span>  
                 </div></Link>
                 <div className="text-black text-base mb-[15px]" >Sign in</div>
                 <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! </div>

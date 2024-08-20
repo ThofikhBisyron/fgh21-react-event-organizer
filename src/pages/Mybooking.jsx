@@ -1,6 +1,6 @@
 import React from "react" 
 import Footer from "../components/Footer"
-import Navbar2 from "../components/Navbar2"
+import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
 import profilejhon from "../assets/img/profilejhon.svg"
 import cardprofile from "../assets/img/cardprofile.svg"
@@ -22,13 +22,13 @@ function Mybooking(){
 
 
     return(
-        <div className="md:bg-[#F4F7FF]">
-            <Navbar2/>
+        <div className="bg-yellow-300">
+            <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] w-[100%] hidden md:block">
                     <Sidebar/>
                 </div>
-                <div className=" md:w-[70%] w-[100%] bg-[#FFFFFF] md:rounded-[30px] md:mr-[70px]">
+                <div className=" md:w-[70%] w-[100%] md:bg-gray-200 bg-yellow-300 md:rounded-[30px] md:mr-[70px]">
                    <div className="flex justify-between h-[50px] w-[85%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">My Booking</div>
                         <div className="flex align-middle items-center"><img src={calender} alt="" />March</div>

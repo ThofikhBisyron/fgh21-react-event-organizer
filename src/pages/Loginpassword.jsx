@@ -4,6 +4,8 @@ import google from "../assets/img/google.svg"
 import facebok from "../assets/img/facebook.svg"
 import family from "../assets/img/family.svg"
 import Footer from "../components/Footer"
+import binancecover from "../assets/img/binancelogo.svg"
+import binancelogo from "../assets/img/logobinance.png"
 import show from "../assets/img/showpassword.svg"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -30,14 +32,14 @@ function Loginpassword() {
     }
   }
   return (
-    <div>
+    <div className="bg-yellow-300">
             <div className="flex ">
-            <div className="md:w-[75%] h-[100vh] bg-[#3366FF] hidden md:block">
-                <img src={family} alt="" className="pl-[17%] pt-[8%]" />       
+            <div className="md:w-[75%] h-[100vh] bg-[#000000] hidden md:block">
+                <img src={binancecover} alt="" className="" />       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-[100%] md:h-[614px]">
-                  <Link to="/Login"><div className="flex mb-[50px]"><span><img src={logo} alt=""/></span><span className="text-[#3366FF] content-center">we</span><span className="text-[#FF3D71] content-center">tick</span>  
+                  <Link to="/Login"><div className="flex mb-[50px]"><span><img src={binancelogo} alt=""/></span><span className="text-[#000000] content-center">bin</span><span className="text-[#000000] content-center">ance</span>  
                 </div></Link>
                 <div className="text-black mb-[15px] font-semibold text-3xl" >Forgot Password</div>
                 <div className="text-black text-sm mb-[50px]">You’ll get mail soon on your email</div>
