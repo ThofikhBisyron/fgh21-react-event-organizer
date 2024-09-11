@@ -33,9 +33,8 @@ import { useDispatch} from "react-redux";
 
 function Index() {
   const datatoken = useSelector((state) => state.auth.token);
-  console.log(datatoken)
   const datahome = useSelector((state) => state.home.datahome)
-  console.log(datahome)
+  const [loc, setLoc] = React.useState([])
   const dispatch = useDispatch()
   const [partner, setPartner] = React.useState([])
     const [see, setsee] = React.useState(true)
@@ -67,34 +66,24 @@ useEffect(() =>{
   async function partnersData(){
     const eventfetch = await fetch("http://localhost:8080/partners/")
     const datapartners = await eventfetch.json()
-    // console.log(eventdata.results)
-    // dispatch(listevent(eventdata.results))
-    console.log(datapartners.results)
     setPartner(datapartners.results)
 
-    
-
+  
     
   }
   partnersData()
 }, [])
-// async function home() {
 
-//   const dataeventhome = await fetch(
-//       "https://wsw6zh-8888.csb.app/events",
-//  {
-//   headers: {
-//       Authorization: "Bearer " + data.results.token,
-//       },
-//   }
-// );  
-// const listhome = await dataeventhome.json()
-// dispatch(dataHome(listhome.results))
-// }
-// home()
-
+useEffect(() =>{
+  async function location() {
+    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const listlocation = await locationfetch.json()
+    console.log(listlocation.results)
+    setLoc(listlocation.results)
     
-
+  }
+  location()
+}, [])  
 
   return (
     <div className="bg-yellow-300">
@@ -193,11 +182,16 @@ useEffect(() =>{
                       Discover Events Near You
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 text-white items-center">
-                    <img src={jakarta} alt="" className="w-full h-full" />
-                    <div className="font-medium">Jakarta</div>
+                  {loc.map((item) => {
+                    return(
+                    <div className="flex flex-col gap-2 text-white items-center">
+                      <img src={item.image} alt="" className="w-full h-full" />
+                    <div className="font-medium">{item.name}</div>
                   </div>
-                  <div className="flex flex-col gap-2 text-white items-center">
+                    )
+                  })}
+                  
+                  {/* <div className="flex flex-col gap-2 text-white items-center">
                     <img src={bandung} alt="" className="w-full h-full" />
                     <div className="font-medium">Bandung</div>
                   </div>
@@ -240,7 +234,7 @@ useEffect(() =>{
                     }>
                     <img src={semarang} alt="" className="w-full h-full" />
                     <div className="font-medium">Semarang</div>
-                  </div>
+                  </div> */}
 
                 </div>
                 <div className="w-full text-center">

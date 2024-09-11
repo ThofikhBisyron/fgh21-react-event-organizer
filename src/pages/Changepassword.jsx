@@ -53,9 +53,9 @@ function Changepassword(){
         });
         const response = await pnew.json()
         if (response.success) {
-            window.alert("Success Updated")
+            setErrorMessage(response.message)
         } else {
-            window.alert("Not Success")
+            setErrorMessage(response.message)
         }
         
 

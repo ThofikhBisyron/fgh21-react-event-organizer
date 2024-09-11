@@ -8,10 +8,74 @@ import payment from "../assets/img/payment.svg";
 import bank from "../assets/img/bank.svg";
 import retail from "../assets/img/retail.svg";
 import money from "../assets/img/money.svg";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Payment() {
+  const datatoken = useSelector((state) => state.auth.token);
+  const navigate = useNavigate()
 
+  const eventTitle = useSelector((state) => state.transaction.eventTittle);
+  console.log(eventTitle)
+  const qty = useSelector((state) => state.transaction.qty);
+  const eventId = useSelector((state) => state.transaction.eventid);
+  const totalPayment = useSelector((state) => state.transaction.totalPay);
+  const ticketSection = useSelector((state) => state.transaction.ticketSec);
+  const sectionId = useSelector((state) => state.transaction.secId);
+  const quan = useSelector((state) => state.transaction.quantity);
+  const [payMethod, setPayMethod] = React.useState(null);
+  const [isPaymentMethodSelected, setIsPaymentMethodSelected] = React.useState(true)
+  function tooglePayment(event) {
+    setPayMethod(parseInt(event.target.value));
+    setIsPaymentMethodSelected(true); ;
+  }
+
+  const [message, setMessage] = React.useState(false)
+
+  const id = Math.ceil(Math.random() * 100000000)
+  const body = JSON.stringify({
+    user_id: Math.ceil(Math.random() * 100),
+    amount: parseInt(totalPayment),
+    item_id: `PROD${id}`,
+    item_name: eventTitle,
+  });
+
+  const formData = new URLSearchParams({
+    event_id: parseInt(eventId),
+    payment_method_id: parseInt(payMethod),
+    section_id: parseInt(sectionId),
+    ticket_qty: parseInt(quan),
+  });
+  for (const value of formData.values()) {
+    console.log(value);
+  }
+
+  async function payment() {
+    if (payMethod === null) {
+      setIsPaymentMethodSelected(false); 
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:8080/transactions/", {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + datatoken,
+        },
+      });
+      const dataresponse = await response.json()
+      console.log(dataresponse)
+      if (dataresponse.success === true) {
+          navigate("/Mybooking")
+      } else {
+
+      }
+
+    } catch (error) {
+
+      return;
+    }
+  }
 
   return (
     <div className="bg-yellow-300">
@@ -23,7 +87,7 @@ function Payment() {
             </div>
             <label htmlFor="card" className="flex justify-between items-center mb-[16px]">
               <div className="flex gap-[16px] items-center">
-                <input type="radio" name="card" id="card" />
+                <input type="radio" name="card" id="card" value={1} onChange={tooglePayment} />
                 <span className="">
                   <img src={card} alt="" className="p-[10px] bg-[#E7DBFF] rounded-[10px]"/>
                 </span>
@@ -44,7 +108,7 @@ function Payment() {
             </div>
             <label htmlFor="bank" className="flex justify-between items-center mb-[16px]">
               <div className="flex gap-[16px] items-center">
-                <input type="radio" name="card" id="bank" />
+                <input type="radio" name="card" id="bank" value={2} onChange={tooglePayment}/>
                 <span className=""><img src={bank} alt="" className="p-[11px] bg-[#FECFDD] rounded-[10px]"/>
                 </span>
                 <span className="font-semibold tracking-[1px] text-sm">Bank Transfer
@@ -56,7 +120,7 @@ function Payment() {
             </label>
             <label htmlFor="retail" className="flex justify-between items-center mb-[16px]">
               <div className="flex gap-[16px] items-center">
-                <input type="radio" name="card" id="retail" />
+                <input type="radio" name="card" id="retail"  value={3} onChange={tooglePayment}/>
                 <span className="">
                   <img src={retail} alt="" className="pt-[10px] pb-[10px] pl-[13px] pr-[13px] bg-[#FFE7CC] rounded-[10px]"/>
                 </span>
@@ -68,7 +132,7 @@ function Payment() {
             </label>
             <label htmlFor="money" className="flex justify-between items-center mb-[16px]">
               <div className="flex gap-[16px] items-center">
-                <input type="radio" name="card" id="money" />
+                <input type="radio" name="card" id="money"  value={4} onChange={tooglePayment}/>
                 <span className="">
                   <img src={money} alt="" className="pt-[10px] pb-[10px] pl-[11px] pr-[11px] bg-[#D6E0FF] rounded-[10px]"/>
                 </span>
@@ -77,6 +141,11 @@ function Payment() {
               <div className=""><img src={arrowDown} alt=""/>
               </div>
             </label>
+            {!isPaymentMethodSelected && (
+              <div className="text-red-500 mt-2">
+                Please select a payment method.
+              </div>
+            )}
           </div>
           <div className="md:w-[50%] w-[100%] md:ml-[88px]">
             <div className="text-xl tracking-[1px] text-[#373A42] font-semibold mb-[50px]">Ticket Detail
@@ -84,28 +153,30 @@ function Payment() {
             <div className="justify-between mb-[16px] hidden md:flex flex-row">
               <div className="text-sm text-[#373A42] tracking-[0.5px] font-semibold">Event
               </div>
-              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">Sights & Sounds Exhibition
+              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">{eventId === 0 ? "-" : eventTitle}
               </div>
             </div>
             <div className="flex justify-between mb-[16px]">
               <div className="text-sm text-[#373A42] tracking-[0.5px] font-semibold">Ticket Section
               </div>
-              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">VIP
+              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">{ticketSection.length === 0 ? "-" : ticketSection.join(", ")}
               </div>
             </div>
             <div className="flex justify-between mb-[16px]">
               <div className="text-sm text-[#373A42] tracking-[0.5px] font-semibold">Quantity
               </div>
-              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">2
+              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">{qty === 0 ? "-" : qty}
               </div>
             </div>
             <div className="flex justify-between mb-[50px]">
               <div className="text-sm text-[#373A42] tracking-[0.5px] font-semibold">Total Payment
               </div>
-              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">$70
+              <div className="text-sm text-[#3366FF] tracking-[0.5px] font-semibold">{totalPayment === 0
+                    ? "-"
+                    : `Rp.${totalPayment.toLocaleString("id")}`}
               </div>
             </div>
-            <Link to="/Mybooking"><button type="submit" className="w-full h-[50px] bg-[#3366FF] text-white rounded-[15px]">Payment</button></Link>
+            <button type="submit" onClick={payment} className="w-full h-[50px] bg-[#3366FF] text-white rounded-[15px]">Payment</button>
           </div>
         </div>
       </div>

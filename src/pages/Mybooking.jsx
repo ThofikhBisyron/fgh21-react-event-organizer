@@ -1,4 +1,4 @@
-import React from "react" 
+import React, { useEffect } from "react" 
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
@@ -13,11 +13,30 @@ import logout from "../assets/img/redlog.svg"
 import calender from "../assets/img/calender.svg"
 import { Input } from "postcss"
 import Sidebar from "../components/Sidebar"
+import { useSelector } from "react-redux"
 
 
 
 
 function Mybooking(){
+    const dataToken = useSelector((state) => state.auth.token)
+    const [list, setList] = React.useState([])
+
+
+    async function getBooking() {
+        const datafetch = await fetch("http://localhost:8080/transactions/user",{
+            headers: {
+                Authorization: "Bearer " + dataToken,
+            }
+        })
+        const databooking = await datafetch.json()
+        console.log(databooking.results)
+        setList(databooking.results)
+        }
+   
+    useEffect(() =>{
+        getBooking()
+    }, [])
 
 
 
@@ -33,12 +52,32 @@ function Mybooking(){
                         <div className="font-semibold text-2xl">My Booking</div>
                         <div className="flex align-middle items-center"><img src={calender} alt="" />March</div>
                    </div>  
-                   <div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px] hidden">
+                   {list.length === 0 ? (
+                    <div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px]">
                         <div className="text-center text-2xl font-bold">No tickets bought</div>
                         <div className="text-center text-[#B3B8B8]">It appears you haven’t bought any tickets yet. Maybe try searching these?</div>
                     </div>
-            <div className="overflow-y-scroll shrink-0 h-96 ml-4">
-                <div className="flex flex-row gap-6 mt-14 shrink-0">
+                   ) : (
+                    <div className="overflow-y-scroll shrink-0 h-96 ml-4">
+                    {list.map((item) => {
+                        return(
+                        <div className="flex flex-row gap-6 mt-14 shrink-0">
+                            <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
+                                <div className="text-[#FF8900]">15</div>
+                                <div>Wed</div>
+                            </div>
+                            <div>
+                                <div className="font-semibold text-3xl mb-4">{item.event_tittle}</div>
+                            <div className="text-[#373A42] text-sm">
+                                <div>{item.location}</div>
+                                <div>{item.date}</div>
+                            </div>
+                            <div className="text-sm text-[#3366FF] mt-3">Detail</div>
+                            </div>
+                        </div>
+                    )
+                })}   
+                {/* <div className="flex flex-row gap-6 mt-14 shrink-0">
                     <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
                         <div className="text-[#FF8900]">15</div>
                         <div>Wed</div>
@@ -79,22 +118,11 @@ function Mybooking(){
                     </div>
                      <div className="text-sm text-[#3366FF] mt-3">Detail</div>
                     </div>
-                </div>
-                <div className="flex flex-row gap-6 mt-14 shrink-0">
-                    <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                        <div className="text-[#FF8900]">15</div>
-                        <div>Wed</div>
-                    </div>
-                    <div>
-                        <div className="font-semibold text-3xl mb-4">Sights & Sounds Exhibition</div>
-                    <div className="text-[#373A42] text-sm">
-                        <div>Jakarta, Indonesia</div>
-                        <div>Wed, 15 Nov, 4:00 PM</div>
-                    </div>
-                     <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                    </div>
-                </div>
+                </div> */}
             </div>
+                   )}
+                   
+            
         </div>
 
     </div>

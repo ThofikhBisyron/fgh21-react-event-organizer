@@ -10,6 +10,7 @@ import show from "../assets/img/showpassword.svg"
 import { Link, useNavigate } from "react-router-dom";
 import orangelogin from "../assets/img/orangelogin.jpg"
 import ticket from "../assets/img/logoticket.png"
+import react from "react";
 
  
 
@@ -17,20 +18,9 @@ import ticket from "../assets/img/logoticket.png"
 
 function Signup(){
     const navigate = useNavigate(); 
-//     function logindo(e) {
-//     e.preventDefault();
-//     const name = e.target.username.value;
-//     const email = e.target.email.value;
-//     const password = e.target.password.value;
-//     if (name === "admin" && email === "admin@mail.com" && password === "1234") {
-//       window.alert("Login Success!");
-//       navigate("/index");
-//     } else {
-//       window.alert("Wrong email or password!");
-//     }
-//   }
-    
- 
+    const [message, setMessage] = React.useState(false)
+    const [response, setResponse] = React.useState(false)
+
 const [New, setNew] = React.useState("password")
     function showp() {
          if (New === "password") {
@@ -53,6 +43,25 @@ const [New, setNew] = React.useState("password")
         const email = e.target.email.value;
         const password = e.target.password.value;
         const confirmpass = e.target.confirmpassword.value;
+        const cek = e.target.cek.checked
+
+        if (!name || !email || !password || !confirmpass) {
+          setMessage("Please fill in all fields")
+          return
+        }
+        if (password.length < 8) {
+          setMessage("Password must be more than 8 words")
+          return
+      }
+        if (password !== confirmpass) {
+          setMessage("Passwords do not match")
+          return
+        }
+        if(!cek) {
+          setMessage("Accept terms and condition")
+          return
+        }
+
         console.log(name)
         console.log(email)
         console.log(password)
@@ -65,32 +74,25 @@ const [New, setNew] = React.useState("password")
             method: 'POST',
             body: formData,
         })
-    
-        if (name !== "") {
-          if (email !== "") {
-            if (password !== "") {
-              if (confirmpass === password) {
-                navigate("/Login");
-                window.alert("Registration Success! Please Log In");
-              } else {
-                window.alert("Password and Confirm Password Must same!");
-              }
-            } else {
-              window.alert("You must fill the password!");
-            }
-          } else {
-            window.alert("You must fill the email!");
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success == true) {
+            setResponse(data.message)
+            navigate("/Login");
+            return
+          }else{
+            setMessage("Please Try Again")
+            return
           }
-        } else {
-          window.alert("You must fill the name!");
-        }
-      }
+        })
+            
+      }    
 
     return(
         <div className="bg-yellow-300">
             <div className="flex ">
             <div className="md:w-[75%] h-[1000px] bg-[#000000] hidden md:block">
-                <img src={orangelogin} alt="" className="w-[1100px] h-[1000px]" />       
+                <img src={orangelogin} alt="" className="w-full h-full" />       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-full md:h-[614px]">
@@ -99,10 +101,12 @@ const [New, setNew] = React.useState("password")
                 <div className="text-black text-base mb-[15px]" >Sign in</div>
                 <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! </div>
                 <form onSubmit={btnlogin}> 
+                {message && <div className="bg-red-400 mb-4">{message}</div>}
+                {response && <div className="bg-green-400 mb-4">{response}</div>}
                     <div className="flex flex-col gap-5 w-full mb-[15px] ">
                     <input type="text" name="name" placeholder="Fullname" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
                     <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
-                    <div className="w-full"> 
+                    <div className="w-full">                       
                         <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-[86%] md:max-w-[315px] h-[55px] align-middle pl-4"/> 
                         <div className="w-[100%] flex justify-end">
                             <button type="button" onClick={showp}><img src={show} alt="" className="flex w-[45px] h-[45px] relative md:ml-[260px] pt-[10px]"/></button>

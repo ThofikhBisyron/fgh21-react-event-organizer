@@ -27,19 +27,18 @@ function Login(){
 
 const navigate = useNavigate();
 const datatoken = useSelector((state) => state.auth.token)
-console.log(datatoken)
+
 const [load, setLoad] = React.useState(false)
-console.log(datatoken)
+
 const dispatch = useDispatch();
 const [emailError, setEmailError] = React.useState("");
 const [passwordError, setPasswordError] = React.useState("");
+const [responses, setResponses] = React.useState(false)
+
 function btnlogin(e) {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email)
-    console.log(password)
-
     setEmailError("");
     setPasswordError("");
 
@@ -69,10 +68,8 @@ function btnlogin(e) {
         .then((response) => response.json())
         .then((data) => {
             if (data.success === true){
-                window.alert(data.message)
-               
+               setResponses(data.message)
                 dispatch(login(data.results))
-                console.log(data.results)
                 async function profile() {
 
                     const dataProfile = await fetch(
@@ -84,14 +81,16 @@ function btnlogin(e) {
                     }
                 );
                 const listdata = await dataProfile.json()
-                console.log(listdata)
+                
                 dispatch(datainput(listdata.results))
+                console.log(listdata.results)
                 navigate("/Index")
             }
-            profile()
+            profile ()
                 
             }else {
-                window.alert(data.message)
+                setResponses(data.message)
+                setLoad(false)
             }
         })
         .catch((err) => {
@@ -113,7 +112,7 @@ const [New, setNew] = React.useState("password")
             <div className="bg-yellow-300">
             <div className="flex ">
             <div className="md:w-[75%] h-[100vh] bg-[#000000] hidden md:block">
-                <img src={orangelogin} className="w-[1100px] h-[800px]" alt=""/>       
+                <img src={orangelogin} className="w-full h-full" alt=""/>       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-[100%] md:h-[614px]">
@@ -122,6 +121,7 @@ const [New, setNew] = React.useState("password")
                 <div className="text-black mb-[15px] font-semibold text-3xl" >Sign in</div>
                 <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! <Link to="/Signup"><div>Can't Login ? Sign Up</div></Link></div>
                 <form onSubmit={btnlogin}> 
+                    {responses && <div className="text-green-400">{responses}</div>}
                     <div className="flex flex-col gap-5 md:w-[315px] w-full mb-[15px] ">
                     {emailError && <div className="text-red-500">{emailError}</div>}
                     <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>

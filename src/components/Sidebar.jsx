@@ -7,14 +7,16 @@ import book from "../assets/img/mybook.svg"
 import wishlist from "../assets/img/wishlist.svg"
 import setting from "../assets/img/settings.svg"
 import logoutt from "../assets/img/redlog.svg"
+import profileimg from "../assets/img/profileimage.png"
 import { Result } from "postcss"
 import createevent from "../assets/img/createevent.svg"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { removedata } from "../redux/reducers/profile"
 import { logout } from "../redux/reducers/auth"
 
 function Sidebar(){
+    const datauser = useSelector((state) => state.profile.datauser)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     function log(){
@@ -30,10 +32,10 @@ return (
 <div className="md:w-[30%] hidden md:block">
                     <div className="flex flex-col w-[242px] h-[508px] ml-[70px]">
                         <div className="flex mb-[50px] gap-4">
-                        <img src={profile} alt="" className="w-[55px] h-[55px]" />
+                        <img src={datauser.profile.picture === null ? profileimg : datauser.profile.picture} alt="" className="w-14 h-14 rounded-full" />
                         <div>
-                            <div>Jhon Thomson</div>
-                            <div>Entrepreneur, ID</div>
+                            <div>{datauser.profile.full_name}</div>
+                            <div>{datauser.profile.profession === null ? "----" : datauser.profile.profession}</div>
                         </div>
                         </div>
                         <div className="flex flex-col gap-[30px]">

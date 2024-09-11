@@ -13,26 +13,43 @@ import profile4 from "../assets/img/p4.svg";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listevent } from "../redux/reducers/event";
+import { inputwishlist } from "../redux/reducers/wishlist";
 
 function Event() {
+  const datatoken = useSelector((state) => state.auth.token);
   const dispatch = useDispatch()
-  // const datae = useSelector((state) => state.event.dataevent);
-  // console.log(datae) 
   let {id} = useParams()
   const [event, setEvent] = React.useState([])
-  console.log(event)
+  const [mess, setMess] = React.useState(false)
 
-  useEffect(() =>{
-    async function eventData(){
-      const eventfetch = await fetch("http://localhost:8080/events/" + id)
-      const eventdata = await eventfetch.json()
-      // console.log(eventdata.results)
-      // dispatch(listevent(eventdata.results))
-      setEvent(eventdata.results)
-      
+  async function eventData(){
+    const eventfetch = await fetch("http://localhost:8080/events/" + id)
+    const eventdata = await eventfetch.json()
+    setEvent(eventdata.results)
+  }
 
-      
+  async function insertWishlist(e, eventid){
+    e.preventDefault();
+
+    const formData = new URLSearchParams()
+    formData.append('event_id', eventid)
+
+    const wishlistfetch = await fetch("http://localhost:8080/wishlist/", {
+      method:'POST',
+      headers: {
+        Authorization: "Bearer " + datatoken,
+      },
+      body: formData,
+    })
+    const listwishlist = await wishlistfetch.json()
+    console.log(listwishlist)
+    if (listwishlist.success === true) {
+      setMess(listwishlist.message)
+    }else{
+      setMess(listwishlist.message)
     }
+  }
+  useEffect(() =>{
     eventData()
   }, [])
 
@@ -90,13 +107,16 @@ function Event() {
               <img src={event.image} alt="" className=" h-full w-full object-cover"/>
               <div className="absolute bg-gradient-to-t from-[black] to-[transparent] w-full h-full "></div>
             </div>
-            <div className="flex justify-center items-center gap-[16px]">
-              <div className="">
-                <img src={favorite} alt="" className="w-[36px] h-[36px]" />
+            <button onClick={(e) => insertWishlist(e, event.id)}>
+              <div className="flex justify-center items-center gap-[16px]">
+                <div className="">
+                  <img src={favorite} alt="" className="w-[36px] h-[36px]"/>
+                </div>
+                <div className="font-semibold text-xl text-[#373A42] tracking-[1px]"> Add to Wishlist
+                </div>
               </div>
-              <div className="font-semibold text-xl text-[#373A42] tracking-[1px]"> Add to Wishlist
-              </div>
-            </div>
+            </button>
+            {mess && <div className="text-red-500">{mess}</div>}
           </div>
           <div className="md:w-3/5">
             <div className=" md:flex flex-col border-b-2 border-solid border-[rgba(193,197,208,0.25)] mb-[25px] hidden">

@@ -1,4 +1,4 @@
-import React from "react" 
+import React, { useEffect } from "react" 
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
@@ -14,13 +14,32 @@ import calender from "../assets/img/calender.svg"
 import Sidebar from "../components/Sidebar"
 import lovewish from "../assets/img/lovewish.svg"
 import { Input } from "postcss"
+import react from "react"
+import { useSelector } from "react-redux"
 
 
 
 
 function Mywishlist(){
+    const datatoken = useSelector((state) => state.auth.token);
+    const [wishlist, setWishlist] = react.useState([])
+    const [list, setList] = react.useState(false)
 
+    async function dataListwish() {
+        const wishlistfetch = await fetch("http://localhost:8080/wishlist/findevent", {
+            headers: {
+                Authorization: "Bearer " + datatoken,
+              },
+        }) 
+        const datawishlist = await wishlistfetch.json()
+        setWishlist(datawishlist.results)
+        setList(datawishlist.results)
+        console.log(datawishlist.results)
+    }
 
+    useEffect(() =>{
+        dataListwish()
+      }, [])
 
     return(
 <div className="bg-yellow-300">
@@ -31,88 +50,39 @@ function Mywishlist(){
                 <div className="flex justify-between h-[50px] mt-[33px] ml-[50px]">
                     <div className="font-semibold text-2xl">My Wishlist</div>
                 </div>  
-                <div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px] hidden">
-                    <div className="text-center text-2xl font-bold">No tickets bought</div>
-                    <div className="text-center text-[#B3B8B8]">It appears you haven’t bought any tickets yet. Maybe try searching these?</div>
-                </div> 
-            <div className="overflow-y-scroll shrink-0 h-96 ml-4">
-                <div className="flex justify-between">
-                    <div className="flex flex-row gap-6 mt-14 shrink-0">
-                        <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                            <div className="text-[#FF8900]">15</div>
-                            <div>Wed</div>
-                        </div>
-                    <div>
-                        <div className="font-semibold text-3xl mb-4">Sights & Sounds Exhibition</div>
-                        <div className="text-[#373A42] text-sm">
-                            <div>Jakarta, Indonesia</div>
-                            <div>Wed, 15 Nov, 4:00 PM</div>
-                        </div>
-                        <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                    </div>
-                    </div>
-                    <div className="content-center">
-                        <img src={lovewish} alt="" />
-                    </div>
-                </div>
-                <div className="flex justify-between">
-                    <div className="flex flex-row gap-6 mt-14 shrink-0">
-                        <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                            <div className="text-[#FF8900]">15</div>
-                            <div>Wed</div>
-                        </div>
-                    <div>
-                        <div className="font-semibold text-3xl mb-4">Sights & Sounds Exhibition</div>
-                        <div className="text-[#373A42] text-sm">
-                            <div>Jakarta, Indonesia</div>
-                            <div>Wed, 15 Nov, 4:00 PM</div>
-                        </div>
-                        <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                    </div>
-                    </div>
-                    <div className="content-center">
-                        <img src={lovewish} alt="" />
-                    </div>
-                </div>
-                <div className="flex justify-between">
-                    <div className="flex flex-row gap-6 mt-14 shrink-0">
-                        <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                            <div className="text-[#FF8900]">15</div>
-                            <div>Wed</div>
-                        </div>
-                    <div>
-                        <div className="font-semibold text-3xl mb-4">Sights & Sounds Exhibition</div>
-                        <div className="text-[#373A42] text-sm">
-                            <div>Jakarta, Indonesia</div>
-                            <div>Wed, 15 Nov, 4:00 PM</div>
-                        </div>
-                        <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                    </div>
-                    </div>
-                    <div className="content-center">
-                        <img src={lovewish} alt="" />
-                    </div>
-                </div>
-                <div className="flex justify-between">
-                    <div className="flex flex-row gap-6 mt-14 shrink-0">
-                        <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                            <div className="text-[#FF8900]">15</div>
-                            <div>Wed</div>
-                        </div>
-                    <div>
-                        <div className="font-semibold text-3xl mb-4">Sights & Sounds Exhibition</div>
-                        <div className="text-[#373A42] text-sm">
-                            <div>Jakarta, Indonesia</div>
-                            <div>Wed, 15 Nov, 4:00 PM</div>
-                        </div>
-                        <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                    </div>
-                    </div>
-                    <div className="content-center">
-                        <img src={lovewish} alt="" />
-                    </div>
-                </div>
-            </div>
+                {list === null ? (<div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px]">
+                        <div className="text-center text-2xl font-bold">There is no favorite event</div>
+                        <div className="text-center text-[#B3B8B8]">It seems there is no favorite event here. Maybe try searching?</div>
+                    </div> ): (
+                         <div className="overflow-y-scroll shrink-0 h-96 ml-4">
+                         {wishlist.map((item) => {
+                             return(
+                                 <div className="flex justify-between">
+                                     <div className="flex flex-row gap-6 mt-14 shrink-0">
+                                         <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
+                                             <div className="text-[#FF8900]">15</div>
+                                             <div>Wed</div>
+                                         </div>
+                                     <div>
+                                         <div className="font-semibold text-3xl mb-4">{item.tittle}</div>
+                                         <div className="text-[#373A42] text-sm">
+                                             <div>{item.location}</div>
+                                             <div>{item.date}</div>
+                                         </div>
+                                         <div className="text-sm text-[#3366FF] mt-3">{item.description}</div>
+                                     </div>
+                                     </div>
+                                     <div className="content-center">
+                                         <img src={lovewish} alt="" />
+                                     </div>
+                                  </div>
+                             )
+                         })}
+                     </div>
+                     )}
+                    
+         
+           
         </div>
     </div>
         <Footer/>

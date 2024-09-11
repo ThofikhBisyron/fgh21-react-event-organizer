@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import filter from "../assets/img/filter.svg";
@@ -9,25 +9,36 @@ import ticket from "../assets/img/ticket.svg";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { inputticket } from "../redux/reducers/ticket";
+import Transaction from "../components/Transaction"
+import {  inputSection,
+          inputqty, 
+          inputEventId, 
+          inputEventTitle, 
+          inputTotalPayment,
+          inputTicketSection,
+          inputSectionId,
+          inputQuantity,
+ } from "../redux/reducers/transaction";
+import { current } from "@reduxjs/toolkit";
  
 
 
 
 function Ticket() {
   
-  let [count, set] = React.useState(0)
-    function min(){
-        count = count - 1
-        set(count)
+  // let [count, set] = React.useState(0)
+  //   function min(){
+  //       count = count - 1
+  //       set(count)
 
-    }
-    function plus(){
-        count = count + 1
-        set(count)
-    }
-    if (count <= -1){
-        count = 0
-    }
+  //   }
+  //   function plus(){ 
+  //       count = count + 1
+  //       set(count)
+  //   }
+  //   if (count <= -1){
+  //       count = 0
+  //   }
     // 2
     // let [count2, set2] = React.useState(0)
     // function min2(){
@@ -59,13 +70,10 @@ function Ticket() {
     let {id} = useParams()  
     let dispatch = useDispatch()
     const [event, setEvent] = React.useState([])
+    console.log(event)
     const [ticket, setTicket] = React.useState([])
-    const dataticket = useSelector((state) => state.ticket.dataticket);
-  
+    const dataticket = useSelector((state) => state.ticket.dataticket); 
     const datatoken = useSelector((state) => state.auth.token)
-    
-
-
 
     useEffect(() =>{
       async function ticket(){
@@ -76,8 +84,7 @@ function Ticket() {
         })
         const data = await fetchticket.json()
         dispatch(inputticket(data.results))
-        console.log(data.results)
-        
+        console.log(data.results) 
       }
       ticket()
     }, [])
@@ -90,16 +97,84 @@ function Ticket() {
         }
       })
         const eventdata = await eventfetch.json()
-        console.log(eventdata.results)
-        
+        console.log(eventdata.results)     
         setEvent(eventdata.results)
-        
-  
-        
       }
       eventData()
     }, [])
+    
+
+  // const [selsec, setSelsec] = useState([])
   
+  // const ticketSec = selsec.reduce((prev, curr) => {
+  //   const arr = prev;
+  //   if (curr.quantity !== 0) {
+  //     arr.push(`${curr.name}(${curr.quantity})`);
+  //   }
+  //   return arr;
+  // }, []);
+  // const quantity = selsec.reduce(
+  //   (prev, curr) => prev + curr.quantity,
+  //   0
+  // );
+  // const price = selsec.reduce((prev, curr) => prev + curr.price, 0);
+
+  // const secId = selsec.reduce((prev, curr) => {
+  //   const arr = prev;
+  //   if (curr.quantity !== 0) {
+  //     arr.push(curr.id);
+  //   }
+  //   return arr;
+  // }, []);
+  // const quantityArr = selsec.reduce((prev, curr) => {
+  //   const arr = prev;
+  //   if (curr.quantity !== 0) {
+  //     arr.push(curr.quantity);
+  //   }
+  //   return arr;
+  // }, []);
+
+  const [selectedSections, setSelectedSections] = useState([]);
+
+  const ticketSection = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(`${curr.name}(${curr.quantity})`);
+    }
+    return arr;
+  }, []);
+  const quantity = selectedSections.reduce(
+    (prev, curr) => prev + curr.quantity,
+    0
+  );
+  const price = selectedSections.reduce((prev, curr) => prev + curr.price, 0);
+
+  const sectionId = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(curr.id);
+    }
+    return arr;
+  }, []);
+  const quantityArray = selectedSections.reduce((prev, curr) => {
+    const arr = prev;
+    if (curr.quantity !== 0) {
+      arr.push(curr.quantity);
+    }
+    return arr;
+  }, []);
+
+
+  console.log(event)
+  dispatch(inputQuantity(quantityArray));
+  dispatch(inputqty(quantity));
+  dispatch(inputEventId(id));
+  dispatch(inputSectionId(sectionId));
+  dispatch(inputTotalPayment(price));
+  dispatch(inputTicketSection(ticketSection));
+  dispatch(inputEventTitle(event.tittle));
+
+
   return (
     <div className="bg-yellow-300">
       <div className="navbar">
@@ -122,40 +197,16 @@ function Ticket() {
                   </button>
                 </div>
               </div>
-              {dataticket.map((item) => {
+              {dataticket.map((item, index) => {
+                console.log(`{plus${item.id}}`)
                 return (
-                  <div>
-                  <div className="flex items-center mb-[16px]">
-                <div className="h-[45px] w-[45px] bg-[#F1EAFF] flex items-center justify-center rounded-[10px] mr-[16px]">
-                  <img src={ticket1} alt="" className="" />
-                </div>
-                <div className="flex justify-between w-full">
-                  <div className="flex flex-col gap-[4px]">
-                    <div className="text-sm text-[#373A42] font-semibold">{item.name}
-                    </div>
-                    <div className="text-xs text-[#BDC0C4]">{item.quantity} Seats available
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-[1px] items-center">
-                    <div className="text-[#373A42] font-semibold tracking-[1px]">${item.price}
-                    </div>  
-                    <div className="text-xs tracking-[0.5] text-[#BDC0C4]">per person
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-between items-center mb-[50px]">
-                <div className="pl-[60px] tracking-[1px] text-xs font-semibold">Quantity
-                </div>
-                <div className="flex gap-[20px] items-center">
-                  <button onClick={min} className="border border-solid w-[36px] h-[32px] border-[#C1C5D0] rounded-[6px] text-[#C1C5D0]">-
-                  </button>
-                  <div className="">{count}</div>
-                  <button onClick={plus}className="border border-solid w-[36px] h-[32px] border-[#C1C5D0] rounded-[6px] text-[#C1C5D0]">+
-                  </button>
-                </div>
-              </div>
-              </div>
+                 <Transaction
+                  key={item.id}
+                  data={item}
+                  index={index}
+                  currentData={selectedSections}
+                  onChange={setSelectedSections}
+                 />
                 )
               })}
               
@@ -232,6 +283,7 @@ function Ticket() {
               </div>
               <div className="text-[#3366FF] tracking-[1px] font-semibold">
                 {/* {("vip1(" + count + ")") + ("vip2(" + count2) + ")" + ("vip3(" + count3 + ")")} */}
+                {ticketSection.length == 0 ? "-" : ticketSection.join(", ")}
               </div>
             </div>
             <div className="text-sm flex justify-between mb-[16px]">
@@ -240,6 +292,7 @@ function Ticket() {
               </div>
               <div className="text-[#3366FF] tracking-[1px] font-semibold">
                 {/* {count + count2 + count3} */}
+                {quantity === 0 ? "-" : quantity}
               </div>
             </div>
             <div className="text-sm flex justify-between mb-[50px]">
@@ -248,6 +301,7 @@ function Ticket() {
               </div>
               <div className="text-[#3366FF] tracking-[1px] font-semibold">
                 {/* {(count * 15) + (count2 * 35) + (count3 * 50)}$ */}
+                {price === 0 ? "-" : `Rp. ${price.toLocaleString("id")}`}
               </div>
             </div>
             <Link to="/payment">

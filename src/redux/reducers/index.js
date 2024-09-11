@@ -4,6 +4,8 @@ import profile from "./profile";
 import home from "./home";
 import event from "./event";
 import ticket from "./ticket";
+import wishlist from "./wishlist";
+import transaction from "./transaction";
 
 
 const reducer = combineReducers({
@@ -12,8 +14,8 @@ const reducer = combineReducers({
     home,
     event,
     ticket,
-
-
+    wishlist,
+    transaction,
 })
 
 export default reducer
