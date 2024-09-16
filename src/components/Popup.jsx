@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ function Popup(props) {
   const datatoken = useSelector((state) => state.auth.token);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [loc, setLoc] = React.useState([])
 
 
  async function insertEvent(e) {
@@ -35,11 +36,23 @@ function Popup(props) {
   const listevent = await eventfetch.json()
   console.log(listevent)
   if (listevent.success === true){
-      navigate("/Createevent")
+    props.setEventCreated(listevent.results)
+    navigate("/Createevent")
   }
 
 
  }
+
+ useEffect(() =>{
+  async function location() {
+    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const listlocation = await locationfetch.json()
+    console.log(listlocation.results)
+    setLoc(listlocation.results)
+    
+  }
+  location()
+}, [])  
 
   
   return (
@@ -65,7 +78,13 @@ function Popup(props) {
           <div className="w-1/2">
             <label htmlFor="location" className="mb-[10px]">Location</label>
             <div>
-              <input type="text" name="location" id="location" placeholder="Select Location" className="h-[55px] border-2 w-full pl-[20px] pr-[20px] rounded-[15px] mb-[30px]"/>
+              <select type="text" name="location" id="location" placeholder="Select Location" className="h-[55px] border-2 w-full pl-[20px] pr-[20px] rounded-[15px] mb-[30px]">
+              {loc.map((item) => {
+                return(
+                  <option key={item.key} value={item.id}>{item.name}</option>
+                )
+              })}
+              </select>
             </div>
           </div>
           <div className="w-1/2">

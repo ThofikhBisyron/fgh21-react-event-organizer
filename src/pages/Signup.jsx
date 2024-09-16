@@ -89,34 +89,34 @@ const [New, setNew] = React.useState("password")
       }    
 
     return(
-        <div className="bg-yellow-300">
+        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <div className="flex ">
-            <div className="md:w-[75%] h-[1000px] bg-[#000000] hidden md:block">
-                <img src={orangelogin} alt="" className="w-full h-full" />       
+            <div className="md:w-[75%] h-[100vh] bg-[#000000] hidden md:block">
+                <img src={orangelogin} alt="" className="w-full h-full hover:opacity-70 object-cover" />       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-full md:h-[614px]">
                     <Link to="/Login"><div className="flex mb-[50px]"><span><img src={ticket} alt="" className="w-16 h-16"/></span><span className="text-[#000000] content-center">Athrust</span><span className="text-[#000000] content-center">Tick</span>  
                 </div></Link>
-                <div className="text-black text-base mb-[15px]" >Sign in</div>
-                <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! </div>
+                <Link to="/Login"><div className="text-black text-base mb-[15px] hover:text-blue-400">Sign in</div></Link>
+                <div className="text-black text-xl mb-[50px]">Hi, Welcome back to AthrusTick</div>
                 <form onSubmit={btnlogin}> 
                 {message && <div className="bg-red-400 mb-4">{message}</div>}
                 {response && <div className="bg-green-400 mb-4">{response}</div>}
                     <div className="flex flex-col gap-5 w-full mb-[15px] ">
-                    <input type="text" name="name" placeholder="Fullname" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
-                    <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
-                    <div className="w-full">                       
-                        <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-[86%] md:max-w-[315px] h-[55px] align-middle pl-4"/> 
-                        <div className="w-[100%] flex justify-end">
-                            <button type="button" onClick={showp}><img src={show} alt="" className="flex w-[45px] h-[45px] relative md:ml-[260px] pt-[10px]"/></button>
-                        </div>
+                    <input type="text" name="name" placeholder="Fullname" className="border-2 rounded-2xl h-[55px] w-full align-middle pl-4"/>
+                    <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-full align-middle pl-4"/>
+                    <div className="w-full flex items-center relative">
+                        <input type={New} name="password" placeholder="Password" className="border-2 rounded-2xl w-full h-[55px] align-middle pl-4 pr-14"/> 
+                        <button type="button" onClick={showp} className="absolute right-4">
+                            <img src={show} alt="" className="w-6 h-6"/>
+                        </button>
                     </div>
-                    <div>
-                        <input type={New2} name="confirmpassword" placeholder="Confirm Password" className="absolute border-2 rounded-2xl w-[86%] md:max-w-[315px] h-[55px] align-middle pl-4"/> 
-                        <div className="w-[100%] flex justify-end">
-                            <button type="button" onClick={showp2}><img src={show} alt="" className="flex w-[45px] h-[45px] relative md:ml-[260px] pt-[10px]"/></button>
-                        </div>
+                    <div className="w-full flex items-center relative">
+                        <input type={New2} name="confirmpassword" placeholder="Confirm Password" className="border-2 rounded-2xl w-full h-[55px] align-middle pl-4 pr-14"/> 
+                        <button type="button" onClick={showp2} className="absolute right-4">
+                            <img src={show} alt="" className="w-6 h-6"/>
+                        </button>
                     </div>
                     <div className="flex gap-3 text-sm ml-3"><input type="checkbox" name="cek"/>Accept terms and condition</div>
                     </div>

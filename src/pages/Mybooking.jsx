@@ -41,7 +41,7 @@ function Mybooking(){
 
 
     return(
-        <div className="bg-yellow-300">
+        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] w-[100%] hidden md:block">

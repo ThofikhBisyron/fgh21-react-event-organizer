@@ -66,7 +66,7 @@ function Changepassword(){
 
 
     return(
-        <div className="bg-yellow-300">
+        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <Sidebar/>

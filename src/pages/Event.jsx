@@ -54,7 +54,7 @@ function Event() {
   }, [])
 
   return (
-    <div className="bg-yellow-300">
+    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
       <div className="navbar">
         <Navbar />
       </div>

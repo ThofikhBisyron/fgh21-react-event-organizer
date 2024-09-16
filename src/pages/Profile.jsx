@@ -117,15 +117,15 @@ function Profile(){
           setMessage(dataprofile.message)
         }
         }
-      
+
     return(
-        <div className="bg-yellow-300">
+        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] hidden md:block">
                     <Sidebar/>
                 </div>
-                <div className="flex flex-col-reverse md:flex-row md:w-[70%] w-[100%] bg-yellow-300 md:bg-gray-200 rounded-[30px] mr-[70px]">
+                <div className="flex flex-col-reverse md:flex-row md:w-[70%] w-[100%] md:bg-gray-200 rounded-[30px] mr-[70px]">
                     <div className="md:w-[60%] w-[100%]">
                         <div className="ml-[50px] mb-[50px] mt-[46px] hidden md:block">Profile</div>
                     <form className="flex flex-col w-full md:w-[80%] ml-[50px]" onSubmit={updatep}>

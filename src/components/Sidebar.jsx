@@ -16,9 +16,16 @@ import { removedata } from "../redux/reducers/profile"
 import { logout } from "../redux/reducers/auth"
 
 function Sidebar(){
+    const dataToken = useSelector((state) => state.auth.token)
     const datauser = useSelector((state) => state.profile.datauser)
+    console.log(dataToken)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    if (dataToken == null) {
+        navigate("/Login")
+    }
+
     function log(){
         dispatch(logout())
         dispatch(removedata())
@@ -30,12 +37,12 @@ return (
 
 
 <div className="md:w-[30%] hidden md:block">
-                    <div className="flex flex-col w-[242px] h-[508px] ml-[70px]">
+                    <div className="flex flex-col w-[242px] h-[508px] ml-[70px]">   
                         <div className="flex mb-[50px] gap-4">
-                        <img src={datauser.profile.picture === null ? profileimg : datauser.profile.picture} alt="" className="w-14 h-14 rounded-full" />
+                        <img src={datauser.length === 0 ? profileimg : datauser.profile.picture} alt="" className="w-14 h-14 rounded-full" />
                         <div>
-                            <div>{datauser.profile.full_name}</div>
-                            <div>{datauser.profile.profession === null ? "----" : datauser.profile.profession}</div>
+                            <div>{datauser.length === 0 ? "" : datauser.profile.full_name}</div>
+                            <div>{datauser.length === 0 ? "----" : datauser.profile.profession}</div>
                         </div>
                         </div>
                         <div className="flex flex-col gap-[30px]">

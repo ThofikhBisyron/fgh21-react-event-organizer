@@ -15,14 +15,20 @@ import { Input } from "postcss"
 import Sidebar from "../components/Sidebar"
 import Popup from "../components/Popup"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
 
 
 
 function Createevent(){
+    const navigate = useNavigate()
 
     const dataToken = useSelector((state) => state.auth.token)
     const [eventcreated, setEventCreated] = React.useState([])
+
+    if (dataToken == null) {
+        navigate("Login")
+    }
 
     const [pop, setpop] = React.useState(true)
     function butpop () {
@@ -49,9 +55,8 @@ function Createevent(){
         createdEvent()
     }, [])
 
-
     return(
-        <div className="bg-yellow-300">
+        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] w-[100%] hidden md:block">
@@ -62,7 +67,7 @@ function Createevent(){
                         <div className="font-semibold text-2xl">Manage Event</div>
                         <button onClick={butpop} className="border rounded-[15px] w-[125px] h-[50px] bg-[#EAF1FF] text-[#3366FF]">Create</button>
                    </div>
-                   {eventcreated.length === 0 ? (
+                   {eventcreated.length === null ? (
                     <div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px]">
                         <div className="text-center text-2xl font-bold">No Event Created</div>
                         <div className="text-center text-[#B3B8B8]">It seems that you haven't created any events yet. Maybe try making one?</div>
@@ -96,7 +101,7 @@ function Createevent(){
                 </div>  
             </div>
             <div className={pop ? "hidden" : ""}>
-                <Popup butpop={butpop}/>
+                <Popup butpop={butpop} setEventCreated={setEventCreated}/>
             </div>
         <Footer/>
     </div>

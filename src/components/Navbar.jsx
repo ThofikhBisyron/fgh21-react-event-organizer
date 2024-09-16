@@ -56,7 +56,7 @@ function butnav () {
                     </div>
                     { datatoken === null ? (<div className={navb ? "md:flex hidden" : ""}>
                         <div className="mb-5 items-center align-middle md:pt-5">
-                            <Link to="/login"><button className="h-[40px] w-[100px]">Log In</button></Link>
+                            <Link to="/login"><button className="h-[40px] w-[120px] border-2 rounded-xl">Log In</button></Link>
                             <Link to="/Signup"><button className="h-[40px] bg-[#3366FF] rounded-xl w-[169px] text-white">Sign Up</button></Link>
                         </div>
                     </div>) : (<div className={navb ? "md:flex hidden" : ""}>

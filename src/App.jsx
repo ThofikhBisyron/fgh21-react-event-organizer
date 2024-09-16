@@ -24,7 +24,7 @@ import { store } from "./redux/store";
 const Router = createBrowserRouter([
     {
         path : "/", 
-        element : <Login/>
+        element : <Index/>
     },
     {
         path : "/Loginpassword", 

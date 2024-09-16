@@ -109,25 +109,25 @@ const [New, setNew] = React.useState("password")
 
     return(
         <div>
-            <div className="bg-yellow-300">
+            <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
             <div className="flex ">
             <div className="md:w-[75%] h-[100vh] bg-[#000000] hidden md:block">
-                <img src={orangelogin} className="w-full h-full" alt=""/>       
+                <img src={orangelogin} className="w-full h-full hover:opacity-70 object-cover" alt=""/>       
             </div>
             <div className="md:w-[25%] w-[100%] mt-[20px] text-2xl md:ml-[140px] md:mr-[100px] ml-[50px] mr-[50px]">
                 <div className="md:w-[316px] w-[100%] md:h-[614px]">
                     <Link to="/Index"><div className="flex mb-[50px]"><span><img src={ticket} alt="" className="w-16 h-16"/></span><span className="text-[#000000] content-center">Athrus</span><span className="text-[#000000] content-center">Tick</span>  
                 </div></Link>
                 <div className="text-black mb-[15px] font-semibold text-3xl" >Sign in</div>
-                <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! <Link to="/Signup"><div>Can't Login ? Sign Up</div></Link></div>
+                <div className="text-black text-sm mb-[50px]">Hi, Welcome back to Urticket! <Link to="/Signup"><div className="hover:text-blue-300">Can't Login ? Sign Up</div></Link></div>
                 <form onSubmit={btnlogin}> 
                     {responses && <div className="text-green-400">{responses}</div>}
                     <div className="flex flex-col gap-5 md:w-[315px] w-full mb-[15px] ">
                     {emailError && <div className="text-red-500">{emailError}</div>}
                     <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
-                    <div>
+                    <div className="relative w-full">
                     {passwordError && <div className="text-red-500">{passwordError}</div>}
-                        <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-full max-w-[86%] md:max-w-[315px] h-[55px] align-middle pl-4"/> 
+                        <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-full h-[55px] align-middle pl-4"/> 
                         <div className="w-[100%] flex justify-end">
                             <button type="button" onClick={showp}><img src={show} alt="" className="flex relative w-[45px] h-[45px] md:ml-[260px] pt-[10px]"/></button>
                         </div>

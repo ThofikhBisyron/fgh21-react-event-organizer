@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import card from "../assets/img/card.svg";
@@ -13,8 +13,10 @@ import { useSelector } from "react-redux";
 
 function Payment() {
   const datatoken = useSelector((state) => state.auth.token);
+  console.log(datatoken)
+  
   const navigate = useNavigate()
-
+  
   const eventTitle = useSelector((state) => state.transaction.eventTittle);
   console.log(eventTitle)
   const qty = useSelector((state) => state.transaction.qty);
@@ -31,6 +33,15 @@ function Payment() {
   }
 
   const [message, setMessage] = React.useState(false)
+  
+  useEffect(() =>{
+    if (datatoken === null) { 
+      navigate("/Login")
+    }
+  }, [])
+  
+
+
 
   const id = Math.ceil(Math.random() * 100000000)
   const body = JSON.stringify({
@@ -78,7 +89,7 @@ function Payment() {
   }
 
   return (
-    <div className="bg-yellow-300">
+    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
       <Navbar />
       <div className="">
         <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">

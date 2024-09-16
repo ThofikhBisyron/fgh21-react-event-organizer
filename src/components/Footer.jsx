@@ -29,26 +29,26 @@ function Footer(){
                     </div>
                     <div>   
                         <div className="mb-[20px] font-bold text-base">Wetick</div>
-                        <div className="text-[#C1C5D0] text-sm">About Us</div>
-                        <div className="text-[#C1C5D0] text-sm">Features</div>
-                        <div className="text-[#C1C5D0] text-sm">Blog</div>
-                        <div className="text-[#C1C5D0] text-sm">Payments</div>
-                        <div className="text-[#C1C5D0] text-sm">Mobile App</div>
+                        <div className="text-grey-300 text-sm">About Us</div>
+                        <div className="text-grey-300 text-sm">Features</div>
+                        <div className="text-grey-300 text-sm">Blog</div>
+                        <div className="text-grey-300 text-sm">Payments</div>
+                        <div className="text-grey-300 text-sm">Mobile App</div>
                     </div>
                     <div>
                         <div className="mb-[20px] font-bold text-base">Features</div>
-                        <div className="text-[#C1C5D0] text-sm">Booking</div>
-                        <div className="text-[#C1C5D0] text-sm">Create Event</div>
-                        <div className="text-[#C1C5D0] text-sm">Discover</div>
-                        <div className="text-[#C1C5D0] text-sm">Register</div>
+                        <div className="text-grey-300 text-sm">Booking</div>
+                        <div className="text-grey-300 text-sm">Create Event</div>
+                        <div className="text-grey-300 text-sm">Discover</div>
+                        <div className="text-grey-300 text-sm">Register</div>
                     </div>
                     <div>
                         <div className="mb-[20px] font-bold text-base">Company</div>
-                        <div className="text-[#C1C5D0] text-sm">Partnership</div>
-                        <div className="text-[#C1C5D0] text-sm">Help</div>
-                        <div className="text-[#C1C5D0] text-sm">Terms of Service</div>
-                        <div className="text-[#C1C5D0] text-sm">Privacy Policy</div>
-                        <div className="text-[#C1C5D0] text-sm">Sitemap</div>
+                        <div className="text-grey-300 text-sm">Partnership</div>
+                        <div className="text-grey-300 text-sm">Help</div>
+                        <div className="text-grey-300 text-sm">Terms of Service</div>
+                        <div className="text-grey-300 text-sm">Privacy Policy</div>
+                        <div className="text-grey-300 text-sm">Sitemap</div>
                     </div>
                 </div>
                 </div>
