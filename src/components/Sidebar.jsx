@@ -39,10 +39,10 @@ return (
 <div className="md:w-[30%] hidden md:block">
                     <div className="flex flex-col w-[242px] h-[508px] ml-[70px]">   
                         <div className="flex mb-[50px] gap-4">
-                        <img src={datauser.length === 0 ? profileimg : datauser.profile.picture} alt="" className="w-14 h-14 rounded-full" />
+                        <img src={datauser === null ? profileimg : datauser.profile.picture} alt="" className="w-14 h-14 rounded-full" />
                         <div>
-                            <div>{datauser.length === 0 ? "" : datauser.profile.full_name}</div>
-                            <div>{datauser.length === 0 ? "----" : datauser.profile.profession}</div>
+                            <div>{datauser === null ? "" : datauser.profile.full_name}</div>
+                            <div>{datauser === null ? "----" : datauser.profile.profession}</div>
                         </div>
                         </div>
                         <div className="flex flex-col gap-[30px]">

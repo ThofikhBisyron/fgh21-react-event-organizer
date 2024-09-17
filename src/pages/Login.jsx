@@ -132,7 +132,7 @@ const [New, setNew] = React.useState("password")
                             <button type="button" onClick={showp}><img src={show} alt="" className="flex relative w-[45px] h-[45px] md:ml-[260px] pt-[10px]"/></button>
                         </div>
                     </div>
-                    </div>
+                    </div>  
                     <Link to="/Loginpassword"><div className="flex flex-col gap-7 text-sm text-right mb-5">Forgot Password?</div></Link>
                         <button type ="submit" className="w-[100%] h-[55px] bg-[#3366FF] mb-[48px] rounded-xl text-white">Sign In</button> 
                     
