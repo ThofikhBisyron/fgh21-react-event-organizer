@@ -25,20 +25,13 @@ function Createevent(){
 
     const dataToken = useSelector((state) => state.auth.token)
     const [eventcreated, setEventCreated] = React.useState([])
-
+    console.log(eventcreated)
     if (dataToken == null) {
         navigate("Login")
     }
 
-    const [pop, setpop] = React.useState(true)
-    function butpop () {
-        if ( pop === true ){
-            setpop(false)
-        }else{
-            setpop(true)
-        }
-
-    }
+    const [pop, setpop] = React.useState(false)
+    
 
     async function createdEvent() {
         const eventfetch = await fetch("http://localhost:8080/events/created",{
@@ -47,13 +40,13 @@ function Createevent(){
             }
         })
         const listevent = await eventfetch.json()
-        console.log(listevent.results)
+        console.log({listevent})
         setEventCreated(listevent.results)
     }
 
     useEffect(() =>{
         createdEvent()
-    }, [])
+    }, [pop])
 
     return(
         <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
@@ -65,7 +58,7 @@ function Createevent(){
                 <div className=" md:w-[70%] w-[100%] md:bg-gray-200 bg-yellow-300 rounded-[30px] md:mr-[70px]">
                    <div className="md:flex flex flex-col gap-5 md:flex-row md:justify-between md:h-[50px] w-[90%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">Manage Event</div>
-                        <button onClick={butpop} className="border rounded-[15px] w-[125px] h-[50px] bg-[#EAF1FF] text-[#3366FF]">Create</button>
+                        <button onClick={()=>setpop(true)} className="border rounded-[15px] w-[125px] h-[50px] bg-[#EAF1FF] text-[#3366FF]">Create</button>
                    </div>
                    {eventcreated.length === null ? (
                     <div className="flex mt-[15%] flex-col md:w-[315px] h-[113] md:ml-[35%] gap-[15px]">
@@ -100,9 +93,10 @@ function Createevent(){
                    )} 
                 </div>  
             </div>
-            <div className={pop ? "hidden" : ""}>
+            {pop ? <Popup close={()=>setpop(false)}/> : ""}
+            {/* <div className={pop ? "hidden" : ""}>
                 <Popup butpop={butpop} setEventCreated={setEventCreated}/>
-            </div>
+            </div> */}
         <Footer/>
     </div>
 

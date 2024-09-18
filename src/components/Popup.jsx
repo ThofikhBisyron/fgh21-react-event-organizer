@@ -36,8 +36,7 @@ function Popup(props) {
   const listevent = await eventfetch.json()
   console.log(listevent)
   if (listevent.success === true){
-    props.setEventCreated(listevent.results)
-    navigate("/Createevent")
+    props.close()
   }
 
 
@@ -53,7 +52,6 @@ function Popup(props) {
   }
   location()
 }, [])  
-
   
   return (
     <div className="flex items-center justify-center bg-black/25 w-screen h-screen top-0 left-0 fixed">
@@ -120,7 +118,7 @@ function Popup(props) {
         </div>
         <div className="w-full text-right mb-[42px]">
           <button
-            type="button" onClick={props.butpop} className="h-[60px] w-full text-white bg-[#3366FF] max-w-[310px] rounded-[15px]">Close
+            type="button" onClick={props.close} className="h-[60px] w-full text-white bg-[#3366FF] max-w-[310px] rounded-[15px]">Close
           </button>
         </div>
       </div>
