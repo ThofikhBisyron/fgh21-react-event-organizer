@@ -30,7 +30,7 @@ function Profile(){
     const dispatch = useDispatch()
 
     async function home(){
-      const dataH = await fetch('http://localhost:8080/profile/',{
+      const dataH = await fetch('http://103.93.58.89/profile/',{
         headers: {
           Authorization: "Bearer " + datatoken,
         }
@@ -43,7 +43,7 @@ function Profile(){
   
       useEffect(() =>{
         async function Nationalities(){
-          const fetchnational = await fetch("http://localhost:8080/profile/national")
+          const fetchnational = await fetch("http://103.93.58.89/profile/national")
           const listnational = await fetchnational.json()
           setNational(listnational.results)     
         }
@@ -66,7 +66,7 @@ function Profile(){
         const formData = new FormData();
         formData.append('profileImg', file);
       
-        const fetchimg = await fetch("http://localhost:8080/profile/", {
+        const fetchimg = await fetch("http://103.93.58.89/profile/", {
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -101,7 +101,7 @@ function Profile(){
         formData.append("nationality_id", national)
         formData.append("birth_date", birth)
         
-        const datafetch = await fetch("http://localhost:8080/profile/update",{
+        const datafetch = await fetch("http://103.93.58.89/profile/update",{
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,

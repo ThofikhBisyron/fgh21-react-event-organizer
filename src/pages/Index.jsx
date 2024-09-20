@@ -50,7 +50,7 @@ function seeall ()
 
 useEffect(() =>{
   async function home(){
-    const dataHome = await fetch('http://localhost:8080/events/' ,{
+    const dataHome = await fetch('http://103.93.58.89/events/' ,{
       headers: {
         Authorization: "Bearer " + datatoken,
       }
@@ -64,7 +64,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function partnersData(){
-    const eventfetch = await fetch("http://localhost:8080/partners/")
+    const eventfetch = await fetch("http://103.93.58.89/partners/")
     const datapartners = await eventfetch.json()
     setPartner(datapartners.results)
 
@@ -76,7 +76,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const locationfetch = await fetch("http://103.93.58.89/locations/")
     const listlocation = await locationfetch.json()
     console.log(listlocation.results)
     setLoc(listlocation.results)

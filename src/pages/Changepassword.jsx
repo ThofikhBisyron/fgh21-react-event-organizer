@@ -44,7 +44,7 @@ function Changepassword(){
         const formp = new URLSearchParams()
             formp.append("password", newp)
         
-        const pnew = await fetch("http://localhost:8080/users/password", {
+        const pnew = await fetch("http://103.93.58.89/users/password", {
         method: "PATCH",
         headers: {
                 Authorization: "Bearer " + datatoken,

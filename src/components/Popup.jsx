@@ -26,7 +26,7 @@ function Popup(props) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch("http://localhost:8080/events/", {
+  const eventfetch = await fetch("http://103.93.58.89/events/", {
     method: 'POST',
     headers: {
       Authorization: "Bearer " + datatoken,
@@ -44,7 +44,7 @@ function Popup(props) {
 
  useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const locationfetch = await fetch("http://103.93.58.89/locations/")
     const listlocation = await locationfetch.json()
     console.log(listlocation.results)
     setLoc(listlocation.results)
