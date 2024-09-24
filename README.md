@@ -1,8 +1,10 @@
 # ATHRUSTICK
 
 AthrusTick is an event ticket booking application, where users can view events anywhere, buy tickets, add events to their wishlist and can also add events that will be held
-<div>
-  <img src
+<div style=>
+  <img src="./src/assets/portofolio/AthrusTick.png" alt="login" width="500">
+   <img src="./src/assets/portofolio/AthrusTick2.png" alt="Home" width="500" >
+     <img src="./src/assets/portofolio/AthrusTick3.png" alt="Ticket" width="300" height="400">
 </div>
 
 Built using
