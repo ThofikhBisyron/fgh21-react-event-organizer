@@ -12,8 +12,8 @@ function Footer(){
     return(
         <div>
             <div>
-                <div className="w-full">
-                <div className="flex md:gap-56 gap-10 md:ml-20 ml-6 flex-col md:flex-row mb-20 mt-40">
+                <div className="">
+                <div className="flex gap-10 md:justify-between md:ml-20 ml-6 flex-col md:flex-row mb-20 mt-40">
                     <div className="">
                         <div class="flex items-center mb-[30px]"><img src={ticket} alt="" className="w-10 h-10"/>
                             <span className="text-[#757217] text-2xl font-semibold">Athrus</span>

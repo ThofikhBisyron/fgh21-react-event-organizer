@@ -103,9 +103,9 @@ useEffect(() =>{
           <div className="font-[#333333] text-[36px] font-semibold mb-12">
             Events For You
           </div>
-          <div className="mb-[50px]">
+          <div className="mb-[50px] w-full">
             <div className="flex gap-11 justify-center">
-              <div className="flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
+              <div className="hidden md:flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
                 <div>13</div>
                 <div>Mon</div>
               </div>
@@ -124,7 +124,7 @@ useEffect(() =>{
                 <div>16</div>
                 <div>Thu</div>
               </div>
-              <div className="flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
+              <div className="hidden md:flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
                 <div>17</div>
                 <div>Fri</div>
               </div>
