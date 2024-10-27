@@ -25,7 +25,6 @@ function Createevent(){
 
     const dataToken = useSelector((state) => state.auth.token)
     const [eventcreated, setEventCreated] = React.useState([])
-    console.log(eventcreated)
     if (dataToken == null) {
         navigate("Login")
     }
@@ -34,13 +33,12 @@ function Createevent(){
     
 
     async function createdEvent() {
-        const eventfetch = await fetch("http://103.93.58.89:21214/events/created",{
+        const eventfetch = await fetch("http://localhost:8080/events/created",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
         })
         const listevent = await eventfetch.json()
-        console.log({listevent})
         setEventCreated(listevent.results)
     }
 

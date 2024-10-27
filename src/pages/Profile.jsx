@@ -23,14 +23,13 @@ import { datainput } from "../redux/reducers/profile"
 
 function Profile(){
     const datauser = useSelector((state) => state.profile.datauser)
-    console.log(datauser)
     const datatoken = useSelector((state) => state.auth.token)
     const [national, setNational] = React.useState([])
     const [message, setMessage] = React.useState(false)
     const dispatch = useDispatch()
 
     async function home(){
-      const dataH = await fetch('http://103.93.58.89:21214/profile/',{
+      const dataH = await fetch('http://localhost:8080/profile/',{
         headers: {
           Authorization: "Bearer " + datatoken,
         }
@@ -43,7 +42,7 @@ function Profile(){
   
       useEffect(() =>{
         async function Nationalities(){
-          const fetchnational = await fetch("http://103.93.58.89:21214/profile/national")
+          const fetchnational = await fetch("http://localhost:8080/profile/national")
           const listnational = await fetchnational.json()
           setNational(listnational.results)     
         }
@@ -66,7 +65,7 @@ function Profile(){
         const formData = new FormData();
         formData.append('profileImg', file);
       
-        const fetchimg = await fetch("http://103.93.58.89:21214/profile/", {
+        const fetchimg = await fetch("http://localhost:8080/profile/", {
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -76,12 +75,19 @@ function Profile(){
           const dataimg = await fetchimg.json()
           console.log(dataimg)
           if (dataimg.success === true) {
-            dispatch(datainput(dataimg.results))
+            dispatch(datainput({
+              ...datauser, 
+              profile: {
+              ...datauser.profile,
+              picture: dataimg.results.profile.picture
+              }
+            }))
             console.log(dataimg)
             setMessage(dataimg.message) 
           }else
             setMessage(dataimg.message)
       }
+      
       async function updatep(e){
         e.preventDefault()
         const name = e.target.name.value
@@ -92,6 +98,8 @@ function Profile(){
         const national = e.target.national.value 
         const birth = e.target.birth.value
 
+        const profilePicture = datauser.profile.picture
+ 
         const formData = new URLSearchParams()
         formData.append('full_name', name)
         formData.append('username', user)
@@ -100,8 +108,23 @@ function Profile(){
         formData.append("profession", prof)
         formData.append("nationality_id", national)
         formData.append("birth_date", birth)
+
+        if (e.target.files !== "") {
+          const file = e.target.files;
+          const newFormData = new FormData();
+          newFormData.append('profileImg', file);
+          await fetch("http://localhost:8080/profile/", {
+              method: 'PATCH',
+              headers: {
+                  Authorization: "Bearer " + datatoken,
+              },
+              body: newFormData,
+          });
+      } else {
+          formData.append('picture', profilePicture);
+      }
         
-        const datafetch = await fetch("http://103.93.58.89:21214/profile/update",{
+        const datafetch = await fetch("http://localhost:8080/profile/update",{
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -111,7 +134,15 @@ function Profile(){
         const dataprofile = await datafetch.json()
         console.log(dataprofile)
         if (dataprofile.success === true){
-          dispatch(datainput(dataprofile.results))
+          const updatedProfile = {
+            ...datauser,
+            ...dataprofile.results,
+            profile: {
+              ...datauser.profile,
+              picture: profilePicture
+            }
+          }
+          dispatch(datainput(updatedProfile))
           setMessage(dataprofile.message)
         }else{
           setMessage(dataprofile.message)
@@ -175,7 +206,7 @@ function Profile(){
                             </div>  
                             <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
                             <label>Birthday Date</label>
-                            <input type="text" name="birth" defaultValue={datauser.profile.birth_date} className="h-[55px] w-[100%] border rounded-2xl md:ml-[75px] pl-5  "/>
+                            <input type="date" name="birth" defaultValue={datauser.profile.birth_date} className="h-[55px] w-[100%] border rounded-2xl md:ml-[75px] pl-5  "/>
                             {/* <div className="ml-3 border-b-2 text-blue-500 w-6">Edit</div> */}
                             </div>
                             <div className="w-full h-[60px] bg-slate-400 text-center align-middle rounded-3xl content-center">

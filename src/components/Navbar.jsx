@@ -14,7 +14,6 @@ import { CgProfile } from "react-icons/cg";
 function Navbar(){
     const datauser = useSelector((state) => state.profile.datauser)
     const datatoken = useSelector((state) => state.auth.token);
-    console.log(datauser)
 
 
 const [navb, setnavb] = React.useState(true)

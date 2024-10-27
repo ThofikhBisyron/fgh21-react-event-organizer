@@ -18,7 +18,6 @@ import { logout } from "../redux/reducers/auth"
 function Sidebar(){
     const dataToken = useSelector((state) => state.auth.token)
     const datauser = useSelector((state) => state.profile.datauser)
-    console.log(dataToken)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 

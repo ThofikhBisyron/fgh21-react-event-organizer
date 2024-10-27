@@ -19,7 +19,8 @@ import Loginpassword from './pages/Loginpassword'
 import Navbar2 from './components/Navbar2';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from 'react-redux';
-import { store } from "./redux/store";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Router = createBrowserRouter([
     {
@@ -82,8 +83,10 @@ const Router = createBrowserRouter([
 ])
 function App() {
     return(
-        <Provider store={store}>
-       < RouterProvider router = {Router} />
+        <Provider store= {store}>
+            <PersistGate persistor= {persistor}>
+                <RouterProvider router= {Router} />
+            </PersistGate>
        </Provider>
     )
 }  

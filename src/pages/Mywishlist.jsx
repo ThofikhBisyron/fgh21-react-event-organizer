@@ -26,7 +26,7 @@ function Mywishlist(){
     const [list, setList] = react.useState(false)
 
     async function dataListwish() {
-        const wishlistfetch = await fetch("http://103.93.58.89:21214/wishlist/findevent", {
+        const wishlistfetch = await fetch("http://localhost:8080/wishlist/findevent", {
             headers: {
                 Authorization: "Bearer " + datatoken,
               },

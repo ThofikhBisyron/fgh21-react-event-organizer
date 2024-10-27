@@ -7,6 +7,18 @@ function Popup(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [loc, setLoc] = React.useState([])
+  const [category, setCategory] = React.useState([])
+
+  useEffect(() => {
+    async function Category() {
+      const categoryFetch = await fetch(`http://localhost:8080/categories/?page=1&limit=100`)
+      const categoryJson = await categoryFetch.json()
+      console.log(categoryJson.results)
+      setCategory(categoryJson.results)
+      
+    }
+    Category()
+  }, [])
 
 
  async function insertEvent(e) {
@@ -26,7 +38,7 @@ function Popup(props) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch("http://103.93.58.89:21214/events/", {
+  const eventfetch = await fetch("http://localhost:8080/events/", {
     method: 'POST',
     headers: {
       Authorization: "Bearer " + datatoken,
@@ -44,9 +56,8 @@ function Popup(props) {
 
  useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://103.93.58.89:21214/locations/")
+    const locationfetch = await fetch("http://localhost:8080/locations/")
     const listlocation = await locationfetch.json()
-    console.log(listlocation.results)
     setLoc(listlocation.results)
     
   }
@@ -68,7 +79,13 @@ function Popup(props) {
           <div className="w-1/2">
             <label htmlFor="category" className="mb-[10px]">Category</label>
             <div className="">
-              <input type="text" name="category" id="category" placeholder="Select Category" className="h-[55px] border-2 w-full pl-[20px] pr-[20px] rounded-[15px] mb-[30px]"/>
+              <select type="text" name="category" id="category" placeholder="Select Category" className="h-[55px] border-2 w-full pl-[20px] pr-[20px] rounded-[15px] mb-[30px]">
+                {category.map((item) => {
+                  return(
+                    <option key={item.key} value={item.id}>{item.name}</option>
+                  )
+                })}
+              </select>
             </div>
           </div>
         </div>

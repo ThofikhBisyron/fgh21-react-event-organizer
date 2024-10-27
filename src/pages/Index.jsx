@@ -30,6 +30,8 @@ import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { inputhome } from "../redux/reducers/home";
 import { useDispatch} from "react-redux";
+import { data } from "autoprefixer";
+import { MdTextFields } from "react-icons/md";
 
 function Index() {
   const datatoken = useSelector((state) => state.auth.token);
@@ -37,7 +39,16 @@ function Index() {
   const [loc, setLoc] = React.useState([])
   const dispatch = useDispatch()
   const [partner, setPartner] = React.useState([])
-    const [see, setsee] = React.useState(true)
+  const [see, setsee] = React.useState(true)
+  const [category, setCategory] = React.useState([])
+  const [datacategory, setDataCategory] = React.useState(1)
+  const [page, setPage] = React.useState(1)
+  const [prevpage, setPrevPage] = React.useState(1)
+  const [search, setSearch] = React.useState("")
+  console.log(page)
+  console.log(category)
+
+
 function seeall () 
 {
     if ( see === true ){
@@ -48,42 +59,79 @@ function seeall ()
 
 }
 
-useEffect(() =>{
-  async function home(){
-    const dataHome = await fetch('http://103.93.58.89:21214/events/' ,{
-      headers: {
-        Authorization: "Bearer " + datatoken,
-      }
-    })
-    const listevent = await dataHome.json()
-    console.log(listevent)
-    dispatch(inputhome(listevent.results))
+function handleCategoryChange(value) {
+  if (datacategory !== value) {
+    setCategory([])
+    setDataCategory(value); 
+    setPage(1); 
   }
+}
+
+async function home(searchValue){
+  const eventSearch = searchValue ? `?search=${searchValue}` : "";
+  const dataHome = await fetch(`http://localhost:8080/events/${eventSearch}` ,{
+    headers: {
+      Authorization: "Bearer " + datatoken,
+    }
+  })
+  const listevent = await dataHome.json()
+  dispatch(inputhome(listevent.results))
+}
+
+function SearchSubmit(e) {
+  e.preventDefault();
+  home(search);
+}
+
+function seeAllEvent() {
+  setSearch("")
+  home("")
+}
+
+useEffect(() =>{
+  if (search) {
+    home(search)
+  }
+}, [search])
+
+useEffect(() =>{
   home()
-}, [])
+},[])
 
 useEffect(() =>{
   async function partnersData(){
-    const eventfetch = await fetch("http://103.93.58.89:21214/partners/")
+    const eventfetch = await fetch("http://localhost:8080/partners/")
     const datapartners = await eventfetch.json()
     setPartner(datapartners.results)
-
-  
-    
   }
   partnersData()
 }, [])
 
 useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://103.93.58.89:21214/locations/")
+    const locationfetch = await fetch("http://localhost:8080/locations/")
     const listlocation = await locationfetch.json()
-    console.log(listlocation.results)
     setLoc(listlocation.results)
     
   }
   location()
-}, [])  
+}, []) 
+
+async function eventCategory() {
+  const Categoryfetch = await fetch(`http://localhost:8080/categories/events/?id=${datacategory}&page=${page}&limit=3`)
+  const listCategory = await Categoryfetch.json()
+  if (listCategory.results.length === 0){
+    setPage(prevpage)
+  } else {
+    setPrevPage(page)
+    setCategory(listCategory.results)
+  }
+  
+}
+useEffect(() => {
+  eventCategory()
+}, [datacategory, page])
+
 
   return (
     <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
@@ -131,7 +179,16 @@ useEffect(() =>{
             </div>
           </div>
         </div>
-        <div className="flex gap-4 overflow-x-scroll mb-10 ml-10">
+        <form className="mb-20 ml-16" onSubmit={SearchSubmit}>
+          <input type="text" name="search" placeholder="Search Event Here" className="h-12 w-1/3 bg-orange-100 rounded-xl pl-4" value={search} onChange={(e) => setSearch(e.target.value)}/>
+        </form>
+        {datahome.length === 0 ? 
+        (<div className="border-2 border-orange-300 text-white rounded-full p-5 mb-10 mr-20 ml-20 animate-pulse animate-infinite">
+          <div className="text-4xl text-center">
+            The text you entered is not in the events list
+          </div>
+        </div>) : (
+          <div className="flex gap-4 overflow-x-scroll mb-10 ml-10">
           {datahome.map((data) =>{
             return(
               <Link to={`/Events/${data.id}`}>
@@ -161,10 +218,12 @@ useEffect(() =>{
             )
           })}
           </div>
+        )}
+        
         
         <div className="w-full flex flex-col items-center">
           <div>
-            <button type="button" className="border-2 tracking-[0.5px] border-[#3366FF] w-[255px] h-[40px] mb-[175px] rounded-2xl text-[#3366FF]">See All
+            <button type="button" className="border-2 tracking-[0.5px] border-[#3366FF] w-[255px] h-[40px] mb-[175px] rounded-2xl text-[#3366FF]" onClick={seeAllEvent}>See All
             </button>
           </div>
           <div className="w-full mb-[175px]">
@@ -253,107 +312,83 @@ useEffect(() =>{
             </div>
           </div>
           <div className="grid grid-cols-3 md:grid-cols-7 gap-14 mb-10">
-            <div className="underline text-[#3366FF] font-semibold">Music</div>
-            <div className="text-[#C1C5D0] font-semibold">Arts</div>
-            <div className="text-[#C1C5D0] font-semibold">Outdoors</div>
-            <div className="text-[#C1C5D0] font-semibold">Workshop</div>
-            <div className="text-[#C1C5D0] font-semibold">Sport</div>
-            <div className="text-[#C1C5D0] font-semibold">Festival</div>
-            <div className="text-[#C1C5D0] font-semibold">Fashion</div>
+            <button className={`font-semibold ${datacategory === 1 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="1" onClick={() => handleCategoryChange(1)}>Music</button>
+            <button className={`font-semibold ${datacategory === 2 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="2" onClick={() => handleCategoryChange(2)}>Arts</button>
+            <button className={`font-semibold ${datacategory === 3 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="3" onClick={() => handleCategoryChange(3)}>Outdoors</button>
+            <button className={`font-semibold ${datacategory === 4 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="4" onClick={() => handleCategoryChange(4)}>Workshop</button>
+            <button className={`font-semibold ${datacategory === 5 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="5" onClick={() => handleCategoryChange(5)}>Sport</button>
+            <button className={`font-semibold ${datacategory === 6 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="6" onClick={() => handleCategoryChange(6)}>Festival</button>
+            <button className={`font-semibold ${datacategory === 7 ? "text-blue-600" : "text-[#C1C5D0]"} `} value="7" onClick={() => handleCategoryChange(7)}>Fashion</button>
           </div>
         </div>
-        <div className="flex  gap-6 items-center overflow-x-scroll justify-center">
-          <div className="md:w-[45px] md:h-[45px] md:shadow-md md:bg-white md:flex  items-center justify-center rounded-md hidden">
+        <div className="flex items-center overflow-x-scroll justify-between">
+          <button 
+            className="md:w-[45px] ml-10 md:h-[45px] md:shadow-md md:bg-white md:flex  items-center justify-center rounded-md hidden hover:active:bg-blue-300"
+            onClick={() => {if (page > 1) setPage(page - 1)}}
+            >
             <img src={arrowLeft} alt="" className="" />
-          </div>
-          <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden ml-8 flex-shrink-0">
-            <img src={cars} alt="" />
-            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
-              <div className="flex mb-[8px] mt-[-16px]">
-                <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile1} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile2} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile3} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                  <img src={profile4} alt="" />
-                  <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                    62+
-                  </div>
-                </div>
+          </button>
+          {category.length === 0 ? (
+            <div className="">
+              <div className="text-2xl text-white animate-pulse animate-infinite">
+                There are no events that have been included in the category yet
               </div>
-              <div className="flex flex-col text-white gap-2 mt-7">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-semibold text-2xl tracking-wider">
-                  Sights & Sounds Exhibition
+            </div>) : (
+            category.map((item) => {
+              return (
+                <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden ml-8 flex-shrink-0">
+                  <img src={item.image} alt="" className="w-full h-full"/>
+                    <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
+                      <div className="flex mb-[8px] mt-[-16px]">
+                        <div className="h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
+                          <img src={profile1} alt="" />
+                        </div>
+                        <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
+                          <img src={profile2} alt="" />
+                        </div>
+                        <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
+                          <img src={profile3} alt="" />
+                        </div>
+                        <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] relative overflow-hidden">
+                          <img src={profile4} alt="" />
+                          <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
+                            62+
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col text-white gap-2 mt-7">
+                        <div>{item.date}</div>
+                        <div className="font-semibold text-xl tracking-wider">
+                          {item.tittle}
+                        </div>
+                      </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden flex-shrink-0">
-            <img src={cars} alt="" />
-            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
-              <div className="flex mb-[8px] mt-[-16px]">
-                <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile1} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile2} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile3} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                  <img src={profile4} alt="" />
-                  <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                    62+
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col text-white gap-2 mt-7">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-semibold text-2xl tracking-wider">
-                  Sights & Sounds Exhibition
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-[300px] h-[350px] rounded-3xl overflow-hidden mr-8 flex-shrink-0">
-            <img src={cars} alt="" />
-            <div className="absolute bg-[#0a0a0a] w-full h-[162px] bottom-0 px-4 pb-4">
-              <div className="flex mb-[8px] mt-[-16px]">
-                <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile1} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile2} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                  <img src={profile3} alt="" />
-                </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
-                  <img src={profile4} alt="" />
-                  <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">
-                    62+
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col text-white gap-2 mt-7">
-                <div>Wed, 15 Nov, 4:00 PM</div>
-                <div className="font-semibold text-2xl tracking-wider">
-                  Sights & Sounds Exhibition
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="md:w-[45px] md:h-[45px] md:shadow-md md:bg-[#3366FF] md:flex  items-center justify-center rounded-md hidden">
-            <img src={arrowRight} alt="" className="" />
-          </div>
+              )
+            })
+          )}
+
+          <button 
+            className="md:w-[45px] md:h-[45px] mr-10 md:shadow-md md:bg-[#3366FF] md:flex  items-center justify-center rounded-md hidden hover:active:bg-blue-300" 
+            onClick={() => setPage(page + 1)}
+            >
+            <img src={arrowRight} alt="" className="" /> 
+          </button>
         </div>
+        <div className="flex justify-between mt-10 mr-20 ml-20">
+          <button 
+            className="w-[45px] h-[45px] shadow-md bg-white md:hidden items-center content-center justify-center rounded-md hover:active:bg-blue-300"
+            onClick={() => {if (page > 1) setPage(page - 1)}}
+          >
+            <img src={arrowLeft} alt="" className="pl-2" />
+          </button>
+          <button 
+            className="w-[45px] h-[45px] shadow-md bg-[#3366FF] md:hidden items-center content-center justify-center rounded-md hover:active:bg-blue-300"
+            onClick={() => setPage(page + 1)}
+          >
+            <img src={arrowRight} alt="" className="pl-3" />
+          </button>
+        </div> 
       </div>
       <div className="bg-[#373A42] p-16 flex flex-col items-center mb-16">
         <div className="bg-[#979797] h-[30px] w-[150px] rounded-full text-xs tracking-[3px] font-semibold text-white flex gap-[10px] items-center justify-center before:content-['\2501'] mb-[25px] ">
