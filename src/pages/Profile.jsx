@@ -27,6 +27,7 @@ function Profile(){
     const [national, setNational] = React.useState([])
     const [message, setMessage] = React.useState(false)
     const dispatch = useDispatch()
+    const [selectedNationality, setSelectedNationality] = React.useState(datauser.profile.nationality_id);
 
     async function home(){
       const dataH = await fetch('http://localhost:8080/profile/',{
@@ -49,6 +50,7 @@ function Profile(){
         Nationalities()
       }, [])
 
+    
       async function uploadImage(e) {
         const file = e.target.files[0];
       
@@ -139,10 +141,12 @@ function Profile(){
             ...dataprofile.results,
             profile: {
               ...datauser.profile,
-              picture: profilePicture
+              nationality_id: national,
+              picture: profilePicture,
             }
           }
           dispatch(datainput(updatedProfile))
+          setSelectedNationality(updatedProfile.profile.nationality_id); 
           setMessage(dataprofile.message)
         }else{
           setMessage(dataprofile.message)
@@ -193,7 +197,7 @@ function Profile(){
                             </div>
                             <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
                             <label>Nationality</label>
-                            <select type="text" name="national" className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5 ">
+                            <select type="text" name="national" className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5" value={selectedNationality} onChange={(e) => setSelectedNationality(e.target.value)}>
                                 {national.map((item) => {
                                 return (    
                                   <option key={item.id} value={item.id}>

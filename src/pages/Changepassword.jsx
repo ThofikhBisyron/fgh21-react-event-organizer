@@ -43,6 +43,7 @@ function Changepassword(){
         }
         const formp = new URLSearchParams()
             formp.append("password", newp)
+            formp.append("oldpassword", old)
         
         const pnew = await fetch("http://localhost:8080/users/password", {
         method: "PATCH",

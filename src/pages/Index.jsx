@@ -196,7 +196,7 @@ useEffect(() => {
                   <img
                     src={data.image}
                     alt=""
-                    className="flex relative w-full h-full overflow-hidden rounded-[40px] relative mb-[52px] overflow-hidden"
+                    className="flex w-full h-full rounded-[40px] relative mb-[52px] overflow-hidden object-cover"
                   />
                   <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
                     <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">

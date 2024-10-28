@@ -182,8 +182,8 @@ function Ticket() {
       </div>
       <div className="">
         <div className="flex md:flex-row flex-col md:mt-[48px] md:mr-[120px] md:ml-[120px] md:mb-[100px] bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">
-          <div className=" md:w-[50%] w-[100%]  h-[486px] mr-[88px]">
-            <img src={event.image} alt="" className="w-auto h-full rounded-3xl" />
+          <div className=" md:w-[50%] w-[100%]  h-[486px] mr-[88px] sticky top-10" >
+            <img src={event.image} alt="" className="w-auto h-full rounded-3xl object-cover" />
           </div>
           <div className="md:w-[50%] w-[100%] md:m  l-[88px]">
             <div className="mb-[25px] border-b-[2px]">
