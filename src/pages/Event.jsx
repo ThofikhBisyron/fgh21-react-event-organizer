@@ -116,7 +116,9 @@ function Event() {
                 </div>
               </div>
             </button>
+            <div className="items-center ml-28 mt-2">
             {mess && <div className="text-red-500">{mess}</div>}
+            </div>
           </div>
           <div className="md:w-3/5">
             <div className=" md:flex flex-col border-b-2 border-solid border-[rgba(193,197,208,0.25)] mb-[25px] hidden">
