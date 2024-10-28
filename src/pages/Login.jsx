@@ -109,7 +109,7 @@ const [New, setNew] = React.useState("password")
 
     return(
         <div>
-            <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+            <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <div className="flex ">
             <div className="md:w-[75%] h-[100vh] bg-[#000000] hidden md:block">
                 <img src={orangelogin} className="w-full h-full hover:opacity-70 object-cover" alt=""/>       

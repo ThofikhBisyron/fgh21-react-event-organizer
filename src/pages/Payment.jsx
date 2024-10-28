@@ -89,7 +89,7 @@ function Payment() {
   }
 
   return (
-    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+    <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
       <Navbar />
       <div className="">
         <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">

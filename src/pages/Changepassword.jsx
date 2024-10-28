@@ -67,17 +67,23 @@ function Changepassword(){
 
 
     return(
-        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+        <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <Sidebar/>
-                <div className="flex w-[100%] bg-yellow-300 md:bg-gray-200 rounded-[30px] mr-[70px] md:w-[70%]">
+                <div className="flex w-[100%] md:bg-gray-200 rounded-[30px] mr-[70px] md:w-[70%]">
                     <form className="w-[876px] h-[413px] mt-[46px] ml-[46px]" onSubmit={changep} >
                         {errorMessage && <div className="error-message">{errorMessage}</div>}
                         <div className ="text-lg mb-[50px]">Change Password</div>
-                        <div className="flex flex-col md:flex-row justify-between"><div>Old Password</div> <input type="password" name="oldpassword" placeholder="Input Old Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" /></div>
-                        <div className="flex flex-col md:flex-row justify-between"><div>New Password</div> <input type="password" name="newpassword" placeholder="Input New Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" /></div>
-                        <div className="flex flex-col md:flex-row justify-between"><div>Confirm Password</div><input type="password" name="confirmpassword" placeholder="Input New Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" /></div>
+                        <div className="flex flex-col md:flex-row justify-between gap-5 md:gap-0">
+                            <div>Old Password</div> <input type="password" name="oldpassword" placeholder="Input Old Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" />
+                        </div>
+                        <div className="flex flex-col md:flex-row justify-between gap-5 md:gap-0">
+                            <div>New Password</div> <input type="password" name="newpassword" placeholder="Input New Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" />
+                        </div>
+                        <div className="flex flex-col md:flex-row justify-between gap-5 md:gap-0">
+                            <div>Confirm Password</div><input type="password" name="confirmpassword" placeholder="Input New Password.." className="h-[55px] w-[90%] md:w-[100%] border rounded-[15px] mb-[33px] mr-4 pl-4" />
+                        </div>
                         <button type="submit" className="md:w-[100%] h-[61px] bg-blue-600 rounded-[15px] text-white w-[90%]">Update</button>
                     </form>
                 </div>

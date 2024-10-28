@@ -39,6 +39,7 @@ function Createevent(){
             }
         })
         const listevent = await eventfetch.json()
+        console.log(listevent.results)
         setEventCreated(listevent.results)
     }
 
@@ -47,13 +48,13 @@ function Createevent(){
     }, [pop])
 
     return(
-        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+        <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] w-[100%] hidden md:block">
                     <Sidebar/>
                 </div>
-                <div className=" md:w-[70%] w-[100%] md:bg-gray-200 bg-yellow-300 rounded-[30px] md:mr-[70px]">
+                <div className=" md:w-[70%] w-[100%] md:bg-gray-200 rounded-[30px] md:mr-[70px]">
                    <div className="md:flex flex flex-col gap-5 md:flex-row md:justify-between md:h-[50px] w-[90%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">Manage Event</div>
                         <button onClick={()=>setpop(true)} className="border rounded-[15px] w-[125px] h-[50px] bg-[#EAF1FF] text-[#3366FF]">Create</button>
@@ -67,10 +68,9 @@ function Createevent(){
                     <div className="overflow-y-scroll shrink-0 h-96 ml-4">
                         {eventcreated.map((item) => {
                             return(
-                                    <div className="flex flex-row gap-6 mt-14 shrink-0">
-                                        <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                                            <div className="text-[#FF8900]">15</div>
-                                            <div>Wed</div>
+                                    <div className="flex flex-row gap-9 mt-14 shrink-0">
+                                        <div className="text-center">
+                                            <img src={item.image} className="w-96 rounded-xl object-cover"/>
                                         </div>
                                         <div>
                                             <div className="font-semibold text-3xl mb-4">{item.tittle}</div>

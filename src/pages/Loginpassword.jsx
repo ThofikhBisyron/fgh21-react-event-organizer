@@ -35,7 +35,7 @@ function Loginpassword() {
     }
   }
   return (
-    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+    <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <div className="flex ">
             <div className="bg-[#000000] h-[100vh] md:w-[75%] hidden md:block">
                 <img src={orangelogin} alt="" className="w-full h-full hover:opacity-70 object-cover" />       

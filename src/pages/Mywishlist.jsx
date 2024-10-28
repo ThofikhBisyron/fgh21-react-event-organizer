@@ -42,11 +42,11 @@ function Mywishlist(){
       }, [])
 
     return(
-<div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+<div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
     <Navbar/>
         <div className="flex mt-[50px]">
             <Sidebar/>
-            <div className=" md:w-[70%] w-[100%] bg-yellow-300 md:bg-gray-200 rounded-[30px] md:mr-[70px]">
+            <div className=" md:w-[70%] w-full md:bg-gray-200 rounded-[30px] md:mr-[70px]">
                 <div className="flex justify-between h-[50px] mt-[33px] ml-[50px]">
                     <div className="font-semibold text-2xl">My Wishlist</div>
                 </div>  
@@ -58,12 +58,11 @@ function Mywishlist(){
                          {wishlist.map((item) => {
                              return(
                                  <div className="flex justify-between">
-                                     <div className="flex flex-row gap-6 mt-14 shrink-0">
-                                         <div className="text-center w-16 h-24 rounded-2xl border-2 pt-6">
-                                             <div className="text-[#FF8900]">15</div>
-                                             <div>Wed</div>
+                                     <div className="flex flex-row gap-6 mt-14">
+                                         <div className="text-center pt-6">
+                                             <img src={item.image} className="w-80"/>
                                          </div>
-                                     <div>
+                                     <div className="mt-7">
                                          <div className="font-semibold text-3xl mb-4">{item.tittle}</div>
                                          <div className="text-[#373A42] text-sm">
                                              <div>{item.location}</div>

@@ -28,6 +28,7 @@ function Profile(){
     const [message, setMessage] = React.useState(false)
     const dispatch = useDispatch()
     const [selectedNationality, setSelectedNationality] = React.useState(datauser.profile.nationality_id);
+    const [gender, setGender] = React.useState(datauser.profile.gender);
 
     async function home(){
       const dataH = await fetch('http://localhost:8080/profile/',{
@@ -96,6 +97,7 @@ function Profile(){
         const user = e.target.user.value 
         const email = e.target.email.value 
         const phone = e.target.phone.value 
+        const genders = gender
         const prof = e.target.profession.value
         const national = e.target.national.value 
         const birth = e.target.birth.value
@@ -107,6 +109,7 @@ function Profile(){
         formData.append('username', user)
         formData.append("email", email)
         formData.append("phone_number", phone)
+        formData.append('gender', genders)
         formData.append("profession", prof)
         formData.append("nationality_id", national)
         formData.append("birth_date", birth)
@@ -143,6 +146,7 @@ function Profile(){
               ...datauser.profile,
               nationality_id: national,
               picture: profilePicture,
+              gender: genders,
             }
           }
           dispatch(datainput(updatedProfile))
@@ -154,7 +158,7 @@ function Profile(){
         }
 
     return(
-        <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+        <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
                 <div className="md:w-[30%] hidden md:block">
@@ -163,41 +167,38 @@ function Profile(){
                 <div className="flex flex-col-reverse md:flex-row md:w-[70%] w-[100%] md:bg-gray-200 rounded-[30px] mr-[70px]">
                     <div className="md:w-[60%] w-[100%]">
                         <div className="ml-[50px] mb-[50px] mt-[46px] hidden md:block">Profile</div>
-                    <form className="flex flex-col w-full md:w-[80%] ml-[50px]" onSubmit={updatep}>
+                    <form className="flex flex-col w-full md:w-[80%] ml-9 mt-10 md:mt-0 md:ml-14" onSubmit={updatep}>
                         {message && <div className="text-red-400 mb-10">{message}</div>}
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Name</label>
-                            <input type="text" name="name" defaultValue={datauser.profile.full_name} className="h-[55px] w-[100%] border rounded-2xl md:ml-[95px] pl-5 "/>
+                            <input type="text" name="name" defaultValue={datauser.profile.full_name} className="h-[55px] w-full border rounded-2xl md:ml-[95px] pl-5"/>
                             </div>
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Username</label> 
-                            <input type="text" name="user" defaultValue={datauser.user.username} className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5  "/>
-                            {/* <div className="ml-3 border-b-2 text-blue-500 w-6">Edit</div> */}
+                            <input type="text" name="user" defaultValue={datauser.user.username} className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Email</label>
-                            <input type="text" name="email" defaultValue={datauser.user.email} className="h-[55px] w-[100%] border rounded-2xl md:ml-[99px] pl-5  "/>
-                            {/* <div className="ml-3 border-b-2 text-blue-500 w-6">Edit</div> */}
+                            <input type="text" name="email" defaultValue={datauser.user.email} className="h-[55px] w-full border rounded-2xl md:ml-[99px] pl-5  "/>
                             </div>  
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Phone Number</label>
-                            <input type="text" name="phone" defaultValue={datauser.profile.phone_number} className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5  "/>
-                            {/* <div className="ml-3 border-b-2 text-blue-500 w-6">Edit</div> */}
+                            <input type="text" name="phone" defaultValue={datauser.profile.phone_number} className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Gender</label>
                             <div className="flex gap-[50px] md:ml-[95px] w-full">
-                                <div><input type="radio" checked/>Male</div>
-                                <div><input type="radio"/>Female</div>
+                                <div><input type="radio" name="gender" value={1} checked={gender === 1} onChange={() => setGender(1)}/>Male</div>
+                                <div><input type="radio" name="gender" value={2} checked={gender === 2} onChange={() => setGender(2)}/>Female</div>
                             </div>
                             </div>
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Profession</label>
-                            <input type="text" name="profession" defaultValue={datauser.profile.profession} placeholder="Endivepreneur" className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5  "/>
+                            <input type="text" name="profession" defaultValue={datauser.profile.profession} placeholder="Endivepreneur" className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Nationality</label>
-                            <select type="text" name="national" className="h-[55px] w-[100%] border rounded-2xl md:ml-[65px] pl-5" value={selectedNationality} onChange={(e) => setSelectedNationality(e.target.value)}>
+                            <select type="text" name="national" className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5" value={selectedNationality} onChange={(e) => setSelectedNationality(e.target.value)}>
                                 {national.map((item) => {
                                 return (    
                                   <option key={item.id} value={item.id}>
@@ -208,10 +209,9 @@ function Profile(){
                               </select>
                             
                             </div>  
-                            <div className="flex mb-[50px] flex-col md:flex-row gap-2 md:items-center">
+                            <div className="flex flex-col md:flex-row mb-6 items-center">
                             <label>Birthday Date</label>
-                            <input type="date" name="birth" defaultValue={datauser.profile.birth_date} className="h-[55px] w-[100%] border rounded-2xl md:ml-[75px] pl-5  "/>
-                            {/* <div className="ml-3 border-b-2 text-blue-500 w-6">Edit</div> */}
+                            <input type="date" name="birth" defaultValue={datauser.profile.birth_date} className="h-[55px] w-full border rounded-2xl md:ml-[75px] pl-5  "/>
                             </div>
                             <div className="w-full h-[60px] bg-slate-400 text-center align-middle rounded-3xl content-center">
                                 <button type="submit" className="text-3xl ">SAVE</button>

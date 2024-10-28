@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import people from "../assets/img/family.svg";
@@ -45,6 +45,7 @@ function Index() {
   const [page, setPage] = React.useState(1)
   const [prevpage, setPrevPage] = React.useState(1)
   const [search, setSearch] = React.useState("")
+  const locationRef = useRef(null);
   console.log(page)
   console.log(category)
 
@@ -134,14 +135,14 @@ useEffect(() => {
 
 
   return (
-    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+    <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
       <div>
-        <Navbar />
+        <Navbar locationRef={locationRef}/>
       </div>
       <div className="mb-[150px]">
         <div className="h-[600px] bg-[#3366FF]  mb-[175px]">
           <div className="w-full h-full flex items-end justify-end">
-            <img src={orangebanner} alt="" className="w-full h-[600px]" />
+            <img src={orangebanner} alt="" className="w-full h-[600px] object-cover" />
           </div>
         </div>
         <div className="w-full flex flex-col items-center">
@@ -235,7 +236,7 @@ useEffect(() => {
                     LOCATION
                   </div>
                 </div>
-                <div className="grid md:grid-cols-4 gap-7 mb-[50px] text-center">
+                <div className="grid md:grid-cols-4 gap-7 mb-[50px] text-center" id="location" ref={locationRef}>
                   <div>
                     <div className="text-4xl text-white font-medium">
                       Discover Events Near You

@@ -176,7 +176,7 @@ function Ticket() {
 
 
   return (
-    <div className="bg-gradient-to-bl from-yellow-300 to-amber-800">
+    <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
       <div className="navbar">
         <Navbar />
       </div>
