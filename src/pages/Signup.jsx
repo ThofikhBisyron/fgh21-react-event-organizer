@@ -81,7 +81,7 @@ const [New, setNew] = React.useState("password")
             navigate("/Login");
             return
           }else{
-            setMessage("Please Try Again")
+            setMessage("An error occurred, please try again")
             return
           }
         })
@@ -118,7 +118,9 @@ const [New, setNew] = React.useState("password")
                             <img src={show} alt="" className="w-6 h-6"/>
                         </button>
                     </div>
-                    <div className="flex gap-3 text-sm ml-3"><input type="checkbox" name="cek"/>Accept terms and condition</div>
+                    <label className="flex gap-3 text-sm ml-3" htmlfor="cek">
+                        <input type="checkbox" id="cek" name="cek"/>Accept terms and condition
+                    </label>
                     </div>
                         <Link to="/Loginpassword"><div className="flex flex-col gap-7 text-sm text-right mb-5">Forgot Password?</div></Link>
                         <button type ="submit" className="w-[100%] h-[55px] bg-[#3366FF] mb-[48px] rounded-xl text-white">Sign Up</button> 

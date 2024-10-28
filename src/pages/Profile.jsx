@@ -147,6 +147,9 @@ function Profile(){
               nationality_id: national,
               picture: profilePicture,
               gender: genders,
+              profession: prof,
+              phone_number: phone,
+              birth_date: birth,
             }
           }
           dispatch(datainput(updatedProfile))

@@ -16,8 +16,8 @@ function Footer(){
                 <div className="flex gap-10 md:justify-between md:ml-20 ml-6 flex-col md:flex-row mb-20 mt-40 mr-32">
                     <div className="">
                         <div class="flex items-center mb-[30px]"><img src={ticket} alt="" className="w-10 h-10"/>
-                            <span className="text-[#757217] text-2xl font-semibold">Athrus</span>
-                            <span className="text-[#757217] text-2xl font-semibold">Tick</span>
+                            <span className="text-yellow-300 text-2xl font-semibold">Athrus</span>
+                            <span className="text-yellow-300 text-2xl font-semibold">Tick</span>
                         </div>
                         <div className="text-xs mb-[15px]">Find events you love with our</div>
                         <div>   

@@ -6,7 +6,8 @@ import profileimg from "../assets/img/profileimage.png"
 import ticket from "../assets/img/logoticket.png"
 import { useSelector } from "react-redux";
 import { CgProfile } from "react-icons/cg";
-import { Link } from "react-router-dom"
+import { Link, ScrollRestoration } from "react-router-dom"
+
 
 
 
@@ -39,6 +40,7 @@ function Navbar({locationRef}){
     return(
     <div class="bg-orange-500">
         <div>
+            <ScrollRestoration/>
             <div className="w-{100%] flex md:flex-row flex-col justify-between md:align-middle content-center items-center mr-10 ml-10">
                 <div className="flex items-center justify-between w-full md:w-[0]">
                     <Link to="/Index"><div className="flex items-center"><img src={ticket} className="w-20 h-20 md:w-20 md:h-20" alt=""/>
@@ -54,9 +56,11 @@ function Navbar({locationRef}){
                             <Link to="/Index"><div className="m-2 hover:text-black">
                                 <span>home</span>
                             </div></Link>
+                            {datauser.user.role_id === 1 ? "" : (
                             <Link to="/Createevent"><div className="m-2 hover:text-black">
                                 <span>Create Event</span>
                             </div></Link>
+                            )}
                             <div className="m-2 hover:text-black">
                                 <button onClick={handleLocationClick}>Location</button>
                             </div>
