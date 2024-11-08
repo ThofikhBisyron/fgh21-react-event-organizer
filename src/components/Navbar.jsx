@@ -13,7 +13,7 @@ import { Link, ScrollRestoration } from "react-router-dom"
 
 
 function Navbar({locationRef}){
-    const datauser = useSelector((state) => state.profile.datauser)
+    const datauser = useSelector((state) => state.profile.datauser) || { user: [], profile: [] };
     const datatoken = useSelector((state) => state.auth.token);
 
 
