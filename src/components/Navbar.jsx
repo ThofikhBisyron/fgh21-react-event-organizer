@@ -15,7 +15,6 @@ import { Link, ScrollRestoration } from "react-router-dom"
 function Navbar({locationRef}){
     const datauser = useSelector((state) => state.profile.datauser) || { user: [], profile: [] };
     const datatoken = useSelector((state) => state.auth.token);
-    console.log(datauser.user)
 
 
     const [navb, setnavb] = React.useState(true)
@@ -57,7 +56,7 @@ function Navbar({locationRef}){
                             <Link to="/Index"><div className="m-2 hover:text-black">
                                 <span>home</span>
                             </div></Link>
-                            {datauser.user.role_id === 2 ? (
+                            {datauser?.user?.role_id === 2 ? (
                                 <Link to="/Createevent"><div className="m-2 hover:text-black">
                                 <span>Create Event</span>
                                 </div></Link>) : "" }

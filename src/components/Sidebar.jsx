@@ -49,7 +49,7 @@ return (
                             <div className="flex gap-[25px] ml-[49px] hover:text-blue-500"><img src={cardprofile} alt="" />Card</div>
                         <Link to="/Profile"><div className="flex gap-[25px] ml-[49px] hover:text-blue-500"><img src={blueedit} alt="" />Edit Profile</div></Link>
                         <Link to="/Changepassword"><div className="flex gap-[25px] ml-[49px] hover:text-blue-500 "><img src={changep} alt="" />Change Password</div></Link>
-                        {datauser.user.role_id === 2 ? 
+                        {datauser?.user?.role_id === 2 ? 
                         (<Link to="/Createevent"><div className="flex gap-[25px] hover:text-blue-500"><img src={createevent} alt="" />Create Event</div></Link>) : "" }
                         
                         <Link to="/Mybooking"><div className="flex gap-[25px] hover:text-blue-500"><img src={book} alt="" />My Booking</div></Link>
