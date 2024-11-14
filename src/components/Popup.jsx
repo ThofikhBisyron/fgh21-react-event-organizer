@@ -22,7 +22,7 @@ function Popup(props) {
 
   useEffect(() => {
     async function Category() {
-      const categoryFetch = await fetch(`http://localhost:8080/categories/?page=1&limit=100`)
+      const categoryFetch = await fetch(`http://103.93.58.89:21214/categories/?page=1&limit=100`)
       const categoryJson = await categoryFetch.json()
       console.log(categoryJson.results)
       setCategory(categoryJson.results)
@@ -48,7 +48,7 @@ function Popup(props) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch("http://localhost:8080/events/", {
+  const eventfetch = await fetch("http://103.93.58.89:21214/events/", {
     method: 'POST',
     headers: {
       Authorization: "Bearer " + datatoken,
@@ -64,7 +64,7 @@ function Popup(props) {
       categoryForm.append('event_id', eventId)
       categoryForm.append('category_id', category)
 
-      const categoryResponse = await fetch(`http://localhost:8080/categories/`, {
+      const categoryResponse = await fetch(`http://103.93.58.89:21214/categories/`, {
         method: 'POST',
         body: categoryForm,
       })
@@ -80,7 +80,7 @@ function Popup(props) {
           sectionForm.append('price', section.price)
           sectionForm.append('quantity', section.quantity)
 
-          const sectionResponse = await fetch(`http://localhost:8080/eventsection/`,{
+          const sectionResponse = await fetch(`http://103.93.58.89:21214/eventsection/`,{
             method: 'POST',
             body: sectionForm,
           })
@@ -98,7 +98,7 @@ function Popup(props) {
 
  useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const locationfetch = await fetch("http://103.93.58.89:21214/locations/")
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     

@@ -70,7 +70,7 @@ function handleCategoryChange(value) {
 
 async function home(searchValue){
   const eventSearch = searchValue ? `?search=${searchValue}` : "";
-  const dataHome = await fetch(`http://localhost:8080/events/${eventSearch}` ,{
+  const dataHome = await fetch(`http://103.93.58.89:21214/events/${eventSearch}` ,{
     headers: {
       Authorization: "Bearer " + datatoken,
     }
@@ -101,7 +101,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function partnersData(){
-    const eventfetch = await fetch("http://localhost:8080/partners/")
+    const eventfetch = await fetch("http://103.93.58.89:21214/partners/")
     const datapartners = await eventfetch.json()
     setPartner(datapartners.results)
   }
@@ -110,7 +110,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://localhost:8080/locations/")
+    const locationfetch = await fetch("http://103.93.58.89:21214/locations/")
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     
@@ -119,7 +119,7 @@ useEffect(() =>{
 }, []) 
 
 async function eventCategory() {
-  const Categoryfetch = await fetch(`http://localhost:8080/categories/events/?id=${datacategory}&page=${page}&limit=3`)
+  const Categoryfetch = await fetch(`http://103.93.58.89:21214/categories/events/?id=${datacategory}&page=${page}&limit=3`)
   const listCategory = await Categoryfetch.json()
   if (listCategory.results.length === 0){
     setPage(prevpage)

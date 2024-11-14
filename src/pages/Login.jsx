@@ -60,7 +60,7 @@ function btnlogin(e) {
         formData.append('email', email)
         formData.append('password', password)
        
-        fetch ('http://localhost:8080/auth/login', {
+        fetch ('http://103.93.58.89:21214/auth/login', {
             method: 'POST',
             body: formData,
         })
@@ -73,7 +73,7 @@ function btnlogin(e) {
                 async function profile() {
 
                     const dataProfile = await fetch(
-                        "http://localhost:8080/profile/" ,
+                        "http://103.93.58.89:21214/profile/" ,
                    {
                     headers: {
                         Authorization: "Bearer " + data.results,
