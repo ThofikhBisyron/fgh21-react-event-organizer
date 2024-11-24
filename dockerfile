@@ -10,7 +10,7 @@ RUN npm install
 
 RUN npx vite build 
 
-ENTRYPOINT cd dist && serve -l tcp://0.0.0.0:4000
+ENTRYPOINT ["serve", "-s", "-l", "tcp://0.0.0.0:4000", "dist"]
 # ENTRYPOINT cd dist $$ serve -l tcp://0.0.0.0
 
 # ENTRYPOINT npm run dev  -- --host 0.0.0.0
