@@ -6,7 +6,7 @@ import profileimg from "../assets/img/profileimage.png"
 import ticket from "../assets/img/logoticket.png"
 import { useSelector } from "react-redux";
 import { CgProfile } from "react-icons/cg";
-import { Link, ScrollRestoration } from "react-router-dom"
+import { Link, Navigate, ScrollRestoration, useNavigate } from "react-router-dom"
 
 
 
@@ -15,6 +15,7 @@ import { Link, ScrollRestoration } from "react-router-dom"
 function Navbar({locationRef}){
     const datauser = useSelector((state) => state.profile.datauser) || { user: [], profile: [] };
     const datatoken = useSelector((state) => state.auth.token);
+    const navigate = useNavigate()
 
 
     const [navb, setnavb] = React.useState(true)
@@ -28,14 +29,20 @@ function Navbar({locationRef}){
     }
 
     const handleLocationClick = () => {
-        const locationElement = document.getElementById('location');
-        if (locationElement) {
-          window.scrollTo({
-            top: locationElement.offsetTop,
-            behavior: 'smooth',
-          });
-        }
-      };
+        
+
+        navigate("/Index")
+
+        setTimeout(() => {
+            const locationElement = document.getElementById('location');
+            if (locationElement) {
+              window.scrollTo({
+                top: locationElement.offsetTop,
+                behavior: 'smooth',
+              });
+            }
+          }, 200);
+        };
 
     return(
     <div class="bg-orange-500">

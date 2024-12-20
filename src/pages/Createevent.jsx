@@ -14,8 +14,9 @@ import calender from "../assets/img/calender.svg"
 import { Input } from "postcss"
 import Sidebar from "../components/Sidebar"
 import Popup from "../components/Popup"
+import PopupEdit from "../components/PopupEdit"
 import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 
 
 
@@ -30,10 +31,11 @@ function Createevent(){
     }
 
     const [pop, setpop] = React.useState(false)
+    const [popedit, setPopEdit] = React.useState({isOpen:false, eventId: null})
     
 
     async function createdEvent() {
-        const eventfetch = await fetch("http://103.93.58.89:21214/events/created",{
+        const eventfetch = await fetch("http://localhost:8080/events/created",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
@@ -43,9 +45,25 @@ function Createevent(){
         setEventCreated(listevent.results)
     }
 
+    async function deleteEvent(id) {
+        const deleventFetch = await fetch("http://localhost:8080/events/" + id,{
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + dataToken,
+            },
+        })
+        if (deleventFetch.ok) {
+            createdEvent()
+        }
+    }
+
     useEffect(() =>{
         createdEvent()
-    }, [pop])
+        deleteEvent()
+    }, [pop, popedit])
+    const closePopup = () => {
+        setPopEdit({ isOpen: false, eventId: null });
+      };
 
     return(
         <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
@@ -70,7 +88,7 @@ function Createevent(){
                             return(
                                     <div className="flex flex-row gap-9 mt-14 shrink-0">
                                         <div className="text-center">
-                                            <img src={item.image} className="w-96 rounded-xl object-cover"/>
+                                            <img src={item.image} className="w-40 rounded-xl object-cover"/>
                                         </div>
                                         <div>
                                             <div className="font-semibold text-3xl mb-4">{item.tittle}</div>
@@ -79,11 +97,11 @@ function Createevent(){
                                                 <div>{item.date}</div>
                                             </div>
                                             <div className="flex gap-8">
-                                                <div className="text-sm text-[#3366FF] mt-3">Detail</div>
-                                                <div className="text-sm text-[#3366FF] mt-3">Update</div>
-                                                <div className="text-sm text-[#3366FF] mt-3">Delete</div>
+                                                <Link to={`/Events/${item.id}`}className="text-sm text-[#3366FF] mt-3">Detail</Link>
+                                                <button onClick={()=> setPopEdit({isOpen:true, eventId: item.id})}className="text-sm text-[#3366FF] mt-3">Update</button>
+                                                <button onClick={()=> deleteEvent(item.id)}className="text-sm text-[#3366FF] mt-3">Delete</button>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                         )
                     })}
@@ -92,6 +110,8 @@ function Createevent(){
                 </div>  
             </div>
             {pop ? <Popup close={()=>setpop(false)}/> : ""}
+            {popedit.isOpen ? <PopupEdit close={() => setPopEdit({ isOpen: false, eventId: null })} eventId={popedit.eventId} popedit={popedit} props={{ close: closePopup }}/> : ""}
+
             {/* <div className={pop ? "hidden" : ""}>
                 <Popup butpop={butpop} setEventCreated={setEventCreated}/>
             </div> */}

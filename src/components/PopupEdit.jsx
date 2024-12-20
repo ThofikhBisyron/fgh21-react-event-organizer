@@ -1,10 +1,10 @@
 import react from "react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import uploadImage from "../assets/img/uploadImage.png"
 
-function Popup(props) {
+function PopupEdit({props, popedit, eventId}) {
   const datatoken = useSelector((state) => state.auth.token);
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -22,6 +22,8 @@ function Popup(props) {
     const newSections = sections.filter((_, i) => i !== index);
     setSections(newSections);
   };
+
+  const {id} = useParams()
 
   useEffect(() => {
     async function Category() {
@@ -71,8 +73,8 @@ function Popup(props) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch("http://localhost:8080/events/", {
-    method: 'POST',
+  const eventfetch = await fetch("http://localhost:8080/events/" + eventId, {
+    method: 'PATCH',
     headers: {
       Authorization: "Bearer " + datatoken,
       },
@@ -91,34 +93,37 @@ function Popup(props) {
       const eventId = listevent.results.id
 
       const categoryForm = new URLSearchParams()
-      categoryForm.append('event_id', eventId)
       categoryForm.append('category_id', category)
 
-      const categoryResponse = await fetch(`http://localhost:8080/categories/`, {
-        method: 'POST',
+      const categoryResponse = await fetch(`http://localhost:8080/categories/` + eventId, {
+        method: 'PATCH',
         body: categoryForm,
       })
 
       const categoryResult = await categoryResponse.json()
+      console.log(categoryResult)
 
       if (categoryResult.success === true) {
-        for (const section of sections) {
-          const sectionForm = new URLSearchParams()
-          sectionForm.append('event_id', eventId)
-          sectionForm.append('name', section.name)
-          sectionForm.append('price', section.price)
-          sectionForm.append('quantity', section.quantity)
-        
-
-          const sectionResponse = await fetch(`http://localhost:8080/eventsection/`,{
-            method: 'POST',
-            body: sectionForm,
-          })
-
-          const sectionResult = await sectionResponse.json()
-        }
+        const sectionForm = new URLSearchParams();
+        sectionForm.append("event_id", eventId);
+      
+        sections.forEach((section, index) => {
+          sectionForm.append(`name_${index}`, section.name);
+          sectionForm.append(`price_${index}`, section.price.toString()); 
+          sectionForm.append(`quantity_${index}`, section.quantity.toString()); 
+        });
+      
+        const sectionResponse = await fetch('http://localhost:8080/eventsection/', {
+          method: 'PATCH',
+          body: sectionForm,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+      
+        const sectionResult = await sectionResponse.json();
+        console.log(sectionResult);
       }
-
     props.close()
   }
 
@@ -148,7 +153,7 @@ const ShowImage = (e) => {
   return (
     <div className="flex items-center justify-center bg-black/25 w-screen h-screen top-0 left-0 fixed">
       <div className="bg-white pr-[52px] w-4/5 h-screen rounded-[30px] pl-[52px] absolute shrink-0 overflow-y-scroll">
-        <div className="pt-[32px] font-semibold tracking-[1px] mb-[44px] text-center">Create Event</div>
+        <div className="pt-[32px] font-semibold tracking-[1px] mb-[44px] text-center">Update Event</div>
         <form onSubmit={insertEvent}>
         <div className="w-full flex md:flex-row flex-col md:gap-[60px]">
           <div className="md:w-1/2">
@@ -273,7 +278,7 @@ const ShowImage = (e) => {
       <div className="flex">
         <div className="w-full text-right mb-[42px]">
           <button
-            type="submit"  onClick={props.butpop} className="h-[60px] w-full text-white bg-[#3366FF] max-w-[310px] rounded-[15px] hover:opacity-70">Save
+            type="submit" className="h-[60px] w-full text-white bg-[#3366FF] max-w-[310px] rounded-[15px] hover:opacity-70">Save
           </button>
         </div>
         <div className="w-full text-right mb-[42px]">
@@ -288,4 +293,4 @@ const ShowImage = (e) => {
   );
 }
 
-export default Popup;
+export default PopupEdit;

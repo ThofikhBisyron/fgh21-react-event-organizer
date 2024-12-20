@@ -67,7 +67,7 @@ function Payment() {
       return;
     }
     try {
-      const response = await fetch("http://103.93.58.89:21214/transactions/", {
+      const response = await fetch("http://localhost:8080/transactions/", {
         method: 'POST',
         body: formData,
         headers: {

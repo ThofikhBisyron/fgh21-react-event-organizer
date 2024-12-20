@@ -1,4 +1,4 @@
-import React from "react" 
+import React, { useRef } from "react" 
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import profile from "../assets/img/profile.svg"
@@ -18,10 +18,12 @@ import { useSelector } from "react-redux"
 
 
 
+
 function Changepassword(){
     const datatoken = useSelector((state) => state.auth.token);
     console.log(datatoken)
     const [errorMessage, setErrorMessage] = React.useState('');
+    const locationRef = useRef(null);
 
     async function changep(e){
         e.preventDefault()
@@ -45,7 +47,7 @@ function Changepassword(){
             formp.append("password", newp)
             formp.append("oldpassword", old)
         
-        const pnew = await fetch("http://103.93.58.89:21214/users/password", {
+        const pnew = await fetch("http://localhost:8080/users/password", {
         method: "PATCH",
         headers: {
                 Authorization: "Bearer " + datatoken,

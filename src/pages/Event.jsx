@@ -21,9 +21,10 @@ function Event() {
   let {id} = useParams()
   const [event, setEvent] = React.useState([])
   const [mess, setMess] = React.useState(false)
+  const [read, setRead] = React.useState(false)
 
   async function eventData(){
-    const eventfetch = await fetch("http://103.93.58.89:21214/events/" + id)
+    const eventfetch = await fetch("http://localhost:8080/events/" + id)
     const eventdata = await eventfetch.json()
     setEvent(eventdata.results)
   }
@@ -34,7 +35,7 @@ function Event() {
     const formData = new URLSearchParams()
     formData.append('event_id', eventid)
 
-    const wishlistfetch = await fetch("http://103.93.58.89:21214/wishlist/", {
+    const wishlistfetch = await fetch("http://localhost:8080/wishlist/", {
       method:'POST',
       headers: {
         Authorization: "Bearer " + datatoken,
@@ -101,7 +102,7 @@ function Event() {
             </div>
           </div>
         </div>
-        <div className="flex mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] bg-yellow-300 md:bg-gray-200 p-10 mb:p-[100px] rounded-3xl">
+        <div className="flex mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px md:bg-gray-200 p-10 mb:p-[100px] rounded-3xl">
           <div className="md:flex flex-col md:w-2/5 h-[486px] mr-[88px] hidden">
             <div className="flex relative w-full h-full overflow-hidden rounded-[40px] mb-[52px] "> 
               <img src={event.image} alt="" className=" h-full w-full object-cover"/>
@@ -120,7 +121,7 @@ function Event() {
             {mess && <div className="text-red-500">{mess}</div>}
             </div>
           </div>
-          <div className="md:w-3/5">
+          <div className="md:w-3/5 w-full">
             <div className=" md:flex flex-col border-b-2 border-solid border-[rgba(193,197,208,0.25)] mb-[25px] hidden">
               <div className="font-semibold text-2xl mb-[30px] tracking-[2px]">{event.tittle}
               </div>
@@ -160,10 +161,10 @@ function Event() {
             </div>
             <div className="font-semibold tracking-[1px] text-xl mb-[16px]">Event Detail
             </div>
-            <div className="text-xs text-[rgba(55,58,66,0.75)] mb-[12px]">{event.description}
+            <div className={`text-xs text-[rgba(55,58,66,0.75)] mb-[12px] break-words ${read ? "line-clamp-none" : "line-clamp-1"}`}>{event.description}
             </div>
-            <div className="text-xs text-[#3366FF] font-medium mb-[25px]">Read More
-            </div>
+            <button className="text-xs text-[#3366FF] font-medium mb-[25px]" onClick={() => setRead(!read)}>{read ? "Read Less" : "Read More"}
+            </button>
             <div className="text-xl tracking-[1px] text-[#373A42] mb-[16px]">Location
             </div>
             <div className="w-full">

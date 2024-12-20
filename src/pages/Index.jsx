@@ -46,6 +46,7 @@ function Index() {
   const [prevpage, setPrevPage] = React.useState(1)
   const [search, setSearch] = React.useState("")
   const locationRef = useRef(null);
+  const [loadingEvent, setLoadingEvent] = React.useState(false)
   console.log(page)
   console.log(category)
 
@@ -69,15 +70,20 @@ function handleCategoryChange(value) {
 }
 
 async function home(searchValue){
+  setLoadingEvent(true)
   const eventSearch = searchValue ? `?search=${searchValue}` : "";
-  const dataHome = await fetch(`http://103.93.58.89:21214/events/${eventSearch}` ,{
+  const dataHome = await fetch(`http://localhost:8080/events/${eventSearch}` ,{
     headers: {
       Authorization: "Bearer " + datatoken,
     }
-  })
+  }, )
   const listevent = await dataHome.json()
-  dispatch(inputhome(listevent.results))
-}
+  dispatch(inputhome(listevent.results)) 
+    setTimeout(() => {
+      setLoadingEvent(false) 
+    }, 1000)
+  
+} 
 
 function SearchSubmit(e) {
   e.preventDefault();
@@ -101,7 +107,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function partnersData(){
-    const eventfetch = await fetch("http://103.93.58.89:21214/partners/")
+    const eventfetch = await fetch("http://localhost:8080/partners/")
     const datapartners = await eventfetch.json()
     setPartner(datapartners.results)
   }
@@ -110,7 +116,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://103.93.58.89:21214/locations/")
+    const locationfetch = await fetch("http://localhost:8080/locations/")
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     
@@ -119,7 +125,7 @@ useEffect(() =>{
 }, []) 
 
 async function eventCategory() {
-  const Categoryfetch = await fetch(`http://103.93.58.89:21214/categories/events/?id=${datacategory}&page=${page}&limit=3`)
+  const Categoryfetch = await fetch(`http://localhost:8080/categories/events/?id=${datacategory}&page=${page}&limit=3`)
   const listCategory = await Categoryfetch.json()
   if (listCategory.results.length === 0){
     setPage(prevpage)
@@ -137,7 +143,7 @@ useEffect(() => {
   return (
     <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
       <div>
-        <Navbar locationRef={locationRef}/>
+        <Navbar/>
       </div>
       <div className="mb-[150px]">
         <div className="h-[600px] bg-[#3366FF]  mb-[175px]">
@@ -183,43 +189,51 @@ useEffect(() => {
         <form className="mb-20 ml-16" onSubmit={SearchSubmit}>
           <input type="text" name="search" placeholder="Search Event Here" className="h-12 w-1/3 bg-orange-100 rounded-xl pl-4" value={search} onChange={(e) => setSearch(e.target.value)}/>
         </form>
-        {datahome.length === 0 ? 
-        (<div className="border-2 border-orange-300 text-white rounded-full p-5 mb-10 mr-20 ml-20 animate-pulse animate-infinite">
-          <div className="text-4xl text-center">
-            The text you entered is not in the events list
-          </div>
-        </div>) : (
-          <div className="flex gap-4 overflow-x-scroll mb-10 ml-10">
-          {datahome.map((data) =>{
-            return(
-              <Link to={`/Events/${data.id}`}>
-                <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative ">
-                  <img
-                    src={data.image}
-                    alt=""
-                    className="flex w-full h-full rounded-[40px] relative mb-[52px] overflow-hidden object-cover"
-                  />
-                  <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
-                    <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
-                      <div className="text-white">{new Date(data.date).toLocaleDateString("en-CA")}</div>
-                      <div className="text-white">{data.tittle}</div>
-                      <div className="flex mb-[8px]">
-                        {/* {data.attendees.map((item) =>{
-                          return(
-                            <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
-                            <img src={'https://wsw6zh-8888.csb.app/' + item.picture} alt="" />
+        {loadingEvent ? (
+          <div className="text-center text-gray-500 animate-pulse text-4xl mb-20">Loading...</div>
+        ) : (
+          <>
+          {datahome.length === 0 ? 
+            (<div className="border-2 border-orange-300 text-white rounded-full p-5 mb-10 mr-20 ml-20 animate-pulse animate-infinite">
+              <div className="text-4xl text-center">
+                The text you entered is not in the events list
+              </div>
+            </div>) : (
+              
+              <div className="flex gap-4 overflow-x-scroll mb-10 ml-10">
+              {datahome.map((data) =>{
+                return(
+                  <Link to={`/Events/${data.id}`}>
+                    <div className="flex w-[260px] flex-shrink-0 h-[376px] overflow-hidden rounded-[40px] relative ">
+                      <img
+                        src={data.image}
+                        alt=""
+                        className="flex w-full h-full rounded-[40px] relative mb-[52px] overflow-hidden object-cover"
+                      />
+                      <div className="absolute bg-gradient-to-t from-black ... w-[260px] h-[376px]">
+                        <div className="flex flex-col justify-end h-full gap-6 ml-6 pb-7">
+                          <div className="text-white">{new Date(data.date).toLocaleDateString("en-CA")}</div>
+                          <div className="text-white">{data.tittle}</div>
+                          <div className="flex mb-[8px]">
+                            {/* {data.attendees.map((item) =>{
+                              return(
+                                <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
+                                <img src={'https://wsw6zh-8888.csb.app/' + item.picture} alt="" />
+                              </div>
+                              )
+                            })} */}
                           </div>
-                          )
-                        })} */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </Link>
-            )
-          })}
-          </div>
-        )}
+                  </Link>
+                )
+              })}
+              </div>
+            )}
+            </>
+        )} 
+        
         
         
         <div className="w-full flex flex-col items-center">
