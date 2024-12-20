@@ -1,20 +1,25 @@
-FROM node:lts-alpine
 
-WORKDIR /app 
+FROM node:lts-alpine AS builder
 
-COPY . /app/
+WORKDIR /app
 
-RUN npm install -g serve@latest
+COPY package*.json ./
 
 RUN npm install
 
-RUN npx vite build 
+COPY . .
 
-ENTRYPOINT ["serve", "-s", "-l", "tcp://0.0.0.0:4000", "dist"]
-# ENTRYPOINT cd dist $$ serve -l tcp://0.0.0.0
+RUN npm run build
 
-# ENTRYPOINT npm run dev  -- --host 0.0.0.0
+FROM nginx:alpine
 
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+EXPOSE 4000
+
+CMD ["nginx", "-g", "daemon off;"]
+
+#Normal
 # FROM node:lts-alpine
 
 # WORKDIR /app 
@@ -22,3 +27,10 @@ ENTRYPOINT ["serve", "-s", "-l", "tcp://0.0.0.0:4000", "dist"]
 # COPY . /app/
 
 # RUN npm install -g serve@latest
+
+# RUN npm install
+
+# RUN npx vite build 
+
+# ENTRYPOINT ["serve", "-s", "-l", "tcp://0.0.0.0:4000", "dist"]
+
