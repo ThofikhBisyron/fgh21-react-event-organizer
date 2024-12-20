@@ -26,46 +26,6 @@ import { current } from "@reduxjs/toolkit";
 
 function Ticket() {
   
-  // let [count, set] = React.useState(0)
-  //   function min(){
-  //       count = count - 1
-  //       set(count)
-
-  //   }
-  //   function plus(){ 
-  //       count = count + 1
-  //       set(count)
-  //   }
-  //   if (count <= -1){
-  //       count = 0
-  //   }
-    // 2
-    // let [count2, set2] = React.useState(0)
-    // function min2(){
-    //     count2 = count2 - 1
-    //     set2(count2)
-
-    // }
-    // function plus2(){
-    //     count2 = count2 + 1
-    //     set2(count2)
-    // }
-    // if (count2 <= -1){
-    //     count2 = 0
-    // }
-    // // 3
-    // let [count3, set3] = React.useState(0)
-    // function min3(){
-    //   count3 = count3 -1
-    //   set3(count3)
-    // }   
-    // function plus3(){
-    //   count3 = count3 + 1
-    //   set3(count3)
-    // }
-    // if (count3 <= -1){
-    //   count3 = 0
-    // }
 
     let {id} = useParams()  
     let dispatch = useDispatch()
@@ -74,10 +34,25 @@ function Ticket() {
     const [ticket, setTicket] = React.useState([])
     const dataticket = useSelector((state) => state.ticket.dataticket); 
     const datatoken = useSelector((state) => state.auth.token)
+    const [sort, setSort] = React.useState("asc")
+
+    const handleSort = () => {
+      setSort((prev) => (prev === "asc" ? "desc" : "asc"));
+
+    }
+    
+    const sortTicket = [...dataticket].sort((a, b) =>{
+      if (sort === "asc") {
+        return a.price - b.price
+      } else {  
+        return b.price - a.price
+      }
+    })
+
 
     useEffect(() =>{
       async function ticket(){
-        const fetchticket = await fetch("http://localhost:8080/events/section/" + id ,{
+        const fetchticket = await fetch("http://103.93.58.89:21214/events/section/" + id ,{
           headers: {
             Authorization: "Bearer " + datatoken,
           }
@@ -91,7 +66,7 @@ function Ticket() {
 
     useEffect(() =>{
       async function eventData(){
-        const eventfetch = await fetch("http://localhost:8080/events/" + id,{
+        const eventfetch = await fetch("http://103.93.58.89:21214/events/" + id,{
           headers: {
           Authorization: "Bearer " + datatoken,
         }
@@ -103,36 +78,6 @@ function Ticket() {
       eventData()
     }, [])
     
-
-  // const [selsec, setSelsec] = useState([])
-  
-  // const ticketSec = selsec.reduce((prev, curr) => {
-  //   const arr = prev;
-  //   if (curr.quantity !== 0) {
-  //     arr.push(`${curr.name}(${curr.quantity})`);
-  //   }
-  //   return arr;
-  // }, []);
-  // const quantity = selsec.reduce(
-  //   (prev, curr) => prev + curr.quantity,
-  //   0
-  // );
-  // const price = selsec.reduce((prev, curr) => prev + curr.price, 0);
-
-  // const secId = selsec.reduce((prev, curr) => {
-  //   const arr = prev;
-  //   if (curr.quantity !== 0) {
-  //     arr.push(curr.id);
-  //   }
-  //   return arr;
-  // }, []);
-  // const quantityArr = selsec.reduce((prev, curr) => {
-  //   const arr = prev;
-  //   if (curr.quantity !== 0) {
-  //     arr.push(curr.quantity);
-  //   }
-  //   return arr;
-  // }, []);
 
   const [selectedSections, setSelectedSections] = useState([]);
 
@@ -182,7 +127,7 @@ function Ticket() {
       </div>
       <div className="">
         <div className="flex md:flex-row flex-col md:mt-[48px] md:mr-[120px] md:ml-[120px] md:mb-[100px] bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">
-          <div className=" md:w-[50%] w-[100%]  h-[486px] mr-[88px] sticky top-10" >
+          <div className=" md:w-[50%] w-[100%]  h-[486px] mr-[88px] md:sticky top-10" >
             <img src={event.image} alt="" className="w-auto h-full rounded-3xl object-cover" />
           </div>
           <div className="md:w-[50%] w-[100%] md:m  l-[88px]">
@@ -191,13 +136,13 @@ function Ticket() {
                 <div className="font-semibold tracking-[1px] text-xl text-[#373A42]">Tickets
                 </div>
                 <div className="flex items-center gap-[24px]">
-                  <button className="font-semibold tracking-[1px] text-xs text-[#FC1055]">BY PRICE
+                  <button onClick={handleSort} className="font-semibold tracking-[1px] text-xs text-[#FC1055]">BY PRICE ({sort === "asc" ? "Lowest" : "Highest"})
                   </button>
-                  <button type="submit" className=""><img src={filter} alt="" className="h-[24px] w-[24px]" />
+                  <button onClick={handleSort} type="submit" className=""><img src={filter} alt="" className="h-20 w-20 hover:opacity-70" />
                   </button>
                 </div>
               </div>
-              {dataticket.map((item, index) => {
+              {sortTicket.map((item, index) => {
                 console.log(`{plus${item.id}}`)
                 return (
                  <Transaction

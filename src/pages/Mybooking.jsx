@@ -24,7 +24,7 @@ function Mybooking(){
 
 
     async function getBooking() {
-        const datafetch = await fetch("http://localhost:8080/transactions/user",{
+        const datafetch = await fetch("http://103.93.58.89:21214/transactions/user",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
