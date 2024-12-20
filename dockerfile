@@ -1,4 +1,3 @@
-# Stage 1: Build React App
 FROM node:lts-alpine AS builder
 
 WORKDIR /app
