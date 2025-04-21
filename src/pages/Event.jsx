@@ -143,16 +143,16 @@ function Event() {
               </div>
               <div className="text-sm tracking-[1px] font-medium text-[#373A42] mb-[28px]">Attendees</div>
               <div className="flex mb-[8px]">
-                <div className="h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
+                <div className="h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile1} alt="" />
                 </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
+                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile2} alt="" />
                 </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] overflow-hidden">
+                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] overflow-hidden">
                   <img src={profile3} alt="" />
                 </div>
-                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border border-2 border-solid border-[#3366FF] relative overflow-hidden">
+                <div className="ml-[-8px] h-[32px] w-[32px] bg-black rounded-full border-2 border-solid border-[#3366FF] relative overflow-hidden">
                   <img src={profile4} alt="" />
                 <div className="absolute bg-[rgba(234,163,81,0.5)] h-full w-full text-white text-sm flex items-center justify-center top-0 left-0">62+
                   </div>
