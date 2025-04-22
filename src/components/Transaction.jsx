@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ticket1 from "../assets/img/ticket1.svg";
 
 
@@ -45,7 +45,7 @@ function Transaction(props){
                 <div className="pl-[60px] tracking-[1px] text-xs font-semibold">Quantity
                 </div>
                 <div className="flex gap-[20px] items-center">  
-                    <button onClick={()=> setNum(num -1)} className="border border-solid w-[36px] h-[32px] border-[#C1C5D0] rounded-[6px] text-[#C1C5D0]">-
+                    <button onClick={()=> setNum(num > 0 ? num - 1 : 0 )} className="border border-solid w-[36px] h-[32px] border-[#C1C5D0] rounded-[6px] text-[#C1C5D0]">-
                     </button>
                     <div className="">{num}</div>
                     <button onClick={()=> setNum(num +1)} className="border border-solid w-[36px] h-[32px] border-[#C1C5D0] rounded-[6px] text-[#C1C5D0]">+

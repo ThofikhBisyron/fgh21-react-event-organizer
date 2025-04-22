@@ -31,7 +31,7 @@ function Profile(){
     const [gender, setGender] = React.useState(datauser.profile.gender);
 
     async function home(){
-      const dataH = await fetch('http://159.65.11.166:21214/profile/',{
+      const dataH = await fetch('http://localhost:8888/profile/',{
         headers: {
           Authorization: "Bearer " + datatoken,
         }
@@ -44,7 +44,7 @@ function Profile(){
   
       useEffect(() =>{
         async function Nationalities(){
-          const fetchnational = await fetch("http://159.65.11.166:21214/profile/national")
+          const fetchnational = await fetch("http://localhost:8888/profile/national")
           const listnational = await fetchnational.json()
           setNational(listnational.results)     
         }
@@ -68,7 +68,7 @@ function Profile(){
         const formData = new FormData();
         formData.append('profileImg', file);
       
-        const fetchimg = await fetch("http://159.65.11.166:21214/profile/", {
+        const fetchimg = await fetch("http://localhost:8888/profile/", {
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -118,7 +118,7 @@ function Profile(){
           const file = e.target.files;
           const newFormData = new FormData();
           newFormData.append('profileImg', file);
-          await fetch("http://159.65.11.166:21214/profile/", {
+          await fetch("http://localhost:8888/profile/", {
               method: 'PATCH',
               headers: {
                   Authorization: "Bearer " + datatoken,
@@ -129,7 +129,7 @@ function Profile(){
           formData.append('picture', profilePicture);
       }
         
-        const datafetch = await fetch("http://159.65.11.166:21214/profile/update",{
+        const datafetch = await fetch("http://localhost:8888/profile/update",{
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -164,42 +164,40 @@ function Profile(){
         <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
-                <div className="md:w-[30%] hidden md:block">
                     <Sidebar/>
-                </div>
                 <div className="flex flex-col-reverse md:flex-row md:w-[70%] w-[100%] md:bg-gray-200 rounded-[30px] mr-[70px]">
                     <div className="md:w-[60%] w-[100%]">
                         <div className="ml-[50px] mb-[50px] mt-[46px] hidden md:block">Profile</div>
                     <form className="flex flex-col w-full md:w-[80%] ml-9 mt-10 md:mt-0 md:ml-14" onSubmit={updatep}>
                         {message && <div className="text-red-400 mb-10">{message}</div>}
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Name</label>
                             <input type="text" name="name" defaultValue={datauser.profile.full_name} className="h-[55px] w-full border rounded-2xl md:ml-[95px] pl-5"/>
                             </div>
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Username</label> 
                             <input type="text" name="user" defaultValue={datauser.user.username} className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Email</label>
                             <input type="text" name="email" defaultValue={datauser.user.email} className="h-[55px] w-full border rounded-2xl md:ml-[99px] pl-5  "/>
                             </div>  
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Phone Number</label>
                             <input type="text" name="phone" defaultValue={datauser.profile.phone_number} className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Gender</label>
                             <div className="flex gap-[50px] md:ml-[95px] w-full">
                                 <div><input type="radio" name="gender" value={1} checked={gender === 1} onChange={() => setGender(1)}/>Male</div>
                                 <div><input type="radio" name="gender" value={2} checked={gender === 2} onChange={() => setGender(2)}/>Female</div>
                             </div>
                             </div>
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Profession</label>
                             <input type="text" name="profession" defaultValue={datauser.profile.profession} placeholder="Endivepreneur" className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5  "/>
                             </div>
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Nationality</label>
                             <select type="text" name="national" className="h-[55px] w-full border rounded-2xl md:ml-[65px] pl-5" value={selectedNationality} onChange={(e) => setSelectedNationality(e.target.value)}>
                                 {national.map((item) => {
@@ -212,7 +210,7 @@ function Profile(){
                               </select>
                             
                             </div>  
-                            <div className="flex flex-col md:flex-row mb-6 items-center">
+                            <div className="flex flex-col md:flex-row mb-6 md:items-center">
                             <label>Birthday Date</label>
                             <input type="date" name="birth" defaultValue={datauser.profile.birth_date} className="h-[55px] w-full border rounded-2xl md:ml-[75px] pl-5  "/>
                             </div>

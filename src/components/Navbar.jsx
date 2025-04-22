@@ -45,7 +45,7 @@ function Navbar({locationRef}){
         };
 
     return(
-    <div class="bg-orange-500">
+    <div class="bg-orange-500 fixed top-0 left-0 w-full z-20 md:static">
         <div>
             <ScrollRestoration/>
             <div className="w-{100%] flex md:flex-row flex-col justify-between md:align-middle content-center items-center mr-10 ml-10">

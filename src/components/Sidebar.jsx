@@ -14,12 +14,15 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { removedata } from "../redux/reducers/profile"
 import { logout } from "../redux/reducers/auth"
+import React from "react"
+import nav from "../assets/img/navbar.svg"
 
 function Sidebar(){
     const dataToken = useSelector((state) => state.auth.token)
     const datauser = useSelector((state) => state.profile.datauser) || { user: [], profile: [] };
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [popout, setPopOut] = React.useState(true)
 
     if (dataToken == null) {
         navigate("/Login")
@@ -31,11 +34,17 @@ function Sidebar(){
         navigate("/Login")
     }
 
+    function ToogleSideBar() {
+        setPopOut(!popout)
+    }
 
-return ( 
 
-
-<div className="md:w-[30%] hidden md:block">
+        return ( 
+            <>
+            <button onClick={ToogleSideBar} className="md:hidden fixed top-20 active:bg-slate-500 z-20">
+                <img src={nav} className="w-10 h-10"/>
+            </button>   
+            <div className={`md:w-[30%] ${popout ? "hidden" : "fixed left-0 top-20 right-0 bottom-0 z-10 bg-slate-500 bg-opacity-90"} md:block md:static md:z-auto md:left-auto`}>
                     <div className="flex flex-col w-[242px] h-[508px] ml-[70px]">   
                         <div className="flex mb-[50px] gap-4">
                         <img src={datauser === null ? profileimg : datauser?.profile?.picture} alt="" className="w-14 h-14 rounded-full" />
@@ -59,6 +68,7 @@ return (
                         </div>
                     </div>
                 </div>
+            </>
     )
 }
 export default Sidebar

@@ -24,7 +24,7 @@ function Mybooking(){
 
 
     async function getBooking() {
-        const datafetch = await fetch("http://159.65.11.166:21214/transactions/user",{
+        const datafetch = await fetch("http://localhost:8888/transactions/user",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
@@ -44,9 +44,7 @@ function Mybooking(){
         <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
-                <div className="md:w-[30%] w-[100%] hidden md:block">
                     <Sidebar/>
-                </div>
                 <div className=" md:w-[70%] w-[100%] md:bg-gray-200 md:rounded-[30px] md:mr-[70px]">
                    <div className="flex justify-between h-[50px] w-[85%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">My Booking</div>

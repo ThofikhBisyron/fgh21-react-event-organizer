@@ -1,37 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import people from "../assets/img/family.svg";
 import { BsDot } from "react-icons/bs";
-import museum from "../assets/img/museum.svg";
-import cars from "../assets/img/subsquid.jpg";
 import profile1 from "../assets/img/p1.svg";
 import profile2 from "../assets/img/p2.svg";
 import profile3 from "../assets/img/p3.svg";
 import profile4 from "../assets/img/p4.svg";
-import jakarta from "../assets/img/jakarta.svg";
-import bandung from "../assets/img/bandung.svg";
-import bali from "../assets/img/bali.svg";
-import aceh from "../assets/img/aceh.svg";
-import solo from "../assets/img/solo.svg";
-import jogja from "../assets/img/jogja.svg";
-import semarang from "../assets/img/semarang.svg";
 import arrowLeft from "../assets/img/arrow-left.svg";
 import arrowRight from "../assets/img/arrow-right.svg";
-import black1 from "../assets/img/black1.svg";
-import black2 from "../assets/img/black2.svg";
-import black3 from "../assets/img/black3.svg";
-import black4 from "../assets/img/black4.svg";
-import black5 from "../assets/img/black5.svg";
-import black6 from "../assets/img/black6.svg";
-import ticket from "../assets/img/logoticket.png"
 import orangebanner from "../assets/img/orangebanner.jpg";
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { inputhome } from "../redux/reducers/home";
 import { useDispatch} from "react-redux";
-import { data } from "autoprefixer";
-import { MdTextFields } from "react-icons/md";
 
 function Index() {
   const datatoken = useSelector((state) => state.auth.token);
@@ -39,7 +20,7 @@ function Index() {
   const [loc, setLoc] = React.useState([])
   const dispatch = useDispatch()
   const [partner, setPartner] = React.useState([])
-  const [see, setsee] = React.useState(true)
+  const [see, setsee] = React.useState(false)
   const [category, setCategory] = React.useState([])
   const [datacategory, setDataCategory] = React.useState(1)
   const [page, setPage] = React.useState(1)
@@ -51,14 +32,8 @@ function Index() {
   console.log(category)
 
 
-function seeall () 
-{
-    if ( see === true ){
-        setsee(false)
-    }else{
-        setsee(true)
-    }
-
+function seeallLocation () {
+  setsee(!see)
 }
 
 function handleCategoryChange(value) {
@@ -72,7 +47,7 @@ function handleCategoryChange(value) {
 async function home(searchValue){
   setLoadingEvent(true)
   const eventSearch = searchValue ? `?search=${searchValue}` : "";
-  const dataHome = await fetch(`http://159.65.11.166:21214/events/${eventSearch}` ,{
+  const dataHome = await fetch(`http://localhost:8888/events/${eventSearch}` ,{
     headers: {
       Authorization: "Bearer " + datatoken,
     }
@@ -107,7 +82,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function partnersData(){
-    const eventfetch = await fetch("http://159.65.11.166:21214/partners/")
+    const eventfetch = await fetch("http://localhost:8888/partners/")
     const datapartners = await eventfetch.json()
     setPartner(datapartners.results)
   }
@@ -116,7 +91,7 @@ useEffect(() =>{
 
 useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://159.65.11.166:21214/locations/")
+    const locationfetch = await fetch("http://localhost:8888/locations/")
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     
@@ -125,7 +100,7 @@ useEffect(() =>{
 }, []) 
 
 async function eventCategory() {
-  const Categoryfetch = await fetch(`http://159.65.11.166:21214/categories/events/?id=${datacategory}&page=${page}&limit=3`)
+  const Categoryfetch = await fetch(`http://localhost:8888/categories/events/?id=${datacategory}&page=${page}&limit=3`)
   const listCategory = await Categoryfetch.json()
   if (listCategory.results.length === 0){
     setPage(prevpage)
@@ -187,7 +162,7 @@ useEffect(() => {
           </div>
         </div>
         <form className="mb-20 ml-16" onSubmit={SearchSubmit}>
-          <input type="text" name="search" placeholder="Search Event Here" className="h-12 w-1/3 bg-orange-100 rounded-xl pl-4" value={search} onChange={(e) => setSearch(e.target.value)}/>
+          <input type="text" name="search" placeholder="Search Event Here" className="h-12 md:w-1/3 bg-orange-100 rounded-xl pl-4" value={search} onChange={(e) => setSearch(e.target.value)}/>
         </form>
         {loadingEvent ? (
           <div className="text-center text-gray-500 animate-pulse text-4xl mb-20">Loading...</div>
@@ -256,63 +231,17 @@ useEffect(() => {
                       Discover Events Near You
                     </div>
                   </div>
-                  {loc.map((item) => {
+                  {(see ? loc : loc.slice(0, 3)).map((item, index) => {
                     return(
-                    <div className="flex flex-col gap-2 text-white items-center">
+                    <div key={index} className="flex flex-col gap-2 text-white items-center">
                       <img src={item.image} alt="" className="w-full h-full" />
                     <div className="font-medium">{item.name}</div>
                   </div>
                     )
                   })}
-                  
-                  {/* <div className="flex flex-col gap-2 text-white items-center">
-                    <img src={bandung} alt="" className="w-full h-full" />
-                    <div className="font-medium">Bandung</div>
-                  </div>
-                  <div className={
-                      see
-                        ? "md:flex flex-col gap-2 text-white items-center hidden"
-                        : "md:flex flex-col gap-2 text-white items-center"
-                    }>
-                    <img src={bali} alt="" className="w-full h-full" />
-                    <div className="font-medium">Bali</div>
-                  </div>
-                  <div className={
-                      see
-                        ? "md:flex flex-col gap-2 text-white items-center hidden"
-                        : "md:flex flex-col gap-2 text-white items-center"
-                    }>
-                    <img src={aceh} alt="" className="w-full h-full" />
-                    <div className="font-medium">Aceh</div>
-                  </div>
-                  <div className={
-                      see
-                        ? "md:flex flex-col gap-2 text-white items-center hidden"
-                        : "md:flex flex-col gap-2 text-white items-center"
-                    }>
-                    <img src={solo} alt="" className="w-full h-full" />
-                    <div className="font-medium">Solo</div>
-                  </div>
-                  <div className={
-                      see
-                        ? "md:flex flex-col gap-2 text-white items-center hidden"
-                        : "md:flex flex-col gap-2 text-white items-center"
-                    }>
-                    <img src={jogja} alt="" className="w-full h-full" />
-                    <div className="font-medium">Yogyakarta</div>
-                  </div>
-                  <div className={
-                      see
-                        ? "md:flex flex-col gap-2 text-white items-center hidden"
-                        : "md:flex flex-col gap-2 text-white items-center"
-                    }>
-                    <img src={semarang} alt="" className="w-full h-full" />
-                    <div className="font-medium">Semarang</div>
-                  </div> */}
-
                 </div>
                 <div className="w-full text-center">
-                  <button onClick={seeall} className="bg-white w-[255px] h-[40px] rounded-xl text-[#3366FF]">See All
+                  <button onClick={seeallLocation} className="bg-white w-[255px] h-[40px] rounded-xl text-[#3366FF]">{see ? "See Less" : "See All"}
                   </button>
                 </div>
               </div>
@@ -421,24 +350,6 @@ useEffect(() => {
           </div>
             )
           })}
-          {/* <div>
-            <img src={partner[0].image} alt="" />
-          </div>
-          <div>
-            <img src={partner[1].image} alt="" />
-          </div>
-          <div>
-            <img src={partner[2].image} alt="" />
-          </div>
-          <div>
-            <img src={partner[3].image} alt="" />
-          </div>
-          <div>
-            <img src={partner[4].image} alt="" />
-          </div>
-          <div>
-            <img src={partner[5].image} alt="" />
-          </div> */}
         </div>
       </div>
       <div>

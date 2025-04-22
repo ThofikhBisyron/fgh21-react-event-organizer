@@ -29,13 +29,14 @@ function Createevent(){
     if (dataToken == null) {
         navigate("Login")
     }
+    
 
     const [pop, setpop] = React.useState(false)
     const [popedit, setPopEdit] = React.useState({isOpen:false, eventId: null})
     
 
     async function createdEvent() {
-        const eventfetch = await fetch("http://159.65.11.166:21214/events/created",{
+        const eventfetch = await fetch("http://localhost:8888/events/created",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
@@ -46,7 +47,7 @@ function Createevent(){
     }
 
     async function deleteEvent(id) {
-        const deleventFetch = await fetch("http://159.65.11.166:21214/events/" + id,{
+        const deleventFetch = await fetch("http://localhost:8888/events/" + id,{
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + dataToken,
@@ -69,9 +70,7 @@ function Createevent(){
         <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
             <Navbar/>
             <div className="flex mt-[50px]">
-                <div className="md:w-[30%] w-[100%] hidden md:block">
                     <Sidebar/>
-                </div>
                 <div className=" md:w-[70%] w-[100%] md:bg-gray-200 rounded-[30px] md:mr-[70px]">
                    <div className="md:flex flex flex-col gap-5 md:flex-row md:justify-between md:h-[50px] w-[90%] mt-[33px] ml-[50px] mr-[90px]">
                         <div className="font-semibold text-2xl">Manage Event</div>

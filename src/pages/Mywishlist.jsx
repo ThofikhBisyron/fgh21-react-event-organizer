@@ -24,21 +24,20 @@ import { useParams } from "react-router-dom"
 function Mywishlist(){
     const datatoken = useSelector((state) => state.auth.token);
     const [wishlist, setWishlist] = react.useState([])
+    console.log(wishlist)
     const [message, setMessage] = React.useState("")
 
     async function dataListwish() {
-        const wishlistfetch = await fetch("http://159.65.11.166:21214/wishlist/findevent", {
+        const wishlistfetch = await fetch("http://localhost:8888/wishlist/findevent", {
             headers: {
                 Authorization: "Bearer " + datatoken,
               },
         }) 
         const datawishlist = await wishlistfetch.json()
         setWishlist(datawishlist.results)
-        console.log(wishlist)
-        console.log(datawishlist.results)
     }
     async function deleteWishlist(id) {
-        const wishlistdelete = await fetch("http://159.65.11.166:21214/wishlist/" + id,{
+        const wishlistdelete = await fetch("http://localhost:8888/wishlist/" + id,{
             method:"DELETE", 
             headers:{
                 Authorization: "Bearer " + datatoken,

@@ -60,7 +60,7 @@ function btnlogin(e) {
         formData.append('email', email)
         formData.append('password', password)
        
-        fetch ('http://159.65.11.166:21214/auth/login', {
+        fetch ('http://localhost:8888/auth/login', {
             method: 'POST',
             body: formData,
         })
@@ -73,7 +73,7 @@ function btnlogin(e) {
                 async function profile() {
 
                     const dataProfile = await fetch(
-                        "http://159.65.11.166:21214/profile/" ,
+                        "http://localhost:8888/profile/" ,
                    {
                     headers: {
                         Authorization: "Bearer " + data.results,
@@ -124,10 +124,10 @@ const [New, setNew] = React.useState("password")
                     {responses && <div className="text-green-400">{responses}</div>}
                     <div className="flex flex-col gap-5 md:w-[315px] w-full mb-[15px] ">
                     {emailError && <div className="text-red-500">{emailError}</div>}
-                    <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
+                    <input type="email" name="email" placeholder="Email #admin@mail.com" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
                     <div className="relative w-full">
                     {passwordError && <div className="text-red-500">{passwordError}</div>}
-                        <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-full h-[55px] align-middle pl-4"/> 
+                        <input type={New} name="password" placeholder="Password #12345678" className="absolute border-2 rounded-2xl w-full h-[55px] align-middle pl-4"/> 
                         <div className="w-[100%] flex justify-end">
                             <button type="button" onClick={showp}><img src={show} alt="" className="flex relative w-[45px] h-[45px] md:ml-[260px] pt-[10px]"/></button>
                         </div>

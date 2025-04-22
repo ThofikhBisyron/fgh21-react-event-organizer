@@ -70,7 +70,7 @@ const [New, setNew] = React.useState("password")
         formData.append('email', email)
         formData.append('password', password)
        
-        fetch ('http://159.65.11.166:21214/auth/register', {
+        fetch ('http://localhost:8888/auth/register', {
             method: 'POST',
             body: formData,
         })

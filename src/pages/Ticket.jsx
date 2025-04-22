@@ -30,7 +30,6 @@ function Ticket() {
     let {id} = useParams()  
     let dispatch = useDispatch()
     const [event, setEvent] = React.useState([])
-    console.log(event)
     const [ticket, setTicket] = React.useState([])
     const dataticket = useSelector((state) => state.ticket.dataticket); 
     const datatoken = useSelector((state) => state.auth.token)
@@ -52,27 +51,25 @@ function Ticket() {
 
     useEffect(() =>{
       async function ticket(){
-        const fetchticket = await fetch("http://159.65.11.166:21214/events/section/" + id ,{
+        const fetchticket = await fetch("http://localhost:8888/events/section/" + id ,{
           headers: {
             Authorization: "Bearer " + datatoken,
           }
         })
         const data = await fetchticket.json()
         dispatch(inputticket(data.results))
-        console.log(data.results) 
       }
       ticket()
     }, [])
 
     useEffect(() =>{
       async function eventData(){
-        const eventfetch = await fetch("http://159.65.11.166:21214/events/" + id,{
+        const eventfetch = await fetch("http://localhost:8888/events/" + id,{
           headers: {
           Authorization: "Bearer " + datatoken,
         }
       })
-        const eventdata = await eventfetch.json()
-        console.log(eventdata.results)     
+        const eventdata = await eventfetch.json()   
         setEvent(eventdata.results)
       }
       eventData()
@@ -110,7 +107,6 @@ function Ticket() {
   }, []);
 
 
-  console.log(event)
   dispatch(inputQuantity(quantityArray));
   dispatch(inputqty(quantity));
   dispatch(inputEventId(id));
@@ -126,7 +122,7 @@ function Ticket() {
         <Navbar />
       </div>
       <div className="">
-        <div className="flex md:flex-row flex-col md:mt-[48px] md:mr-[120px] md:ml-[120px] md:mb-[100px] bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">
+        <div className="flex md:flex-row flex-col md:mt-[48px] md:mr-[120px] md:ml-[120px] md:mb-[100px] bg-opacity-0 md:bg-slate-300  rounded-[30px] p-[100px] ">
           <div className=" md:w-[50%] w-[100%]  h-[486px] mr-[88px] md:sticky top-10" >
             <img src={event.image} alt="" className="w-auto h-full rounded-3xl object-cover" />
           </div>

@@ -67,7 +67,7 @@ function Payment() {
       return;
     }
     try {
-      const response = await fetch("http://159.65.11.166:21214/transactions/", {
+      const response = await fetch("http://localhost:8888/transactions/", {
         method: 'POST',
         body: formData,
         headers: {
@@ -92,7 +92,7 @@ function Payment() {
     <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
       <Navbar />
       <div className="">
-        <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-yellow-300 md:bg-gray-200 rounded-[30px] p-[100px]">
+        <div className="flex flex-col md:flex-row md:mt-[48px] md:mr-[120px] md:ml-[120px] mb-[100px] gap-y-20 bg-opacity-0 md:bg-gray-200 md:rounded-[30px] p-[100px]">
           <div className=" md:w-[50%] w-[100%] h-[486px] md:mr-[88px]">
             <div className="text-[#373A42] tracking-[1px] font-semibold text-xl mb-[50px]">Payment Method
             </div>
