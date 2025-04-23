@@ -103,6 +103,11 @@ function Profile(){
         const birth = e.target.birth.value
 
         const profilePicture = datauser.profile.picture
+
+        if (genders == null){
+          setMessage("Please input gender")
+          return
+        }
  
         const formData = new URLSearchParams()
         formData.append('full_name', name)
@@ -113,6 +118,8 @@ function Profile(){
         formData.append("profession", prof)
         formData.append("nationality_id", national)
         formData.append("birth_date", birth)
+
+
 
         if (e.target.files !== "") {
           const file = e.target.files;
