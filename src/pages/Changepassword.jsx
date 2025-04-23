@@ -47,7 +47,7 @@ function Changepassword(){
             formp.append("password", newp)
             formp.append("oldpassword", old)
         
-        const pnew = await fetch("http://localhost:8888/users/password", {
+        const pnew = await fetch("http://157.230.243.8:10001/users/password", {
         method: "PATCH",
         headers: {
                 Authorization: "Bearer " + datatoken,

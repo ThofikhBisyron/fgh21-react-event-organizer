@@ -31,7 +31,7 @@ function Profile(){
     const [gender, setGender] = React.useState(datauser.profile.gender);
 
     async function home(){
-      const dataH = await fetch('http://localhost:8888/profile/',{
+      const dataH = await fetch('http://157.230.243.8:10001/profile/',{
         headers: {
           Authorization: "Bearer " + datatoken,
         }
@@ -44,7 +44,7 @@ function Profile(){
   
       useEffect(() =>{
         async function Nationalities(){
-          const fetchnational = await fetch("http://localhost:8888/profile/national")
+          const fetchnational = await fetch("http://157.230.243.8:10001/profile/national")
           const listnational = await fetchnational.json()
           setNational(listnational.results)     
         }
@@ -68,7 +68,7 @@ function Profile(){
         const formData = new FormData();
         formData.append('profileImg', file);
       
-        const fetchimg = await fetch("http://localhost:8888/profile/", {
+        const fetchimg = await fetch("http://157.230.243.8:10001/profile/", {
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,
@@ -118,7 +118,7 @@ function Profile(){
           const file = e.target.files;
           const newFormData = new FormData();
           newFormData.append('profileImg', file);
-          await fetch("http://localhost:8888/profile/", {
+          await fetch("http://157.230.243.8:10001/profile/", {
               method: 'PATCH',
               headers: {
                   Authorization: "Bearer " + datatoken,
@@ -129,7 +129,7 @@ function Profile(){
           formData.append('picture', profilePicture);
       }
         
-        const datafetch = await fetch("http://localhost:8888/profile/update",{
+        const datafetch = await fetch("http://157.230.243.8:10001/profile/update",{
           method: 'PATCH',
           headers: {
             Authorization: "Bearer " + datatoken,

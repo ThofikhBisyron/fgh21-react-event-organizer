@@ -27,7 +27,7 @@ function PopupEdit({props, popedit, eventId}) {
 
   useEffect(() => {
     async function Category() {
-      const categoryFetch = await fetch(`http://localhost:8888/categories/?page=1&limit=100`)
+      const categoryFetch = await fetch(`http://157.230.243.8:10001/categories/?page=1&limit=100`)
       const categoryJson = await categoryFetch.json()
       console.log(categoryJson.results)
       setCategory(categoryJson.results)
@@ -73,7 +73,7 @@ function PopupEdit({props, popedit, eventId}) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch("http://localhost:8888/events/" + eventId, {
+  const eventfetch = await fetch("http://157.230.243.8:10001/events/" + eventId, {
     method: 'PATCH',
     headers: {
       Authorization: "Bearer " + datatoken,
@@ -95,7 +95,7 @@ function PopupEdit({props, popedit, eventId}) {
       const categoryForm = new URLSearchParams()
       categoryForm.append('category_id', category)
 
-      const categoryResponse = await fetch(`http://localhost:8888/categories/` + eventId, {
+      const categoryResponse = await fetch(`http://157.230.243.8:10001/categories/` + eventId, {
         method: 'PATCH',
         body: categoryForm,
       })
@@ -113,7 +113,7 @@ function PopupEdit({props, popedit, eventId}) {
           sectionForm.append(`quantity_${index}`, section.quantity.toString()); 
         });
       
-        const sectionResponse = await fetch('http://localhost:8888/eventsection/', {
+        const sectionResponse = await fetch('http://157.230.243.8:10001/eventsection/', {
           method: 'PATCH',
           body: sectionForm,
           headers: {
@@ -132,7 +132,7 @@ function PopupEdit({props, popedit, eventId}) {
 
  useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch("http://localhost:8888/locations/")
+    const locationfetch = await fetch("http://157.230.243.8:10001/locations/")
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     
