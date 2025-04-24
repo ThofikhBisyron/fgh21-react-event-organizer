@@ -51,7 +51,7 @@ function Ticket() {
 
     useEffect(() =>{
       async function ticket(){
-        const fetchticket = await fetch("http://157.230.243.8:10001/events/section/" + id ,{
+        const fetchticket = await fetch("http://143.198.222.47:10001/events/section/" + id ,{
           headers: {
             Authorization: "Bearer " + datatoken,
           }
@@ -64,7 +64,7 @@ function Ticket() {
 
     useEffect(() =>{
       async function eventData(){
-        const eventfetch = await fetch("http://157.230.243.8:10001/events/" + id,{
+        const eventfetch = await fetch("http://143.198.222.47:10001/events/" + id,{
           headers: {
           Authorization: "Bearer " + datatoken,
         }

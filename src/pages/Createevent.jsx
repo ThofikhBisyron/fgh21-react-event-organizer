@@ -36,7 +36,7 @@ function Createevent(){
     
 
     async function createdEvent() {
-        const eventfetch = await fetch("http://157.230.243.8:10001/events/created",{
+        const eventfetch = await fetch("http://143.198.222.47:10001/events/created",{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
@@ -47,7 +47,7 @@ function Createevent(){
     }
 
     async function deleteEvent(id) {
-        const deleventFetch = await fetch("http://157.230.243.8:10001/events/" + id,{
+        const deleventFetch = await fetch("http://143.198.222.47:10001/events/" + id,{
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + dataToken,

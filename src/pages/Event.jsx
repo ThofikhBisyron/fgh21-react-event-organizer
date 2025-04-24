@@ -24,7 +24,7 @@ function Event() {
   const [read, setRead] = React.useState(false)
 
   async function eventData(){
-    const eventfetch = await fetch("http://157.230.243.8:10001/events/" + id)
+    const eventfetch = await fetch("http://143.198.222.47:10001/events/" + id)
     const eventdata = await eventfetch.json()
     setEvent(eventdata.results)
   }
@@ -35,7 +35,7 @@ function Event() {
     const formData = new URLSearchParams()
     formData.append('event_id', eventid)
 
-    const wishlistfetch = await fetch("http://157.230.243.8:10001/wishlist/", {
+    const wishlistfetch = await fetch("http://143.198.222.47:10001/wishlist/", {
       method:'POST',
       headers: {
         Authorization: "Bearer " + datatoken,

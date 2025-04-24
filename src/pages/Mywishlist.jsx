@@ -28,7 +28,7 @@ function Mywishlist(){
     const [message, setMessage] = React.useState("")
 
     async function dataListwish() {
-        const wishlistfetch = await fetch("http://157.230.243.8:10001/wishlist/findevent", {
+        const wishlistfetch = await fetch("http://143.198.222.47:10001/wishlist/findevent", {
             headers: {
                 Authorization: "Bearer " + datatoken,
               },
@@ -37,7 +37,7 @@ function Mywishlist(){
         setWishlist(datawishlist.results)
     }
     async function deleteWishlist(id) {
-        const wishlistdelete = await fetch("http://157.230.243.8:10001/wishlist/" + id,{
+        const wishlistdelete = await fetch("http://143.198.222.47:10001/wishlist/" + id,{
             method:"DELETE", 
             headers:{
                 Authorization: "Bearer " + datatoken,
