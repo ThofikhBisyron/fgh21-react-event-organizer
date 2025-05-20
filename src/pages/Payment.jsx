@@ -67,7 +67,7 @@ function Payment() {
       return;
     }
     try {
-      const response = await fetch("http://143.198.222.47:10001/transactions/", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transactions/`, {
         method: 'POST',
         body: formData,
         headers: {

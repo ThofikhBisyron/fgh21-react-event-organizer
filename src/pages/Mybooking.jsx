@@ -24,7 +24,7 @@ function Mybooking(){
 
 
     async function getBooking() {
-        const datafetch = await fetch("http://143.198.222.47:10001/transactions/user",{
+        const datafetch = await fetch(`${process.env.REACT_APP_API_URL}/transactions/user`,{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
