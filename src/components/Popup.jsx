@@ -25,7 +25,7 @@ function Popup(props) {
 
   useEffect(() => {
     async function Category() {
-      const categoryFetch = await fetch(`${process.env.REACT_APP_API_URL}/categories/?page=1&limit=100`)
+      const categoryFetch = await fetch(`${import.meta.env.VITE_API_URL}/categories/?page=1&limit=100`)
       const categoryJson = await categoryFetch.json()
       console.log(categoryJson.results)
       setCategory(categoryJson.results)
@@ -71,7 +71,7 @@ function Popup(props) {
   formdata.append('description', description)
   formdata.append('location', location)
 
-  const eventfetch = await fetch(`${process.env.REACT_APP_API_URL}/events/`, {
+  const eventfetch = await fetch(`${import.meta.env.VITE_API_URL}/events/`, {
     method: 'POST',
     headers: {
       Authorization: "Bearer " + datatoken,
@@ -94,7 +94,7 @@ function Popup(props) {
       categoryForm.append('event_id', eventId)
       categoryForm.append('category_id', category)
 
-      const categoryResponse = await fetch(`${process.env.REACT_APP_API_URL}/categories/`, {
+      const categoryResponse = await fetch(`${import.meta.env.VITE_API_URL}/categories/`, {
         method: 'POST',
         body: categoryForm,
       })
@@ -110,7 +110,7 @@ function Popup(props) {
           sectionForm.append('quantity', section.quantity)
         
 
-          const sectionResponse = await fetch(`${process.env.REACT_APP_API_URL}/eventsection/`,{
+          const sectionResponse = await fetch(`${import.meta.env.VITE_API_URL}/eventsection/`,{
             method: 'POST',
             body: sectionForm,
           })
@@ -127,7 +127,7 @@ function Popup(props) {
 
  useEffect(() =>{
   async function location() {
-    const locationfetch = await fetch(`${process.env.REACT_APP_API_URL}/locations/`)
+    const locationfetch = await fetch(`${import.meta.env.VITE_API_URL}/locations/`)
     const listlocation = await locationfetch.json()
     setLoc(listlocation.results)
     

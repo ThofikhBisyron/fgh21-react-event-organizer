@@ -51,7 +51,7 @@ function Ticket() {
 
     useEffect(() =>{
       async function ticket(){
-        const fetchticket = await fetch(`${process.env.REACT_APP_API_URL}/events/section/` + id ,{
+        const fetchticket = await fetch(`${import.meta.env.VITE_API_URL}/events/section/` + id ,{
           headers: {
             Authorization: "Bearer " + datatoken,
           }
@@ -64,7 +64,7 @@ function Ticket() {
 
     useEffect(() =>{
       async function eventData(){
-        const eventfetch = await fetch(`${process.env.REACT_APP_API_URL}/events/` + id,{
+        const eventfetch = await fetch(`${import.meta.env.VITE_API_URL}/events/` + id,{
           headers: {
           Authorization: "Bearer " + datatoken,
         }

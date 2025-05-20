@@ -36,7 +36,7 @@ function Createevent(){
     
 
     async function createdEvent() {
-        const eventfetch = await fetch(`${process.env.REACT_APP_API_URL}/events/created`,{
+        const eventfetch = await fetch(`${import.meta.env.VITE_API_URL}/events/created`,{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
@@ -47,7 +47,7 @@ function Createevent(){
     }
 
     async function deleteEvent(id) {
-        const deleventFetch = await fetch(`${process.env.REACT_APP_API_URL}/events/` + id,{
+        const deleventFetch = await fetch(`${import.meta.env.VITE_API_URL}/events/` + id,{
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + dataToken,

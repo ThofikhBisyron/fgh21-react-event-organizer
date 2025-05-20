@@ -28,7 +28,7 @@ function Mywishlist(){
     const [message, setMessage] = React.useState("")
 
     async function dataListwish() {
-        const wishlistfetch = await fetch(`${process.env.REACT_APP_API_URL}/wishlist/findevent`, {
+        const wishlistfetch = await fetch(`${import.meta.env.VITE_API_URL}/wishlist/findevent`, {
             headers: {
                 Authorization: "Bearer " + datatoken,
               },
@@ -37,7 +37,7 @@ function Mywishlist(){
         setWishlist(datawishlist.results)
     }
     async function deleteWishlist(id) {
-        const wishlistdelete = await fetch(`${process.env.REACT_APP_API_URL}/wishlist/` + id,{
+        const wishlistdelete = await fetch(`${import.meta.env.VITE_API_URL}/wishlist/` + id,{
             method:"DELETE", 
             headers:{
                 Authorization: "Bearer " + datatoken,

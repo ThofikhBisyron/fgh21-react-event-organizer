@@ -60,7 +60,7 @@ function btnlogin(e) {
         formData.append('email', email)
         formData.append('password', password)
        
-        fetch (`${process.env.REACT_APP_API_URL}/auth/login`, {
+        fetch (`${import.meta.env.VITE_API_URL}/auth/login`, {
             method: 'POST',
             body: formData,
         })
@@ -73,7 +73,7 @@ function btnlogin(e) {
                 async function profile() {
 
                     const dataProfile = await fetch(
-                        `${process.env.REACT_APP_API_URL}/profile/` ,
+                        `${import.meta.env.VITE_API_URL}/profile/` ,
                    {
                     headers: {
                         Authorization: "Bearer " + data.results,

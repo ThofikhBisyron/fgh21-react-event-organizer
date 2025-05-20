@@ -70,7 +70,7 @@ const [New, setNew] = React.useState("password")
         formData.append('email', email)
         formData.append('password', password)
        
-        fetch (`${process.env.REACT_APP_API_URL}/auth/register`, {
+        fetch (`${import.meta.env.VITE_API_URL}/auth/register`, {
             method: 'POST',
             body: formData,
         })

@@ -47,7 +47,7 @@ function Changepassword(){
             formp.append("password", newp)
             formp.append("oldpassword", old)
         
-        const pnew = await fetch(`${process.env.REACT_APP_API_URL}/users/password`, {
+        const pnew = await fetch(`${import.meta.env.VITE_API_URL}/users/password`, {
         method: "PATCH",
         headers: {
                 Authorization: "Bearer " + datatoken,

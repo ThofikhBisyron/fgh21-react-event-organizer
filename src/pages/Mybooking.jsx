@@ -24,7 +24,7 @@ function Mybooking(){
 
 
     async function getBooking() {
-        const datafetch = await fetch(`${process.env.REACT_APP_API_URL}/transactions/user`,{
+        const datafetch = await fetch(`${import.meta.env.VITE_API_URL}/transactions/user`,{
             headers: {
                 Authorization: "Bearer " + dataToken,
             }
