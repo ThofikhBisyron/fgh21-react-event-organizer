@@ -38,3 +38,4 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # ENTRYPOINT ["serve", "-s", "-l", "tcp://0.0.0.0:4000", "dist"]
 
+# docker build -t eventfe --build-arg VITE_API_URL=http://165.22.51.58:10001 .
