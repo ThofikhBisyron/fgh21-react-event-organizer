@@ -114,6 +114,24 @@ useEffect(() => {
   eventCategory()
 }, [datacategory, page])
 
+const getDynamicDays = () => {
+  const days = [];
+  const today = new Date();
+
+  for (let i = -2; i <= 2; i++) {
+    const date = new Date();
+    date.setDate(today.getDate() + i);
+    days.push({
+      dateNum: date.getDate(),
+      dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
+      isToday: i === 0 
+    });
+  }
+  return days;
+};
+
+const dynamicDays = getDynamicDays();
+
 
   return (
     <div className="bg-gradient-to-b from-yellow-300 via-orange-500 to-amber-800">
@@ -135,29 +153,24 @@ useEffect(() => {
           </div>
           <div className="mb-[50px] w-full">
             <div className="flex gap-11 justify-center">
-              <div className="hidden md:flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
-                <div>13</div>
-                <div>Mon</div>
-              </div>
-              <div className="flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
-                <div>14</div>
-                <div>Tue</div>
-              </div>
-              <div className="flex flex-col font-medium gap-3 items-center border-2 w-16 h-21 pt-2 pb-2 rounded-xl text-[#FF8900] text-s border-[#FF8900]">
-                <div>15</div>
-                <div>Wed</div>
-                <div>
-                  <BsDot />
+              {dynamicDays.map((day, index) => (
+                <div
+                  key={index}
+                  className={`flex flex-col items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s 
+                    ${index === 0 || index === 4 ? 'hidden md:flex' : 'flex'} 
+                    ${day.isToday 
+                      ? 'border-2 font-medium text-[#FF8900] border-[#FF8900]' 
+                      : 'text-gray-500'}`}
+                >
+                  <div>{day.dateNum}</div>
+                  <div>{day.dayName}</div>
+                  {day.isToday && (
+                    <div className="mt-[-5px]">
+                      <BsDot size={25} />
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
-                <div>16</div>
-                <div>Thu</div>
-              </div>
-              <div className="hidden md:flex flex-col gap-3 items-center w-16 h-21 pt-2 pb-2 rounded-xl text-s ">
-                <div>17</div>
-                <div>Fri</div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
