@@ -124,10 +124,10 @@ const [New, setNew] = React.useState("password")
                     {responses && <div className="text-green-400">{responses}</div>}
                     <div className="flex flex-col gap-5 md:w-[315px] w-full mb-[15px] ">
                     {emailError && <div className="text-red-500">{emailError}</div>}
-                    <input type="email" name="email" placeholder="Email #admin@mail.com" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
+                    <input type="email" name="email" placeholder="Email" className="border-2 rounded-2xl h-[55px] w-[100%] align-middle pl-4"/>
                     <div className="relative w-full">
                     {passwordError && <div className="text-red-500">{passwordError}</div>}
-                        <input type={New} name="password" placeholder="Password #12345678" className="absolute border-2 rounded-2xl w-full h-[55px] align-middle pl-4"/> 
+                        <input type={New} name="password" placeholder="Password" className="absolute border-2 rounded-2xl w-full h-[55px] align-middle pl-4"/> 
                         <div className="w-[100%] flex justify-end">
                             <button type="button" onClick={showp}><img src={show} alt="" className="flex relative w-[45px] h-[45px] md:ml-[260px] pt-[10px]"/></button>
                         </div>
